@@ -11,7 +11,7 @@ function ScanStatus() {
     setError(null);
 
     try {
-      const response = await axios.post('http://172.16.206.4:3000/scan-jx2-jx', {
+      const response = await axios.post('http://172.16.200.28:3000/scan-jx2-jx', {
         FROM_DATE: '2024-02-16',
         TO_DATE: '2024-02-16',
         LINE_JX2: 'ALL',

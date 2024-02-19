@@ -78,7 +78,7 @@ const InventoryLongTerm = () => {
   const totalQty = calculateTotalQty();
   
   const fetchData = async () => {
-    const apiUrl = 'http://172.16.206.4:3000/inventory-long-term';
+    const apiUrl = 'http://172.16.200.28:3000/inventory-long-term';
     try {
       setUpdating(true);
       const sanitizedStyle = selectedStyle.replace(/-/g, '');

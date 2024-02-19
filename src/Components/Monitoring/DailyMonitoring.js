@@ -6,14 +6,15 @@ const FetchData = () => {
   const [updating, setUpdating] = useState(false);
   const [key, setKey] = useState(0);
   // Mendapatkan tanggal pertama dari bulan ini
-  const firstDayOfMonth = new Date();
-  firstDayOfMonth.setDate(1); // Mengatur tanggal menjadi 1
-  const firstDayOfMonthISO = firstDayOfMonth.toISOString().split('T')[0];
+  const firstDayOfPreviousMonth = new Date();
+  firstDayOfPreviousMonth.setDate(1); // Set tanggal menjadi 1
+  firstDayOfPreviousMonth.setMonth(firstDayOfPreviousMonth.getMonth() - 1); // Set bulan menjadi bulan sebelumnya
+  const firstDayOfPreviousMonthISO = firstDayOfPreviousMonth.toISOString().split('T')[0];
 
   // Mendapatkan tanggal hari ini
   const todayISO = new Date().toISOString().split('T')[0];
 
-  const [dateFrom, setDateFrom] = useState(firstDayOfMonthISO);
+  const [dateFrom, setDateFrom] = useState(firstDayOfPreviousMonthISO);
   const [dateTo, setDateTo] = useState(todayISO);
 
   const [wc, setWC] = useState('SEWING');
@@ -67,7 +68,7 @@ const FetchData = () => {
   };
   const fetchData = async () => {
     try {
-      const apiUrl = 'http://172.16.206.4:3000/getDailyProductionStatus';
+      const apiUrl = 'http://172.16.200.28:3000/getDailyProductionStatus';
       const requestBody = {
         DATEFROM: dateFrom,
         DATETO: dateTo,
@@ -117,34 +118,101 @@ const FetchData = () => {
   return (
     <>
       <style>
-        {`
-          /* CSS Styles */
-          .sticky-header thead th {
-            position: sticky;
-            top: 0;
-            background-color: #1F2937;
-            z-index: 2;
-          }
-          .sticky-header th,
-          .sticky-header td {
-            white-space: nowrap;
-          }
-          .sticky-header thead tr:first-child th {
-            color: #D1D5DB;
-          }
-          
-          .sticky-header thead tr:nth-child(2) th {
-            position: sticky;
-            top: 48px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-            background-color: #B84600;
-            z-index: 2;
-          }
-          
-          .table-container {
-            max-height: 100vh;
-            overflow-y: auto;
-          }
-        `}
+      {`
+      /* CSS Styles */
+      .sticky-header thead th {
+      }
+      
+      .sticky-header th,
+      .sticky-header td {
+        white-space: nowrap;
+      }
+      
+      .sticky-header thead tr:first-child th {
+        position: sticky;
+        top: 0;
+        background-color: #1F2937;
+        z-index: 2;
+        color: #D1D5DB;
+      }
+
+      .sticky-header thead tr:first-child th.sticky-main-first-column {
+        left: 0;
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        color: #D1D5DB;
+      }
+
+      .sticky-header thead tr:first-child th.sticky-main-second-column {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        color: #D1D5DB;
+      }
+
+      .sticky-header thead tr:first-child th.sticky-main-third-column {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        color: #D1D5DB;
+      }
+
+      .sticky-header thead tr:first-child th.sticky-main-fourth-column {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        color: #D1D5DB;
+      }
+      
+      .sticky-header thead tr:nth-child(2) th {
+        position: sticky;
+        top: 48px; 
+        background-color: #B84600;
+        z-index: 2;
+      }
+      
+      .sticky-header thead tr:nth-child(2) th.sticky-first-column {
+        left: 0;
+        position: sticky;
+        top: 48px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
+        background-color: #B84600;
+        z-index: 3;
+      }
+      .sticky-header thead tr:nth-child(2) th.sticky-second-column {
+        position: sticky;
+        top: 48px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
+        background-color: #B84600;
+        z-index: 3;
+      }
+      
+      .table-container {
+        max-height: 70vh;
+        max-width: 195vh;
+        overflow-y: auto;
+        overflow-x: auto;
+      }
+      
+      /* Menjadikan sel pertama dalam tbody tetap diam ketika discroll */
+      .sticky-first-row {
+        position: sticky;
+        left: 0;
+        z-index:1;
+      }
+      .sticky-second-row {
+        position: sticky;
+        z-index:1;
+      }
+      .sticky-third-row {
+        position: sticky;
+        z-index:1;
+      }
+      .sticky-fourth-row {
+        position: sticky;
+
+        z-index:1;
+      }
+  `}
       </style>
       <main className="py-12">
         <div className="mx-auto max-w-full px-6 lg:px-1">
@@ -255,16 +323,16 @@ const FetchData = () => {
                       <table key={key} className="min-w-full divide-y divide-neutral-950 sticky-header">
                         <thead className="bg-slate-300">
                           <tr>
-                            <th scope="col" className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6">
+                            <th scope="col" className="sticky-main-first-column px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                               Plant
                             </th>
-                            <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                            <th scope="col" className="sticky-main-second-column left-20 px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                 {wc === 'SEWING' || wc === 'W/H' ? (filterType === 'Line' || filterType === 'Line-Model') ? 'JX Line' : 'Model' : 'Model'}
                                 </th>
-                            <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                            <th scope="col" className="sticky-main-third-column left-32 px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                 {wc === 'SEWING' || wc === 'W/H' ? (filterType === 'Line' || filterType === 'Line-Model') ? 'JX2 Line' : 'Gender' : 'Gender'}
                             </th>
-                            <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                            <th scope="col" className="sticky-main-fourth-column left-48 px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                               Total
                             </th>
                             {columns.map((column, index) => (
@@ -274,10 +342,16 @@ const FetchData = () => {
                             ))}
                           </tr>
                           <tr>
-                            <th colSpan="3" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                            <th className="sticky-first-column py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                                 GRAND TOTAL
                             </th>
-                            <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                            <th className="sticky-second-column left-20 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                                
+                            </th>
+                            <th className="sticky-second-column left-32 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                                
+                            </th>
+                            <th className="sticky-second-column left-48 px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                 {totalColumn.toLocaleString()}
                             </th>
                             {columns.map((column, colIndex) => (
@@ -297,26 +371,25 @@ const FetchData = () => {
                           )}
                           {data.map((item, rowIndex) => (
                             <tr key={rowIndex}>
-                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
+                              <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
                                 {item.WC}
                               </td>
-                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
+                              <td className="sticky-second-row left-20 bg-gray-50  py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
                                 {wc === 'SEWING' || wc === 'W/H' ? (filterType === 'Line' || filterType === 'Line-Model') ? item.JX_LINE : item.SCAN_CELL : item.SCAN_CELL}
                             </td>
-                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
+                            <td className="sticky-third-row bg-gray-50 left-32 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
                                 {wc === 'SEWING' || wc === 'W/H' ? (filterType === 'Line' || filterType === 'Line-Model') ? item.SCAN_CELL : item.GENDER : item.GENDER}
                             </td>
-                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6" style={{ backgroundColor: '#FA7625' }}>
+                              <td className="sticky-fourth-row left-48 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6" style={{ backgroundColor: '#FA7625' }}>
                                 {item.TOTAL.toLocaleString()}
                               </td>
                               {columns.map((column, colIndex) => (
-                                <td key={colIndex} className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
+                                <td key={colIndex} className=" py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                   {item[column] !== null && !isNaN(item[column]) ? parseFloat(item[column]).toLocaleString() : 0}
                                 </td>
                               ))}
                             </tr>
                           ))}
-                         
                         </tbody>
                       </table>
                     </div>

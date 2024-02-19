@@ -52,7 +52,7 @@ const ProductTime = () => {
         C_TIME: selectedCTime,
       };
 
-      const response = await fetch('http://172.16.206.4:3000/api/call-stored-procedure', {
+      const response = await fetch('http://172.16.200.28:3000/api/call-stored-procedure', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -260,6 +260,12 @@ const ProductTime = () => {
                                     Plant
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                    JX Line
+                                  </th>
+                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                    JX2 Line
+                                  </th>
+                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                     Model
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
@@ -300,6 +306,12 @@ const ProductTime = () => {
                                 <tr>
                                   <th scope="col" className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6">
                                     {apiResponse[0][0].FACTORY}
+                                  </th>
+                                  <th scope="col" className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6">
+                                    {apiResponse[0][0].JX_LINE}
+                                  </th>
+                                  <th scope="col" className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6">
+                                    {apiResponse[0][0].LINE}
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                   {apiResponse[0][0].MODEL}
@@ -343,6 +355,12 @@ const ProductTime = () => {
                                 <tr>
                                   <th scope="col" className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6">
                                     {apiResponse[0][1].FACTORY}
+                                  </th>
+                                  <th scope="col" className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6">
+                                    {apiResponse[0][0].JX_LINE}
+                                  </th>
+                                  <th scope="col" className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6">
+                                    {apiResponse[0][0].LINE}
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                   {apiResponse[0][1].MODEL}
@@ -401,6 +419,8 @@ const ProductTime = () => {
                                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6">
                                         {item.FACTORY}
                                       </td>
+                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.JX_LINE}</td>
+                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.LINE}</td>
                                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.MODEL}</td>
                                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.GENDER}</td>
                                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.DAY}</td>

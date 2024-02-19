@@ -53,7 +53,7 @@ const ProductResultTarget = () => {
     try {
       setUpdating(true); // Mulai proses pembaruan
       // Mengganti URL sesuai dengan endpoint Express.js Anda
-      const response = await fetch('http://172.16.206.4:3000/api/product-result-target', {
+      const response = await fetch('http://172.16.200.28:3000/api/product-result-target', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

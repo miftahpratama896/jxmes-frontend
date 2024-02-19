@@ -75,7 +75,7 @@ const [dateFrom, setDateFrom] = useState(formatDate(nextSunday));
       setUpdating(true);
       // Remove hyphens from the selectedStyle
       const sanitizedStyle = selectedStyle.replace(/-/g, '');
-      const result = await axios.get('http://172.16.206.4:3000/po-balance', {
+      const result = await axios.get('http://172.16.200.28:3000/po-balance', {
         params: {
           FROM_RLS: convertedDateFrom,
           TO_RLS: convertedDateTo,

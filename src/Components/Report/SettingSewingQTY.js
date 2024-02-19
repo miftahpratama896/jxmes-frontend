@@ -12,7 +12,7 @@ function ScanStatus() {
       setError(null);
 
       try {
-        const response = await axios.post('http://172.16.206.4:3000/setting-sewingQTY', {
+        const response = await axios.post('http://172.16.200.28:3000/setting-sewingQTY', {
           D_DATE: '2024-02-17',
           D_ASSY_LINE: '01',
           D_ASSY_TARGET: 0,

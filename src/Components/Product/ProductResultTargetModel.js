@@ -50,7 +50,7 @@ const ProductResultTargetModel = () => {
   const fetchData = async () => {
     try {
       setUpdating(true);
-      const response = await fetch('http://172.16.206.4:3000/api/product-result-target', {
+      const response = await fetch('http://172.16.200.28:3000/api/product-result-target', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -99,10 +99,6 @@ const ProductResultTargetModel = () => {
         {`
          /* CSS Styles */
          .sticky-header thead th {
-           position: sticky;
-           top: 0;
-           background-color: #1F2937;
-           z-index: 1;
            
          }
          .sticky-header th,
@@ -111,23 +107,126 @@ const ProductResultTargetModel = () => {
          }
          .sticky-header thead tr:first-child th {
           color: #D1D5DB;
+          position: sticky;
+          top: 0;
+          background-color: #1F2937;
+          z-index: 1;
+         }
+
+         .sticky-header thead tr:first-child th.first-column {
+          color: #D1D5DB;
+          position: sticky;
+          left:0;
+          top: 0;
+          background-color: #1F2937;
+          z-index: 3;
+         }
+         .sticky-header thead tr:first-child th.second-column {
+          color: #D1D5DB;
+          position: sticky;
+          left:132px;
+          top: 0;
+          z-index: 3;
+         }
+         .sticky-header thead tr:first-child th.third-column {
+          color: #D1D5DB;
+          position: sticky;
+          left:224px;
+          top: 0;
+          z-index: 3;
+         }
+         .sticky-header thead tr:first-child th.fourth-column {
+          color: #D1D5DB;
+          position: sticky;
+          left:334px;
+          top: 0;
+          z-index: 3;
+         }
+         .sticky-header thead tr:first-child th.five-column {
+          color: #D1D5DB;
+          position: sticky;
+          left:434px;
+          top: 0;
+
+          z-index: 3;
          }
          
          .sticky-header thead tr:nth-child(2) th {
            color: #D1D5DB;
            position: sticky;
-           top: 48px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
+           top: 48px; 
            z-index: 2;
          }
+
          .sticky-header thead tr:nth-child(3) th {
           position: sticky;
-          top: 96px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
+          top: 96px; 
           background-color: #FA7625;
           z-index: 3;
         }
+
+        .sticky-header thead tr:nth-child(3) th.first-column {
+          position: sticky;
+          left : 0;
+          top: 96px; 
+          z-index: 4;
+        }
+        .sticky-header thead tr:nth-child(3) th.second-column  {
+          position: sticky;
+          left:132px;
+          top: 96px; 
+          z-index: 4;
+        }
+        .sticky-header thead tr:nth-child(3) th.third-column  {
+          position: sticky;
+          left:224px;
+          top: 96px; 
+          z-index: 4;
+        }
+        .sticky-header thead tr:nth-child(3) th.fourth-column  {
+          position: sticky;
+          left:334px;
+          top: 96px; 
+          z-index: 4;
+        }
+        .sticky-header thead tr:nth-child(3) th.five-column  {
+          position: sticky;
+          left:434px;
+          top: 96px; 
+          z-index: 4;
+        }
+        
+        .sticky-first-row {
+          position: sticky;
+          left: 0;
+          z-index:1;
+        }
+        .sticky-second-row {
+          position: sticky;
+          left:132px;
+          z-index:1;
+        }
+        .sticky-third-row {
+          position: sticky;
+          left:224px;
+          z-index:1;
+        }
+        .sticky-fourth-row {
+          position: sticky;
+          left:334px;
+          z-index:1;
+        }
+        .sticky-five-row {
+          position: sticky;
+          left:434px;
+          z-index:1;
+        }
+
          .table-container {
-           max-height: 100vh;
-           overflow-y: auto;
+          max-height: 70vh;
+          max-width: 197vh;
+          overflow-y: auto;
+          overflow-x: auto;
          }
         `}
       </style>
@@ -200,31 +299,31 @@ const ProductResultTargetModel = () => {
                           <tr>
                           <th 
                               scope="col" rowSpan={2}
-                              className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6 "
+                              className="first-column py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6 "
                             >
                               MODEL
                             </th>
                             <th
                               scope="col" rowSpan={2}
-                              className="py-3.5 pl-4 pr-3 text-center  text-sm font-semibold text-gray-900 sm:pl-6"
+                              className="second-column  py-3.5 pr-3 text-center  text-sm font-semibold text-gray-900 sm:pl-6"
                             >
                               TOTAL PLAN
                             </th>
                             <th
                               scope="col" rowSpan={2}
-                              className="py-3.5 pl-4 pr-3 text-center  text-sm font-semibold text-gray-900 sm:pl-6"
+                              className="third-column py-3.5 pl-4 pr-3 text-center  text-sm font-semibold text-gray-900 sm:pl-6"
                             >
                               TOTAL PROD
                             </th>
                             <th
                               scope="col" rowSpan={2}
-                              className="py-3.5 pl-4 pr-3 text-center  text-sm font-semibold text-gray-900 sm:pl-6"
+                              className="fourth-column py-3.5 pl-4 pr-3 text-center  text-sm font-semibold text-gray-900 sm:pl-6"
                             >
                               TOTAL DIFF
                             </th>
                             <th
                               scope="col" rowSpan={2}
-                              className="py-3.5 pl-4 pr-3 text-center  text-sm font-semibold text-gray-900 sm:pl-6"
+                              className="five-column py-3.5 pl-4 pr-3 text-center  text-sm font-semibold text-gray-900 sm:pl-6"
                             >
                               RATE
                             </th>
@@ -277,18 +376,18 @@ const ProductResultTargetModel = () => {
                           {data.map((item, index) =>
                                       index === 0 ? (
                             <tr key={index}>
-                              <th className={`whitespace-nowrap text-center py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ${index === 0 ? 'bg-yellow-500' : ''}`}>
+                              <th className={`first-column whitespace-nowrap text-center py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ${index === 0 ? 'bg-yellow-500' : ''}`}>
                                 {item.MODEL}
                               </th>
                               {/* TOTAL PLAN */}
-                              <th className={`whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6  ${index === 0 ? 'bg-yellow-500' : ''}`}>
+                              <th className={`second-column whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6  ${index === 0 ? 'bg-yellow-500' : ''}`}>
                                 {dynamicColumns.reduce((total, column) => {
                                   const value = item[column.endsWith('_1') ? column : ''] || 0;
                                   return total + value;
                                 }, 0).toLocaleString()}
                               </th>
                               {/* TOTAL PROD */}
-                              <th className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6  ${index === 0 ? 'bg-yellow-500' : ''}`}>
+                              <th className={`third-column whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6  ${index === 0 ? 'bg-yellow-500' : ''}`}>
                                 {dynamicColumns.reduce((total, column) => {
                                   const value = item[column.endsWith('_2') ? column : ''] || 0;
                                   return total + value;
@@ -296,7 +395,7 @@ const ProductResultTargetModel = () => {
                               </th>
                               {/* TOTAL DIFF */}
                               <th
-                                className={`whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium sm:pl-6 ${
+                                className={`fourth-column whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium sm:pl-6 ${
                                   dynamicColumns.reduce((total, column) => {
                                     const value = item[column.endsWith('_3') ? column : ''] || 0;
                                     return total + value;
@@ -310,7 +409,7 @@ const ProductResultTargetModel = () => {
                               </th>
                               {/* RATE */}
                               <th
-                                className={`whitespace-nowrap py-4 pl-4 pr-3 ttext-center text-xs font-medium sm:pl-6 ${
+                                className={`five-column whitespace-nowrap py-4 pl-4 pr-3 ttext-center text-xs font-medium sm:pl-6 ${
                                   isFinite(((dynamicColumns.reduce((total, column) => {
                                     const prodValue = item[column.endsWith('_2') ? column : ''] || 0;
                                     const planValue = item[column.endsWith('_1') ? column : ''] || 0;
@@ -326,7 +425,7 @@ const ProductResultTargetModel = () => {
                                     }, 0) / dynamicColumns.reduce((total, column) => {
                                       const value = item[column.endsWith('_1') ? column : ''] || 0;
                                       return total + value;
-                                    }, 0)) * 100).toFixed(2) >= 100 ? 'bg-green-400' :
+                                    }, 0)) * 100).toFixed(2) >= 100 ? 'five-column bg-green-400' :
                                     ((dynamicColumns.reduce((total, column) => {
                                       const prodValue = item[column.endsWith('_2') ? column : ''] || 0;
                                       const planValue = item[column.endsWith('_1') ? column : ''] || 0;
@@ -334,9 +433,9 @@ const ProductResultTargetModel = () => {
                                     }, 0) / dynamicColumns.reduce((total, column) => {
                                       const value = item[column.endsWith('_1') ? column : ''] || 0;
                                       return total + value;
-                                    }, 0)) * 100).toFixed(2) >= 98 ? 'bg-yellow-400' : 'bg-red-400'
-                                    : 'bg-red-400'
-                                } ${index === 0 ? 'bg-yellow-500' : ''}`}
+                                    }, 0)) * 100).toFixed(2) >= 98 ? 'five-column bg-yellow-400' : 'five-column bg-red-400'
+                                    : 'five-column bg-red-400'
+                                } ${index === 0 ? 'five-column bg-yellow-500' : ''}`}
                               >
                                 {isFinite(((dynamicColumns.reduce((total, column) => {
                                   const prodValue = item[column.endsWith('_2') ? column : ''] || 0;
@@ -379,18 +478,18 @@ const ProductResultTargetModel = () => {
                         {data.map((item, index) =>
                                       index !== 0 ? (
                             <tr key={index}>
-                              <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6 ${index === 0 ? 'bg-yellow-500' : ''}`}>
+                              <td className={`sticky-first-row bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6 ${index === 0 ? 'bg-yellow-500' : ''}`}>
                                 {item.MODEL}
                               </td>
                               {/* TOTAL PLAN */}
-                              <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6  ${index === 0 ? 'bg-yellow-500' : ''}`}>
+                              <td className={`sticky-second-row bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6  ${index === 0 ? 'bg-yellow-500' : ''}`}>
                                 {dynamicColumns.reduce((total, column) => {
                                   const value = item[column.endsWith('_1') ? column : ''] || 0;
                                   return total + value;
                                 }, 0).toLocaleString()}
                               </td>
                               {/* TOTAL PROD */}
-                              <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6  ${index === 0 ? 'bg-yellow-500' : ''}`}>
+                              <td className={`sticky-third-row bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6  ${index === 0 ? 'bg-yellow-500' : ''}`}>
                                 {dynamicColumns.reduce((total, column) => {
                                   const value = item[column.endsWith('_2') ? column : ''] || 0;
                                   return total + value;
@@ -398,7 +497,7 @@ const ProductResultTargetModel = () => {
                               </td>
                               {/* TOTAL DIFF */}
                               <td
-                                className={`whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium sm:pl-6 ${
+                                className={`sticky-fourth-row bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium sm:pl-6 ${
                                   dynamicColumns.reduce((total, column) => {
                                     const value = item[column.endsWith('_3') ? column : ''] || 0;
                                     return total + value;
@@ -412,7 +511,7 @@ const ProductResultTargetModel = () => {
                               </td>
                               {/* RATE */}
                               <td
-                                className={`whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium sm:pl-6 ${
+                                className={`sticky-five-row bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium sm:pl-6 ${
                                   isFinite(((dynamicColumns.reduce((total, column) => {
                                     const prodValue = item[column.endsWith('_2') ? column : ''] || 0;
                                     const planValue = item[column.endsWith('_1') ? column : ''] || 0;
@@ -428,7 +527,7 @@ const ProductResultTargetModel = () => {
                                     }, 0) / dynamicColumns.reduce((total, column) => {
                                       const value = item[column.endsWith('_1') ? column : ''] || 0;
                                       return total + value;
-                                    }, 0)) * 100).toFixed(2) >= 100 ? 'bg-green-400' :
+                                    }, 0)) * 100).toFixed(2) >= 100 ? 'sticky-five-row bg-green-400' :
                                     ((dynamicColumns.reduce((total, column) => {
                                       const prodValue = item[column.endsWith('_2') ? column : ''] || 0;
                                       const planValue = item[column.endsWith('_1') ? column : ''] || 0;
@@ -436,9 +535,9 @@ const ProductResultTargetModel = () => {
                                     }, 0) / dynamicColumns.reduce((total, column) => {
                                       const value = item[column.endsWith('_1') ? column : ''] || 0;
                                       return total + value;
-                                    }, 0)) * 100).toFixed(2) >= 98 ? 'bg-yellow-400' : 'bg-red-400'
-                                    : 'bg-red-400'
-                                } ${index === 0 ? 'bg-yellow-500' : ''}`}
+                                    }, 0)) * 100).toFixed(2) >= 98 ? 'sticky-five-row bg-yellow-400' : 'sticky-five-row bg-red-400'
+                                    : 'sticky-five-row bg-red-400'
+                                } ${index === 0 ? 'sticky-five-row bg-yellow-500' : ''}`}
                               >
                                 {isFinite(((dynamicColumns.reduce((total, column) => {
                                   const prodValue = item[column.endsWith('_2') ? column : ''] || 0;

@@ -13,7 +13,7 @@ export default function Example() {
   }
 
   const fetchData = async () => {
-    const apiUrl = 'http://172.16.206.4:3000/api/monitoring';
+    const apiUrl = 'http://172.16.200.28:3000/api/monitoring';
     const requestBody = {
       PROD_DATE: selectedDate,
     };
