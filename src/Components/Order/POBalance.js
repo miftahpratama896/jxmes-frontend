@@ -452,7 +452,7 @@ const [dateFrom, setDateFrom] = useState(formatDate(nextSunday));
               <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                 <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
                   <div className="table-container">
-                    <table className="min-w-full divide-y divide-neutral-950 sticky-header">
+                    <table className="min-w-full divide-y divide-neutral-950 sticky-header border border-slate-500 ">
                       <thead className="bg-slate-300">
                         <tr>
                           <th scope="col" className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6">
