@@ -178,17 +178,19 @@ const ProductResultTarget = () => {
                           </select>
                         </div>
                         <div className="mt-4 sm:mt-0 sm:ml-4">
-                               {/* Checkbox for automatic updates */}
-                               <input
-                                type="checkbox"
-                                id="autoUpdateCheckbox"
-                                checked={autoUpdate}
-                                onChange={() => setAutoUpdate(!autoUpdate)}
-                                className="form-checkbox h-5 w-5 text-blue-600"
-                                />
-                                <label htmlFor="autoUpdateCheckbox" className="ml-2 text-sm text-gray-700">
-                                Auto Update
-                                </label>
+                          <label htmlFor="autoUpdateCheckbox" className="block text-sm font-medium text-gray-700">
+                            {`Last updated:`}
+                          </label>
+                          <label htmlFor="autoUpdateCheckbox" className="block text-sm font-medium text-gray-700">
+                            {` ${new Date().toLocaleString()}`}
+                          </label>
+                          <input
+                            type="checkbox"
+                            id="autoUpdateCheckbox"
+                            checked={autoUpdate}
+                            onChange={() => setAutoUpdate(!autoUpdate)}
+                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
+                          />
                         </div>
                         </div>
                         <div className="mt-8 flow-root">
@@ -196,7 +198,7 @@ const ProductResultTarget = () => {
                             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                             <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
                             <div className="table-container">
-                                <table className="min-w-full divide-y divide-neutral-950 sticky-header">
+                                <table className="min-w-full divide-y divide-neutral-950 sticky-header border border-slate-500">
                                 <thead className="bg-slate-300">
                                     <tr>
                                     <th scope="col" className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6">

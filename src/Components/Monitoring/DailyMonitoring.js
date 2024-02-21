@@ -227,7 +227,7 @@ const FetchData = () => {
               <div className="sm:flex sm:items-center">
                 <div className="mt-4 sm:mt-0 sm:ml-4">
                   <label htmlFor="yesdayDate" className="block text-sm font-medium text-gray-700">
-                    Yesterday Date
+                    YESTERDAY DATE
                   </label>
                   <input
                     type="date"
@@ -240,7 +240,7 @@ const FetchData = () => {
                 </div>
                 <div className="mt-4 sm:mt-0 sm:ml-4">
                   <label htmlFor="todayDate" className="block text-sm font-medium text-gray-700">
-                    Today Date
+                    TODAY DATE 
                   </label>
                   <input
                     type="date"
@@ -253,7 +253,7 @@ const FetchData = () => {
                 </div>
                 <div className="mt-4 sm:mt-0 sm:ml-4">
                   <label htmlFor="plant" className="block text-sm font-medium text-gray-700">
-                    Plant
+                    PLANT
                   </label>
                   <select
                     id="plant"
@@ -269,7 +269,7 @@ const FetchData = () => {
                 </div>
                 <div className="mt-4 sm:mt-0 sm:ml-4">
                   <label htmlFor="wc" className="block text-sm font-medium text-gray-700">
-                    Work Center (WC)
+                    WORK CENTER
                   </label>
                   <select
                     id="wc"
@@ -286,7 +286,7 @@ const FetchData = () => {
                 {wc !== 'CUTTING' && (
                 <div className="mt-4 sm:mt-0 sm:ml-4">
                     <label htmlFor="filter" className="block text-sm font-medium text-gray-700">
-                    Filter
+                    FILTER
                     </label>
                     <select
                     id="filter"
@@ -301,18 +301,21 @@ const FetchData = () => {
                     </select>
                 </div>
                 )}
-                <div className="mt-4 sm:mt-0 sm:ml-4">
-                  <input
-                    type="checkbox"
-                    id="autoUpdateCheckbox"
-                    checked={autoUpdate}
-                    onChange={() => setAutoUpdate(!autoUpdate)}
-                    className="form-checkbox h-5 w-5 text-blue-600"
-                  />
-                  <label htmlFor="autoUpdateCheckbox" className="ml-2 text-sm text-gray-700">
-                    Auto Update
-                  </label>
-                </div>
+                 <div className="mt-4 sm:mt-0 sm:ml-4">
+                          <label htmlFor="autoUpdateCheckbox" className="block text-sm font-medium text-gray-700">
+                            {`Last updated:`}
+                          </label>
+                          <label htmlFor="autoUpdateCheckbox" className="block text-sm font-medium text-gray-700">
+                            {` ${new Date().toLocaleString()}`}
+                          </label>
+                          <input
+                            type="checkbox"
+                            id="autoUpdateCheckbox"
+                            checked={autoUpdate}
+                            onChange={() => setAutoUpdate(!autoUpdate)}
+                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
+                          />
+                    </div>
               </div>
             </div>
             <div className="mt-8 flow-root">
@@ -320,20 +323,20 @@ const FetchData = () => {
                 <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                   <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
                     <div className="table-container">
-                      <table key={key} className="min-w-full divide-y divide-neutral-950 sticky-header">
+                      <table key={key} className="min-w-full divide-y divide-neutral-950 sticky-header border border-slate-500">
                         <thead className="bg-slate-300">
                           <tr>
                             <th scope="col" className="sticky-main-first-column px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                              Plant
+                              PLANT
                             </th>
                             <th scope="col" className="sticky-main-second-column left-20 px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                {wc === 'SEWING' || wc === 'W/H' ? (filterType === 'Line' || filterType === 'Line-Model') ? 'JX Line' : 'Model' : 'Model'}
+                                {wc === 'SEWING' || wc === 'W/H' ? (filterType === 'Line' || filterType === 'Line-Model') ? 'JX LINE' : 'MODEL' : 'MODEL'}
                                 </th>
                             <th scope="col" className="sticky-main-third-column left-32 px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                {wc === 'SEWING' || wc === 'W/H' ? (filterType === 'Line' || filterType === 'Line-Model') ? 'JX2 Line' : 'Gender' : 'Gender'}
+                                {wc === 'SEWING' || wc === 'W/H' ? (filterType === 'Line' || filterType === 'Line-Model') ? 'JX2 LINE' : 'GENDER' : 'GENDER'}
                             </th>
                             <th scope="col" className="sticky-main-fourth-column left-48 px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                              Total
+                              TOTAL
                             </th>
                             {columns.map((column, index) => (
                               <th key={index} scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">

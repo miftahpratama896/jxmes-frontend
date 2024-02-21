@@ -8,10 +8,14 @@ function DailyHourProd() {
   const [error, setError] = useState(null);
   const [ProdDatefrom, setProdDatefrom] = useState(new Date().toISOString().split('T')[0]);
   const [ProdDateto, setProdDateto] = useState(new Date().toISOString().split('T')[0]);
+  const [selectedFactory, setSelectedFactory] = useState('ALL');
+  const [selectedType, setSelectedType] = useState('INPUT');
   const [numColumns, setNumColumns] = useState(0);
 
   const [totalAllRows, setTotalAllRows] = useState(0);
   const [averagePercentage, setAveragePercentage] = useState(0);
+  const [TotalAvgHour, setTotalAvgHour] = useState(0);
+  const [TotalAvgPercent, setTotalAvgHourPercent] = useState(0);
 
   const fetchData = async () => {
 
@@ -20,8 +24,8 @@ function DailyHourProd() {
       const response = await axios.post('http://172.16.200.28:3000/daily-prod-report', {
         PROD_DATE: ProdDatefrom, // Ganti dengan nilai yang sesuai
         TO_DATE: ProdDateto,    // Ganti dengan nilai yang sesuai
-        PLANT: 'ALL',  // Ganti dengan nilai yang sesuai
-        TYPE: 'INPUT'     // Ganti dengan nilai yang sesuai
+        PLANT: selectedFactory,  // Ganti dengan nilai yang sesuai
+        TYPE: selectedType     // Ganti dengan nilai yang sesuai
       });
       setData(response.data);
     } catch (error) {
@@ -47,7 +51,7 @@ function DailyHourProd() {
       // Pemanggilan pertama kali saat komponen dipasang
       fetchData();
     }
-  }, [autoUpdate]);
+  }, [autoUpdate, selectedFactory, ProdDatefrom, ProdDateto, selectedType]);
   
    // Mendapatkan nama kolom secara dinamis dari data yang memiliki format waktu
    const getColumnNames = () => {
@@ -75,21 +79,34 @@ function DailyHourProd() {
   useEffect(() => {
     let total = 0;
     let totalPercent = 0;
-
+    let totalAvgHourValue = 0; // Menyimpan jumlah total avgHourValue
+    let totalAvgHourValuePercent = 0;
+  
     data.forEach((item) => {
       const totalColumnValue = columns.reduce((total, columnName) => {
         return total + item[columnName];
       }, 0);
-
+  
       total += totalColumnValue;
-
+  
       // Menghitung total persentase
       const percentage = (totalColumnValue / item.TARG_DAY * 100);
       totalPercent += percentage;
+  
+      // Menghitung avgHourValue
+      const colymng = columns.length;
+      const avgHourValue = (totalColumnValue / colymng).toFixed(0);
+      totalAvgHourValue += Number(avgHourValue); // Menambahkan nilai avgHourValue ke totalAvgHourValue
+      
+      // Menghitung avgHourValuePercent
+      const avgHour = avgHourValue * (100 / item.TARG_HOUR);
+      totalAvgHourValuePercent += avgHour;
     });
-
+  
     setTotalAllRows(total);
     setAveragePercentage(totalPercent / data.length); // Menghitung rata-rata persentase
+    setTotalAvgHour(totalAvgHourValue); // Menyimpan jumlah total avgHourValue ke dalam state
+    setTotalAvgHourPercent(totalAvgHourValuePercent / data.length);
   }, [data, columns]);
   
     
@@ -122,7 +139,6 @@ function DailyHourProd() {
         .sticky-header thead th {
           position: sticky;
           top: 0;
-          background-color: #1F2937;
           z-index: 2;
         }
         
@@ -132,6 +148,7 @@ function DailyHourProd() {
         }
         
         .sticky-header thead tr:first-child th {
+          background-color: #1F2937;
           color: #D1D5DB;
         }
         
@@ -144,8 +161,7 @@ function DailyHourProd() {
         }
         .sticky-header thead tr:nth-child(3) th {
           position: sticky;
-          top: 96px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-          background-color: #B84600;
+          top: 95px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
           z-index: 3;
         }
         
@@ -169,8 +185,83 @@ function DailyHourProd() {
                             A list of all the Product - Time 
                           </p>
                         </div>
-                        <div className="sm:flex sm:items-center">
                         
+                        <div className="sm:flex sm:items-center">
+                          <div className="mt-4 sm:mt-0 sm:ml-4">
+                              <label htmlFor="plant" className="block text-sm font-medium text-gray-700">
+                                PLANT
+                              </label>
+                              <select
+                                id="plant"
+                                name="plant"
+                                onChange={(e) => setSelectedFactory(e.target.value)}
+                                value={selectedFactory}
+                                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
+                              >
+                                <option value="ALL">All</option>
+                                <option value="F1">Factory 1</option>
+                                <option value="F2">Factory 2</option>
+                                {/* Add other factory options as needed */}
+                              </select>
+                            </div>
+                            <div className="mt-4 sm:mt-0 sm:ml-4">
+                              <label htmlFor="plant" className="block text-sm font-medium text-gray-700">
+                                TYPE
+                              </label>
+                              <select
+                                id="plant"
+                                name="plant"
+                                onChange={(e) => setSelectedType(e.target.value)}
+                                value={selectedType}
+                                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
+                              >
+                                <option value="INPUT">INPUT</option>
+                                <option value="OUTPUT">OUTPUT</option>
+                                {/* Add other factory options as needed */}
+                              </select>
+                            </div>
+                            <div className="mt-4 sm:mt-0 sm:ml-4">
+                            <label htmlFor="yesdayDate" className="block text-sm font-medium text-gray-700">
+                              PROD FROM
+                            </label>
+                            <input
+                              type="date"
+                              id="yesdayDate"
+                              name="yesdayDate"
+                              value={ProdDatefrom}
+                              onChange={(e) => setProdDatefrom(e.target.value)}
+                              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
+                            />
+                          </div>
+                          {/* Combobox for selecting Today Date */}
+                          <div className="mt-4 sm:mt-0 sm:ml-4">
+                            <label htmlFor="todayDate" className="block text-sm font-medium text-gray-700">
+                              PROD TO
+                            </label>
+                            <input
+                              type="date"
+                              id="todayDate"
+                              name="todayDate"
+                              value={ProdDateto}
+                              onChange={(e) => setProdDateto(e.target.value)}
+                              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
+                            />
+                          </div>
+                          <div className="mt-4 sm:mt-0 sm:ml-4">
+                          <label htmlFor="autoUpdateCheckbox" className="block text-sm font-medium text-gray-700">
+                            {`Last updated:`}
+                          </label>
+                          <label htmlFor="autoUpdateCheckbox" className="block text-sm font-medium text-gray-700">
+                            {` ${new Date().toLocaleString()}`}
+                          </label>
+                          <input
+                            type="checkbox"
+                            id="autoUpdateCheckbox"
+                            checked={autoUpdate}
+                            onChange={() => setAutoUpdate(!autoUpdate)}
+                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
+                          />
+                        </div>
                         </div>
                       </div>
                       <div className="mt-8 flow-root">
@@ -199,13 +290,15 @@ function DailyHourProd() {
                                   <th colSpan={4} scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                     PPIC PLAN
                                   </th>
-                                  <th colSpan={numColumns} scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                  <th colSpan={numColumns} scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 " 
+                                  style={{
+                                    backgroundColor:'#374151'}}>
                                     PROD QTY PER HOUR
                                   </th>
                                   <th rowSpan={2} colSpan={2} scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                     TOTAL
                                   </th>
-                                  <th rowSpan={2} colSpan={numColumns} scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                  <th rowSpan={2} colSpan={2} scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                     AVG {numColumns} HOUR
                                   </th>
                                 </tr>
@@ -223,37 +316,44 @@ function DailyHourProd() {
                                     ACTURE HOUR
                                   </th>
                                   {columns.map((columnName, index) => (
-                                  <th key={index} scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                  <th key={index} scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" style={{
+                                    backgroundColor:'#374151'}}>
                                     {columnName}
                                   </th>
                                   ))}
                                 </tr>
                                 <tr>
-                                  <th colSpan={5}  scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                  <th colSpan={5}  scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-700 ">
                                        TOTAL
                                   </th>
-                                  <th  scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                  <th  scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-700 ">
                                        {totalDailyProd.toLocaleString()}
                                   </th>
-                                  <th  scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                  <th  scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-700 ">
                                        {totalHourTarget.toLocaleString()}
                                   </th>
-                                  <th  scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                  <th  scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-700 ">
                                        {averagePlanHour.toFixed(2)}
                                   </th>
-                                  <th  scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                  <th  scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-700 ">
                                        {averageActureHour.toFixed(2)}
                                   </th>
                                   {columns.map((columnName, index) => (
-                                  <th key={index} scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                  <th key={index} scope="col" className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium ${((calculateColumnTotal(columnName) / totalHourTarget) * 100) === 0 || isNaN((calculateColumnTotal(columnName) / totalHourTarget) * 100) ? 'bg-gray-50' : ((calculateColumnTotal(columnName) / totalHourTarget) * 100) >= 100 ? 'bg-green-400' : ((calculateColumnTotal(columnName) / totalHourTarget) * 100) >= 97 ? 'bg-yellow-400' : 'bg-red-400'} sm:pl-6`}>
                                     {calculateColumnTotal(columnName).toLocaleString()}
                                   </th>
                                 ))}
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                  <th scope="col" className={`px-3 py-3.5 text-center text-sm font-semibold text-gray-900 ${averagePercentage >= 100 ? 'bg-green-400' : averagePercentage >= 97 ? 'bg-yellow-400' : 'bg-red-400'} sm:pl-6`}>
                                     {totalAllRows.toLocaleString() }
                                   </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-700 ">
                                     {averagePercentage.toFixed(2)}%
+                                  </th>
+                                  <th scope="col" className={`px-3 py-3.5 text-center text-sm font-semibold text-gray-900 ${TotalAvgPercent >= 100 ? 'bg-green-400' : TotalAvgPercent >= 97 ? 'bg-yellow-400' : 'bg-red-400'} sm:pl-6`}>
+                                    {TotalAvgHour.toLocaleString()}
+                                  </th>
+                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-700">
+                                    {TotalAvgPercent.toFixed(2)}%
                                   </th>
                                 </tr>
                               </thead>
@@ -283,24 +383,25 @@ function DailyHourProd() {
                                       <td className="whitespace-nowrap text-center py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 ">
                                         {item.JX_LINE}
                                       </td>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 border border-slate-900">{item.SCAN_CELL}</td>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 border border-slate-900">{item.MODEL}</td>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 border border-slate-900">{item.GENDER}</td>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 border border-slate-900">{item.TYPE}</td>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 border border-slate-900">{item.TARG_DAY}</td>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 border border-slate-900">{item.TARG_HOUR}</td>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 border border-slate-900">{item.WORK_HOUR}</td>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 border border-slate-900">{item.ACTURE_HOUR}</td>
+                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.SCAN_CELL}</td>
+                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.MODEL}</td>
+                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.GENDER}</td>
+                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.TYPE}</td>
+                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.TARG_DAY}</td>
+                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.TARG_HOUR}</td>
+                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.WORK_HOUR}</td>
+                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.ACTURE_HOUR}</td>
                                       {columns.map((columnName) => (
-                                        <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium border border-slate-900  ${((item[columnName] / item.TARG_HOUR) * 100) >= 100 ? 'bg-green-400' : ((item[columnName] / item.TARG_HOUR) * 100) >= 97 ? 'bg-yellow-400' : 'bg-red-400'} sm:pl-6`}>
+                                        <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium ${((item[columnName] / item.TARG_HOUR) * 100) === 0 || isNaN((item[columnName] / item.TARG_HOUR) * 100) ? 'bg-gray-50' : ((item[columnName] / item.TARG_HOUR) * 100) >= 100 ? 'bg-green-400' : ((item[columnName] / item.TARG_HOUR) * 100) >= 97 ? 'bg-yellow-400' : 'bg-red-400'} sm:pl-6`}>
                                           {item[columnName]}
-                                        </td>      
+                                        </td>
                                       ))}
-                                      <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium border border-slate-900 ${percentage >= 100 ? 'bg-green-400' : percentage >= 97 ? 'bg-yellow-400' : 'bg-red-400'} sm:pl-6`}>
+
+                                      <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium ${percentage >= 100 ? 'bg-green-400' : percentage >= 97 ? 'bg-yellow-400' : 'bg-red-400'} sm:pl-6`}>
                                         {totalColumnValue.toLocaleString()}
                                       </td>
                                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{percentage}%</td>
-                                      <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium border border-slate-900 ${avgHour >= 100 ? 'bg-green-400' : avgHour >= 97 ? 'bg-yellow-400' : 'bg-red-400'} sm:pl-6`}>
+                                      <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium ${avgHour >= 100 ? 'bg-green-400' : avgHour >= 97 ? 'bg-yellow-400' : 'bg-red-400'} sm:pl-6`}>
                                         {avgHourValue}</td>
                                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{avgHour}%</td>
                                     </tr>

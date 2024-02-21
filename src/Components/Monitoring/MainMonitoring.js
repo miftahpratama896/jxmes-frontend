@@ -150,7 +150,7 @@ export default function Example() {
                         </div>
                         <div className="mt-4 sm:mt-0 sm:ml-4">
                         <label className="block text-sm font-medium leading-6 text-gray-900">
-                            Date
+                            DATE
                         </label> 
                                 <input
                                     type="date"
@@ -162,19 +162,19 @@ export default function Example() {
                         </div>
                         
                         <div className="mt-4 sm:mt-0 sm:ml-4">
-                        <div className="flex space-x-2">
-                           {/* Checkbox for automatic updates */}
-                           <input
-                                type="checkbox"
-                                id="autoUpdateCheckbox"
-                                checked={autoUpdate}
-                                onChange={() => setAutoUpdate(!autoUpdate)}
-                                className="form-checkbox h-5 w-5 text-blue-600"
-                                />
-                                <label htmlFor="autoUpdateCheckbox" className="ml-2 text-sm text-gray-700">
-                                Auto Update
-                                </label>
-                        </div>
+                          <label htmlFor="autoUpdateCheckbox" className="block text-sm font-medium text-gray-700">
+                            {`Last updated:`}
+                          </label>
+                          <label htmlFor="autoUpdateCheckbox" className="block text-sm font-medium text-gray-700">
+                            {` ${new Date().toLocaleString()}`}
+                          </label>
+                          <input
+                            type="checkbox"
+                            id="autoUpdateCheckbox"
+                            checked={autoUpdate}
+                            onChange={() => setAutoUpdate(!autoUpdate)}
+                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
+                          />
                         </div>
                         </div>
                         <div className="mt-8 flow-root">
@@ -187,17 +187,17 @@ export default function Example() {
                                     <span className="text-white">Loading data...</span>
                                 </div>
                                 )}
-                                <table className="min-w-full divide-y divide-neutral-950 sticky-header">
+                                <table className="min-w-full divide-y divide-neutral-950 sticky-header border border-slate-500">
                                 <thead className="bg-slate-300">
                                     <tr>
                                     <th scope="col" className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6">
-                                        Plant
+                                        PLANT
                                     </th>
                                     <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                        Model
+                                        MODEL
                                     </th>
                                     <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                        Gender
+                                        GENDER
                                     </th>
                                     <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                         UPS [SHIFT1]

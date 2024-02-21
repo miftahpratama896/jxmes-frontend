@@ -147,7 +147,7 @@ const ProductTime = () => {
                         {/* Combobox for selecting PLANT */}
                         <div className="mt-4 sm:mt-0 sm:ml-4">
                             <label htmlFor="plant" className="block text-sm font-medium text-gray-700">
-                              Plant
+                              PLANT
                             </label>
                             <select
                               id="plant"
@@ -165,7 +165,7 @@ const ProductTime = () => {
                           {/* Combobox for selecting Yesterday Date */}
                           <div className="mt-4 sm:mt-0 sm:ml-4">
                             <label htmlFor="yesdayDate" className="block text-sm font-medium text-gray-700">
-                              Yesterday Date
+                              YESTERDAY DATE
                             </label>
                             <input
                               type="date"
@@ -179,7 +179,7 @@ const ProductTime = () => {
                           {/* Combobox for selecting Today Date */}
                           <div className="mt-4 sm:mt-0 sm:ml-4">
                             <label htmlFor="todayDate" className="block text-sm font-medium text-gray-700">
-                              Today Date
+                              TODAY DATE
                             </label>
                             <input
                               type="date"
@@ -193,7 +193,7 @@ const ProductTime = () => {
                           {/* Combobox for selecting WC */}
                           <div className="mt-4 sm:mt-0 sm:ml-4">
                             <label htmlFor="wc" className="block text-sm font-medium text-gray-700">
-                              WC
+                              WORK CENTER
                             </label>
                             <select
                               id="wc"
@@ -211,7 +211,7 @@ const ProductTime = () => {
                           {/* Combobox for selecting C Time */}
                           <div className="mt-4 sm:mt-0 sm:ml-4">
                             <label htmlFor="cTime" className="block text-sm font-medium text-gray-700">
-                              Time
+                              TIME 
                             </label>
                             <select
                               id="cTime"
@@ -234,17 +234,20 @@ const ProductTime = () => {
                             </select>
                           </div>
                           {/* CheckBox for automatic updates */}
-                        <div className="mt-4 sm:mt-0 sm:ml-4">
+                          <div className="mt-4 sm:mt-0 sm:ml-4">
+                          <label htmlFor="autoUpdateCheckbox" className="block text-sm font-medium text-gray-700">
+                            {`Last updated:`}
+                          </label>
+                          <label htmlFor="autoUpdateCheckbox" className="block text-sm font-medium text-gray-700">
+                            {` ${new Date().toLocaleString()}`}
+                          </label>
                           <input
                             type="checkbox"
                             id="autoUpdateCheckbox"
                             checked={autoUpdate}
                             onChange={() => setAutoUpdate(!autoUpdate)}
-                            className="form-checkbox h-5 w-5 text-blue-600"
+                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
                           />
-                          <label htmlFor="autoUpdateCheckbox" className="ml-2 text-sm text-gray-700">
-                            Auto Update
-                          </label>
                         </div>
                         </div>
                       </div>
@@ -253,26 +256,26 @@ const ProductTime = () => {
                         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                           <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
                           <div className="table-container">
-                            <table className="min-w-full divide-y divide-neutral-950 sticky-header">
+                            <table className="min-w-full divide-y divide-neutral-950 sticky-header border border-slate-500">
                               <thead className="bg-slate-300 " >
                                 <tr>
                                   <th scope="col" className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6">
-                                    Plant
+                                    PLANT
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    JX Line
+                                    JX LINE 
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    JX2 Line
+                                    JX2 LINE 
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    Model
+                                    MODEL 
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    Gender
+                                    GENDER 
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    Day
+                                    DAY
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                     07:00

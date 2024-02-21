@@ -180,29 +180,29 @@ const [dateFrom, setDateFrom] = useState(formatDate(nextSunday));
             </div>
             <div className="mt-4 sm:mt-0 sm:ml-4">
                 <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Release From
+                    RELEASE FROM 
                 </label>  
                 <input
                   type="date"
                   value={dateFrom}
                   onChange={(e) => setDateFrom(e.target.value)}
-                  className="border border-gray-300 px-2 py-1 mr-2"
+                  className="W-full z-10 mt-1 rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
             </div>
             <div className="mt-4 sm:mt-0 sm:ml-4">
                 <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Release To
+                    RELEASE TO 
                 </label> 
                 <input
                   type="date"
                   value={dateTo}
                   onChange={(e) => setDateTo(e.target.value)}
-                  className="border border-gray-300 px-2 py-1"
+                  className="W-full z-10 mt-1 rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 /> 
             </div>
             <div className="mt-4 sm:mt-0 sm:ml-4">
               <Combobox as="div" onChange={handlePOChange} value={selectedPO} >
-                <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">PO</Combobox.Label>
+                <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">PO NUMBER</Combobox.Label>
                 <div className="relative mt-2">
                   <Combobox.Input
                     className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -279,7 +279,7 @@ const [dateFrom, setDateFrom] = useState(formatDate(nextSunday));
 
               <div className="mt-4 sm:mt-0 sm:ml-4">
               <Combobox as="div" onChange={handleStyleChange} value={selectedStyle} >
-                <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Style</Combobox.Label>
+                <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">STYLE</Combobox.Label>
                 <div className="relative mt-2">
                   <Combobox.Input
                     className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -356,7 +356,7 @@ const [dateFrom, setDateFrom] = useState(formatDate(nextSunday));
 
               <div className="mt-4 sm:mt-0 sm:ml-4">
               <Combobox as="div" onChange={handleModelChange} value={selectedModel} >
-                <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Model</Combobox.Label>
+                <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">MODEL</Combobox.Label>
                 <div className="relative mt-2">
                   <Combobox.Input
                     className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -431,21 +431,21 @@ const [dateFrom, setDateFrom] = useState(formatDate(nextSunday));
               </Combobox>
               </div>
 
-            <div className="mt-4 sm:mt-0 sm:ml-4">
-              <div className="flex space-x-2">
-                {/* Checkbox for automatic updates */}
-                <input
-                  type="checkbox"
-                  id="autoUpdateCheckbox"
-                  checked={autoUpdate}
-                  onChange={() => setAutoUpdate(!autoUpdate)}
-                  className="form-checkbox h-5 w-5 text-blue-600"
-                />
-                <label htmlFor="autoUpdateCheckbox" className="ml-2 text-sm text-gray-700">
-                  Auto Update
-                </label>
+              <div className="mt-4 sm:mt-0 sm:ml-4">
+                          <label htmlFor="autoUpdateCheckbox" className="block text-sm font-medium text-gray-700">
+                            {`Last updated:`}
+                          </label>
+                          <label htmlFor="autoUpdateCheckbox" className="block text-sm font-medium text-gray-700">
+                            {` ${new Date().toLocaleString()}`}
+                          </label>
+                          <input
+                            type="checkbox"
+                            id="autoUpdateCheckbox"
+                            checked={autoUpdate}
+                            onChange={() => setAutoUpdate(!autoUpdate)}
+                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
+                          />
               </div>
-            </div>
           </div>
           <div className="mt-8 flow-root">
             <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
