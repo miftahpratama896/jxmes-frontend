@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Logo from "../../assets/img/New Logo White.png";
 
 
 export default function Example() {
@@ -156,7 +157,7 @@ export default function Example() {
                                     type="date"
                                     value={selectedDate}
                                     onChange={handleDateChange}
-                                    className="border border-gray-300 px-2 py-1"
+                                    className="W-full z-10 mt-1 rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                               
                         </div>
@@ -182,11 +183,6 @@ export default function Example() {
                             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                             <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
                             <div className="table-container">
-                            {updating && (
-                                <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
-                                    <span className="text-white">Loading data...</span>
-                                </div>
-                                )}
                                 <table className="min-w-full divide-y divide-neutral-950 sticky-header border border-slate-500">
                                 <thead className="bg-slate-300">
                                     <tr>
@@ -400,7 +396,15 @@ export default function Example() {
                                     </th> 
                                     </tr>
                                 </thead>
-                                
+                                {updating && (
+                                <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+                                    <img
+                                      className="max-h-28 w-auto animate-bounce animate-infinite"
+                                      src={Logo}
+                                      alt="Your Company"
+                                    />
+                                </div>
+                                )}
                                 <tbody className="divide-y divide-neutral-950 bg-white">
                                     {data.map((item, index) => item.STYLE_S_NAME !== "SUB.TOTAL" && (
                                     <tr key={index}>

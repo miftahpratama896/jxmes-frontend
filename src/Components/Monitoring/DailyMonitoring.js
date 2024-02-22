@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Logo from "../../assets/img/New Logo White.png";
 
 const FetchData = () => {
   const [data, setData] = useState([]);
@@ -8,7 +9,7 @@ const FetchData = () => {
   // Mendapatkan tanggal pertama dari bulan ini
   const firstDayOfPreviousMonth = new Date();
   firstDayOfPreviousMonth.setDate(1); // Set tanggal menjadi 1
-  firstDayOfPreviousMonth.setMonth(firstDayOfPreviousMonth.getMonth() - 1); // Set bulan menjadi bulan sebelumnya
+  firstDayOfPreviousMonth.setMonth(firstDayOfPreviousMonth.getMonth()); // Set bulan menjadi bulan sebelumnya
   const firstDayOfPreviousMonthISO = firstDayOfPreviousMonth.toISOString().split('T')[0];
 
   // Mendapatkan tanggal hari ini
@@ -227,7 +228,7 @@ const FetchData = () => {
               <div className="sm:flex sm:items-center">
                 <div className="mt-4 sm:mt-0 sm:ml-4">
                   <label htmlFor="yesdayDate" className="block text-sm font-medium text-gray-700">
-                    YESTERDAY DATE
+                    FROM DATE
                   </label>
                   <input
                     type="date"
@@ -240,7 +241,7 @@ const FetchData = () => {
                 </div>
                 <div className="mt-4 sm:mt-0 sm:ml-4">
                   <label htmlFor="todayDate" className="block text-sm font-medium text-gray-700">
-                    TODAY DATE 
+                    TO DATE 
                   </label>
                   <input
                     type="date"
@@ -369,7 +370,11 @@ const FetchData = () => {
                         <tbody className="divide-y divide-neutral-950 bg-white">
                           {updating && (
                             <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
-                              <span className="text-white">Loading data...</span>
+                               <img
+                                      className="max-h-28 w-auto animate-bounce animate-infinite"
+                                      src={Logo}
+                                      alt="Your Company"
+                                    />
                             </div>
                           )}
                           {data.map((item, rowIndex) => (

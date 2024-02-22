@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Logo from "../../assets/img/New Logo White.png";
 
 function DailyHourProd() {
   const [data, setData] = useState([]);
@@ -359,25 +360,34 @@ function DailyHourProd() {
                               </thead>
                               {updating && (
                               <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
-                                  <span className="text-white">Loading data...</span>
+                                   <img
+                                      className="max-h-28 w-auto animate-bounce animate-infinite"
+                                      src={Logo}
+                                      alt="Your Company"
+                                    />
                               </div>
                               )}
                                <tbody className="divide-y divide-neutral-950 bg-white">
-                               {data.map((item, index) => {
+                               {data && data.length > 0 && (
+                                  data
+                                    // Mengurutkan data berdasarkan nilai SCAN_CELL
+                                    .slice() // Salin array untuk menghindari perubahan langsung pada data asli
+                                    .sort((a, b) => a.SCAN_CELL - b.SCAN_CELL)
+                                    // Pemetaan dan rendering data yang sudah diurutkan
+                                    .map((item, index) => {
+                                      // Menghitung total nilai dari semua kolom
+                                      const totalColumnValue = columns.reduce((total, columnName) => {
+                                        return total + item[columnName];
+                                      }, 0);
 
-                                  // Menghitung total nilai dari semua kolom
-                                  const totalColumnValue = columns.reduce((total, columnName) => {
-                                    return total + item[columnName];
-                                  }, 0);
+                                      // Menghitung persentase 
+                                      const percentage = ((totalColumnValue / item.TARG_DAY) * 100).toFixed(2);
 
-                                  // Menghitung persentase 
-                                  const percentage = (totalColumnValue / item.TARG_DAY * 100).toFixed(2);
-
-                                  // Menghitung avgHourValue
-                                  const colymng = columns.length;
-                                  const avgHourValue = (totalColumnValue / colymng).toFixed(0)
-                                  // Menghitung avgHourValue
-                                  const avgHour = (avgHourValue * (100 / item.TARG_HOUR)).toFixed(2)
+                                      // Menghitung avgHourValue
+                                      const colymng = columns.length;
+                                      const avgHourValue = (totalColumnValue / colymng).toFixed(0)
+                                      // Menghitung avgHourValue
+                                      const avgHour = (avgHourValue * (100 / item.TARG_HOUR)).toFixed(2)
                                   return (
                                     <tr key={index}>
                                       <td className="whitespace-nowrap text-center py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 ">
@@ -405,8 +415,9 @@ function DailyHourProd() {
                                         {avgHourValue}</td>
                                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{avgHour}%</td>
                                     </tr>
-                                  );
-                                })}
+                                    );
+                                  })
+                              )}
                                 </tbody>
                             </table>
                           </div>

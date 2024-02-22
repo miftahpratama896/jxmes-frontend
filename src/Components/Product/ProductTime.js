@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Logo from "../../assets/img/New Logo White.png";
 
 const ProductTime = () => {
   const [apiResponse, setApiResponse] = useState([]);
@@ -406,7 +407,11 @@ const ProductTime = () => {
                               </thead>
                               {updating && (
                               <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
-                                  <span className="text-white">Loading data...</span>
+                                  <img
+                                      className="max-h-28 w-auto animate-bounce animate-infinite"
+                                      src={Logo}
+                                      alt="Your Company"
+                                    />
                               </div>
                               )}
                               {error && <div style={{ color: 'red' }}>{error}</div>}

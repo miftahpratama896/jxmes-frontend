@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
+import Logo from "../../assets/img/New Logo White.png";
 
 const InventoryLongTerm = () => {
   const [data, setData] = useState([]);
@@ -171,20 +172,20 @@ const InventoryLongTerm = () => {
                 <p className="mt-2 text-sm text-gray-700">A list of all the Inventory [Long Term]</p>
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-4">
-                <label className="block text-sm font-medium leading-6 text-gray-900">Stock Date</label>
+                <label className="block text-sm font-medium leading-6 text-gray-900">STOCk DATE</label>
                 <input
                   type="date"
                   value={selectedDate}
                   onChange={handleDateChange}
-                  className="border border-gray-300 px-2 py-1"
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
                 />
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-4">
-                <label className="block text-sm font-medium leading-6 text-gray-900">WC</label>
+                <label className="block text-sm font-medium leading-6 text-gray-900">WORK CENTER</label>
                 <select
                   value={selectedWC}
                   onChange={handleWCChange}
-                  className="border border-gray-300 px-2 py-1"
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
                 >
                   <option value="Sewing">Sewing</option>
                   <option value="Cutting">Cutting</option>
@@ -192,11 +193,11 @@ const InventoryLongTerm = () => {
                 </select>
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-4">
-                <label className="block text-sm font-medium leading-6 text-gray-900">Term</label>
+                <label className="block text-sm font-medium leading-6 text-gray-900">TERM</label>
                 <select
                   value={selectedFilter}
                   onChange={handleFilterChange}
-                  className="border border-gray-300 px-2 py-1"
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
                 >
                   <option value="ALL">ALL</option>
                   <option value="Over 1 week">Over 1 week</option>
@@ -207,7 +208,7 @@ const InventoryLongTerm = () => {
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-4">
               <Combobox as="div" onChange={handleStyleChange} value={selectedStyle} >
-                <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Style</Combobox.Label>
+                <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">STYLE</Combobox.Label>
                 <div className="relative mt-2">
                   <Combobox.Input
                     className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -283,7 +284,7 @@ const InventoryLongTerm = () => {
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-4">
               <Combobox as="div" onChange={handleModelChange} value={selectedModel} >
-                <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Model</Combobox.Label>
+                <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">MODEL</Combobox.Label>
                 <div className="relative mt-2">
                   <Combobox.Input
                     className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -359,7 +360,7 @@ const InventoryLongTerm = () => {
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-4">
               <Combobox as="div" onChange={handleGenderChange} value={selectedGender} >
-                <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Gender</Combobox.Label>
+                <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">GENDER</Combobox.Label>
                 <div className="relative mt-2">
                   <Combobox.Input
                     className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -433,18 +434,21 @@ const InventoryLongTerm = () => {
                 </div>
               </Combobox>
               </div>
-              <div className="mt-4 sm:mt-0 sm:ml-4">           
-                  <input
-                    type="checkbox"
-                    id="autoUpdateCheckbox"
-                    checked={autoUpdate}
-                    onChange={() => setAutoUpdate(!autoUpdate)}
-                    className="form-checkbox h-5 w-5 text-blue-600"
-                  />
-                  <label htmlFor="autoUpdateCheckbox" className="ml-2 text-sm text-gray-700">
-                    Auto Update
-                  </label>
-              </div>
+              <div className="mt-4 sm:mt-0 sm:ml-4">
+                          <label htmlFor="autoUpdateCheckbox" className="block text-sm font-medium text-gray-700">
+                            {`Last updated:`}
+                          </label>
+                          <label htmlFor="autoUpdateCheckbox" className="block text-sm font-medium text-gray-700">
+                            {` ${new Date().toLocaleString()}`}
+                          </label>
+                          <input
+                            type="checkbox"
+                            id="autoUpdateCheckbox"
+                            checked={autoUpdate}
+                            onChange={() => setAutoUpdate(!autoUpdate)}
+                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
+                          />
+                </div>
             </div>
             <div className="mt-8 flow-root">
               <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -499,7 +503,11 @@ const InventoryLongTerm = () => {
                         </thead>
                         {updating && (
                           <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
-                            <span className="text-white">Loading data...</span>
+                              <img
+                                      className="max-h-28 w-auto animate-bounce animate-infinite"
+                                      src={Logo}
+                                      alt="Your Company"
+                                    />
                           </div>
                         )}
                         <tbody className="divide-y divide-neutral-950 bg-white">

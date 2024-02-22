@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
+import Logo from "../../assets/img/New Logo White.png";
 
 function POBalance() {
   const [data, setData] = useState([]);
@@ -508,7 +509,11 @@ const [dateFrom, setDateFrom] = useState(formatDate(nextSunday));
                       </thead>
                       {updating && (
                           <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
-                            <span className="text-white">Loading data...</span>
+                            <img
+                                      className="max-h-28 w-auto animate-bounce animate-infinite"
+                                      src={Logo}
+                                      alt="Your Company"
+                                    />
                           </div>
                         )}
                       <tbody className="divide-y divide-neutral-950 bg-white">

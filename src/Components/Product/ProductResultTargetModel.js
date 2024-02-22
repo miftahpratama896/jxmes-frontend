@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Logo from "../../assets/img/New Logo White.png";
 
 const ProductResultTargetModel = () => {
   const [data, setData] = useState([]);
@@ -241,29 +242,29 @@ const ProductResultTargetModel = () => {
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-4">
                 <label htmlFor="productOption" className="block text-sm font-medium text-gray-700">
-                  Date From
+                  DATE FROM
                 </label>
                 <input
                   type="date"
                   value={dateFrom}
                   onChange={(e) => handleDateChange('from', e.target.value)}
-                  className="border border-gray-300 px-2 py-1 mr-2"
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
                 />
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-4">
                 <label htmlFor="productOption" className="block text-sm font-medium text-gray-700">
-                  Date To
+                  DATE TO
                 </label>
                 <input
                   type="date"
                   value={dateTo}
                   onChange={(e) => handleDateChange('to', e.target.value)}
-                  className="border border-gray-300 px-2 py-1"
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
                 />
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-4">
                 <label htmlFor="productOption" className="block text-sm font-medium text-gray-700">
-                  Filter
+                  FILTER
                 </label>
                 <select
                   id="productOption"
@@ -474,7 +475,11 @@ const ProductResultTargetModel = () => {
                         </thead>
                         {updating && (
                           <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
-                            <span className="text-white">Loading data...</span>
+                            <img
+                                      className="max-h-28 w-auto animate-bounce animate-infinite"
+                                      src={Logo}
+                                      alt="Your Company"
+                                    />
                           </div>
                         )}
                         <tbody className="divide-y divide-neutral-950 bg-white">

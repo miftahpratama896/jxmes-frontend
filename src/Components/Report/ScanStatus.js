@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
+import {
+  CheckIcon,
+  ChevronUpDownIcon,
+} from '@heroicons/react/20/solid'
+import Logo from "../../assets/img/New Logo White.png";
+
 
 function ScanStatus() {
   const [data, setData] = useState([]);
@@ -67,9 +72,21 @@ function ScanStatus() {
     setSelectedPCard(selectedValue);
   };
 
+
+  const [releaseDate, setreleaseDate] = useState('');
+  const [convertedDateFrom, setConvertedDateFrom] = useState('');
+
+  const convertToCustomFormat = (dateString) => {
+    const dateObj = new Date(dateString);
+    const year = String(dateObj.getFullYear()).slice(-2);
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObj.getDate()).padStart(2, '0');
+    return `${day}${month}${year}`;
+  };
+
+
+
   const fetchData = async () => {
-
-
     try {
       setUpdating(true);
       const parsedFilter = parseInt(selectedFilter);
@@ -83,7 +100,7 @@ function ScanStatus() {
         D_STYLE: sanitizedStyle,
         D_MODEL: selectedModel,
         D_GENDER: selectedGender,
-        D_RLS: '',
+        D_RLS: ' ',
         D_BARCODE: selectedPCard,
         D_CHEK: parsedFilter,
         CEK_IP: '172.16.208.33'
@@ -107,7 +124,7 @@ function ScanStatus() {
     } else {
       fetchData();
     }
-  }, [autoUpdate, fromDate, toDate, selectedStyle, selectedModel, selectedJXLine, selectedJX2Line,selectedGender, selectedPCard, selectedFactory, selectedFilter]);
+  }, [autoUpdate, fromDate, toDate, selectedStyle, selectedModel, selectedJXLine, selectedJX2Line,selectedGender, selectedPCard, selectedFactory, selectedFilter,releaseDate]);
 
   useEffect(() => {
     const uniqueModelOptions = [...new Set(data.map(item => item.MODEL))];
@@ -127,6 +144,8 @@ function ScanStatus() {
 
     const uniquePCardOptions = [...new Set(data.map(item => item.BARCODE))];
     setFilteredPCardOptions(uniquePCardOptions);
+
+    setConvertedDateFrom(convertToCustomFormat(releaseDate));
   }, [data]);
 
 
@@ -163,10 +182,6 @@ function ScanStatus() {
     {`
         /* CSS Styles */
         .sticky-header thead th {
-          position: sticky;
-          top: 0;
-          background-color: #1F2937;
-          z-index: 2;
           color: #D1D5DB;
         }
         
@@ -176,12 +191,15 @@ function ScanStatus() {
         }
         
         .sticky-header thead tr:first-child th {
-          
+          position: sticky;
+          top: 0;
+          background-color: #1F2937;
+          z-index: 1;
         }
         
         .sticky-header thead tr:nth-child(2) th {
           position: sticky;
-          top: 49px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
+          top: 49px; \
           z-index: 2;
         }
         
@@ -189,7 +207,6 @@ function ScanStatus() {
           max-height: 70vh;
           max-width: 197vh;
           overflow-y: auto;
-          overflow-x: auto;
         }
         
         
@@ -198,42 +215,88 @@ function ScanStatus() {
       <main className="py-12">  
                 <div className="mx-auto max-w-full px-6 lg:px-1">
                     <div className="px-4 sm:px-6 lg:px-8">
-                      <div className="sm:flex justify-between items-center py-3">
+                    <div className="sm:flex justify-between items-center py-3">
+                    <div className="sm:flex sm:items-center">
+                        <div className="smt-4 sm:mt-0 sm:ml-4">
+                          <h1 className="text-base font-semibold leading-6 text-gray-900">Product</h1>
+                          <p className="mt-2 text-sm text-gray-700">
+                            A list of all the Product - Time 
+                          </p>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="sm:flex justify-between items-center py-3">
                         <div className="sm:flex sm:items-center">
                         <div className="mt-4 sm:mt-0 sm:ml-4">
-                              <label htmlFor="plant" className="block text-sm font-medium text-gray-700">
-                                INPUT - OUTPUT
-                              </label>
-                              <select
-                                id="plant"
-                                name="plant"
-                                onChange={(e) => setSelectedFilter(e.target.value)}
-                                value={selectedFilter}
-                                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
-                              >
-                                <option value="0">Input</option>
-                                <option value="1">Output</option>
-                                {/* Add other factory options as needed */}
-                              </select>
+                                <label className="block text-sm font-medium leading-6 text-gray-900">
+                                    DATE FROM 
+                                </label>  
+                                <input
+                                  type="date"
+                                  value={fromDate}
+                                  onChange={(e) => setfromDate(e.target.value)}
+                                  className="W-full z-10 mt-1 rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                />
                             </div>
-                        <div className="mt-4 sm:mt-0 sm:ml-4">
-                              <label htmlFor="plant" className="block text-sm font-medium text-gray-700">
-                                PLANT
-                              </label>
-                              <select
-                                id="plant"
-                                name="plant"
-                                onChange={(e) => setSelectedFactory(e.target.value)}
-                                value={selectedFactory}
-                                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
-                              >
-                                <option value="ALL">All</option>
-                                <option value="F1">Factory 1</option>
-                                <option value="F2">Factory 2</option>
-                                {/* Add other factory options as needed */}
-                              </select>
+                            <div className="mt-4 sm:mt-0 sm:ml-4">
+                                <label className="block text-sm font-medium leading-6 text-gray-900">
+                                    DATE TO 
+                                </label> 
+                                <input
+                                  type="date"
+                                  value={toDate}
+                                  onChange={(e) => settoDate(e.target.value)}
+                                  className="W-full z-10 mt-1 rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                /> 
                             </div>
-                            
+                            <div className="mt-4 sm:mt-0 sm:ml-4">
+                                      <label htmlFor="plant" className="block text-sm font-medium leading-6 text-gray-900">
+                                        FILTER
+                                      </label>
+                                      <select
+                                        id="plant"
+                                        name="plant"
+                                        onChange={(e) => setSelectedFilter(e.target.value)}
+                                        value={selectedFilter}
+                                        className="W-full z-10 mt-1 rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                      >
+                                        <option value="0">INPUT</option>
+                                        <option value="1">OUTPUT</option>
+                                      </select>
+                                    </div>
+                                  <div className="mt-4 sm:mt-0 sm:ml-4">
+                                      <label htmlFor="plant" className="block text-sm font-medium leading-6 text-gray-900">
+                                        PLANT
+                                      </label>
+                                      <select
+                                        id="plant"
+                                        name="plant"
+                                        onChange={(e) => setSelectedFactory(e.target.value)}
+                                        value={selectedFactory}
+                                        className="W-full z-10 mt-1 rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                      >
+                                        <option value="ALL">ALL</option>
+                                        <option value="F1">Factory 1</option>
+                                        <option value="F2">Factory 2</option>
+                                        {/* Add other factory options as needed */}
+                                      </select>
+                                    </div>
+                                    <div className="mt-4 sm:mt-0 sm:ml-4">
+                                      <label className="block text-sm font-medium leading-6 text-gray-900">
+                                          RELEASE DATE
+                                      </label>  
+                                      <input
+                                        type="date"
+                                        value={releaseDate}
+                                        onChange={(e) => setreleaseDate(e.target.value)}
+                                        className="W-full z-10 mt-1 rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                      />
+                                      
+                                  </div>
+                              </div>
+                              </div>
+                      <div className="sm:flex justify-between items-center py-3">
+                        <div className="sm:flex sm:items-center">
                         <div className="mt-4 sm:mt-0 sm:ml-4">
                           <Combobox as="div" onChange={handleJXLineChange} value={selectedJXLine} >
                             <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">JX LINE</Combobox.Label>
@@ -718,7 +781,11 @@ function ScanStatus() {
                               </thead>
                               {updating && (
                               <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
-                                  <span className="text-white">Loading data...</span>
+                                  <img
+                                      className="max-h-28 w-auto animate-bounce animate-infinite"
+                                      src={Logo}
+                                      alt="Your Company"
+                                    />
                               </div>
                               )}
                                 <tbody className="divide-y divide-neutral-950 bg-white">
