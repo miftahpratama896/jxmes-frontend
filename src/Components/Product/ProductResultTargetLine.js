@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Logo from "../../assets/img/New Logo White.png";
+import { useHistory } from 'react-router-dom'
 
 
 const ProductResultTarget = () => {
+  const history = useHistory();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      // Redirect ke halaman login jika tidak ada token
+      history.push('/');
+    }
+  }, [history]);
   const [data, setData] = useState([]);
   const [autoUpdate, setAutoUpdate] = useState(false);
   const [updating, setUpdating] = useState(false); // State untuk menunjukkan apakah sedang dalam proses pembaruan

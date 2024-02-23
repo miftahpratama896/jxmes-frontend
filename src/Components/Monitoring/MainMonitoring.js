@@ -1,9 +1,47 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom'
 import axios from 'axios';
 import Logo from "../../assets/img/New Logo White.png";
 
 
 export default function Example() {
+  const [ip, setIP] = useState('');
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get('https://geolocation-db.com/json/');
+        console.log(response.data);
+        setIP(response.data.IPv4);
+      } catch (error) {
+        console.error('Error fetching IP:', error);
+      }
+    };
+
+    const sendDataToBackend = async () => {
+      try {
+        const data = {
+          division: 'JX2WEB',
+          menuName: 'MONITORING',
+          programName: 'Main Monitoring',
+          userID: 'mesuser',
+          ipAddress: ip
+        };
+
+        // Kirim data ke backend
+        const response = await axios.post('http://172.16.200.28:3000/api/log-menu-access', data);
+        console.log('Response:', response.data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    // Panggil fungsi untuk mengambil data IP
+    getData();
+
+    // Panggil fungsi untuk mengirim data ke backend saat komponen dipasang
+    sendDataToBackend();
+  }, [ip]); 
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
@@ -78,7 +116,15 @@ export default function Example() {
   const handleDateChange = (event) => {
     setSelectedDate(event.target.value);
   };
+  const history = useHistory();
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      // Redirect ke halaman login jika tidak ada token
+      history.push('/');
+    }
+  }, [history]);
   useEffect(() => {
     if (autoUpdate) {
         fetchData();

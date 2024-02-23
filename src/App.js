@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
 import Dashboard from './Components/Dashboard';
 import MainMonitoring from './Components/Monitoring/MainMonitoring'
 import './App.css';
@@ -13,6 +13,8 @@ import InventoryLongTerm from "./Components/WIP/InventoryLongTerm";
 import ScanStatus from "./Components/Report/ScanStatus";
 import SettingSewingQTY from "./Components/Report/SettingSewingQTY";
 import DailyHourProd from "./Components/Report/dailyHourProd";
+import Login from "./Components/Login/Login";
+
 
 function App() {
   return (
@@ -20,8 +22,11 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" >
-          <Dashboard/>
-          <DashboardCenter />
+          <Login />
+        </Route>
+        <Route path="/Dashboard" >
+            <Dashboard />
+            <DashboardCenter />
         </Route>
         <Route path="/MainMonitoring" >
           <Dashboard/>

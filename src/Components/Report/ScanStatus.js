@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom'
 import axios from 'axios';
 import { Combobox } from '@headlessui/react'
 import {
@@ -9,6 +10,15 @@ import Logo from "../../assets/img/New Logo White.png";
 
 
 function ScanStatus() {
+  const history = useHistory();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      // Redirect ke halaman login jika tidak ada token
+      history.push('/');
+    }
+  }, [history]);
   const [data, setData] = useState([]);
   const [autoUpdate, setAutoUpdate] = useState(false);
   const [updating, setUpdating] = useState(false);

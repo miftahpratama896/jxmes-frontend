@@ -1,7 +1,31 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom'
 import Logo from "../../assets/img/New Logo White.png";
+import axios from 'axios';
 
 const FetchData = () => {
+  useEffect(() => {
+    const sendDataToBackend = async () => {
+      try {
+        const data = {
+          division: 'JX2WEB',
+          menuName: 'MONITORING',
+          programName: 'Daily Monitoring',
+          userID: 'mesuser',
+          ipAddress: '172.16.206.4'
+        };
+
+        // Kirim data ke backend
+        const response = await axios.post('http://172.16.200.28:3000/api/log-menu-access', data);
+        console.log('Response:', response.data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    // Panggil fungsi untuk mengirim data ke backend
+    sendDataToBackend();
+  }, []);
   const [data, setData] = useState([]);
   const [autoUpdate, setAutoUpdate] = useState(false);
   const [updating, setUpdating] = useState(false);
@@ -38,7 +62,15 @@ const FetchData = () => {
 
     return dateArray;
   };
+  const history = useHistory();
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      // Redirect ke halaman login jika tidak ada token
+      history.push('/');
+    }
+  }, [history]);
   useEffect(() => {
     const startMonth = new Date(dateFrom).getMonth();
     const endMonth = new Date(dateTo).getMonth();

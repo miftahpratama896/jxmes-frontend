@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect  } from 'react';
 import Logo from "../assets/img/New Logo White.png";
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useHistory } from 'react-router-dom';
+import Person from "../assets/img/Person.jpg"
 
 const navigation = [
   { 
@@ -62,7 +64,21 @@ export default function Example() {
   const handleToggleDropdown = (index) => {
     setOpenDropdownIndex(openDropdownIndex === index ? null : index);
   };
+  const history = useHistory();
+  const handleLogout = () => {
+    // Hapus token dari localStorage
+    localStorage.removeItem('token');
 
+    // Redirect ke halaman login
+    history.push('/');
+  };
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      // Redirect ke halaman login jika tidak ada token
+      history.push('/');
+    }
+  }, [history]);
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -89,7 +105,7 @@ export default function Example() {
                         className="h-8 w-auto"
                         src={Logo}
                         alt="Your Company"
-                        href = "/"
+                        href = "/Dashboard"
                       />
                     </a>
                   </div>
@@ -119,7 +135,7 @@ export default function Example() {
                         <span className="sr-only">Open user menu</span>
                         <img
                           className="h-8 w-8 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                          src={Person}
                           alt=""
                         />
                       </Menu.Button>
@@ -137,27 +153,7 @@ export default function Example() {
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              href="#"
-                              className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                            >
-                              Your Profile
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                            >
-                              Settings
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
+                              onClick={handleLogout}
                               className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                             >
                               Sign out

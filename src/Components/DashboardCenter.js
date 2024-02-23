@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import Background from "../assets/img/Nike5.mov"
 import NikeLogo from "../assets/img/NikeLogo.png"
 import JXMESLogo from "../assets/img/JXMESLogo.png"
@@ -58,7 +59,15 @@ const footerNavigation = {
 
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const history = useHistory();
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      // Redirect ke halaman login jika tidak ada token
+      history.push('/');
+    }
+  }, [history]);
   return (
     <div className="bg-white">
       {/* Header */}
