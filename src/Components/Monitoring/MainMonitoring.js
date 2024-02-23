@@ -5,27 +5,14 @@ import Logo from "../../assets/img/New Logo White.png";
 
 
 export default function Example() {
-  const [ip, setIP] = useState('');
-
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await axios.get('https://geolocation-db.com/json/');
-        console.log(response.data);
-        setIP(response.data.IPv4);
-      } catch (error) {
-        console.error('Error fetching IP:', error);
-      }
-    };
-
     const sendDataToBackend = async () => {
       try {
         const data = {
-          division: 'JX2WEB',
+          division: 'JXMES-WEB',
           menuName: 'MONITORING',
-          programName: 'Main Monitoring',
+          programName: 'MAIN MONITORING',
           userID: 'mesuser',
-          ipAddress: ip
         };
 
         // Kirim data ke backend
@@ -36,12 +23,10 @@ export default function Example() {
       }
     };
 
-    // Panggil fungsi untuk mengambil data IP
-    getData();
-
-    // Panggil fungsi untuk mengirim data ke backend saat komponen dipasang
+    // Panggil fungsi untuk mengirim data ke backend
     sendDataToBackend();
-  }, [ip]); 
+  }, []);
+  
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);

@@ -10,6 +10,28 @@ import Logo from "../../assets/img/New Logo White.png";
 
 
 function ScanStatus() {
+  useEffect(() => {
+    const sendDataToBackend = async () => {
+      try {
+        const data = {
+          division: 'JXMES-WEB',
+          menuName: 'REPORT',
+          programName: 'SCAN STATUS JX2-JX',
+          userID: 'mesuser',
+        };
+
+        // Kirim data ke backend
+        const response = await axios.post('http://172.16.200.28:3000/api/log-menu-access', data);
+        console.log('Response:', response.data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    // Panggil fungsi untuk mengirim data ke backend
+    sendDataToBackend();
+  }, []);
+
   const history = useHistory();
 
   useEffect(() => {

@@ -8,11 +8,10 @@ const FetchData = () => {
     const sendDataToBackend = async () => {
       try {
         const data = {
-          division: 'JX2WEB',
+          division: 'JXMES-WEB',
           menuName: 'MONITORING',
-          programName: 'Daily Monitoring',
+          programName: 'DAILY MONITORING',
           userID: 'mesuser',
-          ipAddress: '172.16.206.4'
         };
 
         // Kirim data ke backend
@@ -26,6 +25,7 @@ const FetchData = () => {
     // Panggil fungsi untuk mengirim data ke backend
     sendDataToBackend();
   }, []);
+
   const [data, setData] = useState([]);
   const [autoUpdate, setAutoUpdate] = useState(false);
   const [updating, setUpdating] = useState(false);
