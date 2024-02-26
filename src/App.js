@@ -14,6 +14,7 @@ import ScanStatus from "./Components/Report/ScanStatus";
 import SettingSewingQTY from "./Components/Report/SettingSewingQTY";
 import DailyHourProd from "./Components/Report/dailyHourProd";
 import Login from "./Components/Login/Login";
+import ProductPCard from './Components/Product/ProductPCard';
 
 
 function App() {
@@ -39,6 +40,10 @@ function App() {
         <Route path="/ProductTime" >
           <Dashboard/>
           <ProductTime />
+        </Route>
+        <Route path="/ProductPCard" >
+          <Dashboard/>
+          <ProductPCard />
         </Route>
         <Route path="/ProductResultTargetLine" >
           <Dashboard/>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import JXMESLogo2 from "../../assets/img/New Logo White.png";
@@ -10,9 +10,11 @@ export default function Login() {
 
   const [formData, setFormData] = useState({
     user_id: 'mesuser',
-    password: ''
+    password: '1234'
   });
-  
+
+  const [notification, setNotification] = useState(null);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -35,13 +37,20 @@ export default function Login() {
 
       // Redirect ke halaman Dashboard
       history.push('/Dashboard');
+
+      // Set notification
+      setNotification('Successfully Login');
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error('Please enter ID / Password correctly!', error);
       // Tampilkan pesan kesalahan login kepada pengguna jika diperlukan
+
+      // Set notification
+      setNotification('Please enter ID / Password correctly!');
     }
   };
 
   return (
+    <>
     <div className="bg-gray-900 dark:bg-gray-900">
       <div className="flex justify-center h-screen">
         <div className="hidden bg-cover lg:block lg:w-2/3" style={{
@@ -79,8 +88,14 @@ export default function Login() {
             </div>
 
             <div className="mt-8">
+              {notification && (
+                <div className="mb-4 p-3 text-white bg-red-900 rounded-md text-center">
+                  {notification}
+                </div>
+              )}
+
               <form onSubmit={handleSubmit}>
-              <div>
+                <div>
                   <label htmlFor="user_id" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">User ID</label>
                   <input
                     type="text"
@@ -123,5 +138,6 @@ export default function Login() {
         </div>
       </div>
     </div>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect,Fragment } from 'react'
 import { useHistory } from 'react-router-dom'
 import Background from "../assets/img/Nike5.mov"
 import NikeLogo from "../assets/img/NikeLogo.png"
@@ -6,6 +6,7 @@ import JXMESLogo from "../assets/img/JXMESLogo.png"
 import JXMESLogo2 from "../assets/img/New Logo White.png"
 import PratamaLogo from "../assets/img/PratamaLogo.png"
 import Product from "../assets/img/Product.png"
+import Bill from "../assets/img/bill.jpg"
 import {
   CloudArrowUpIcon,
   FingerPrintIcon,
@@ -58,17 +59,22 @@ const footerNavigation = {
 
 
 export default function Example() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const history = useHistory();
+  const [showNotification, setShowNotification] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
       // Redirect ke halaman login jika tidak ada token
       history.push('/');
-    }
+    } 
   }, [history]);
+
+  const closeNotification = () => {
+    setShowNotification(false);
+  };
   return (
+    <>
     <div className="bg-white">
       {/* Header */}
 
@@ -163,8 +169,7 @@ export default function Example() {
               <h2 className="text-base font-semibold leading-7 text-indigo-600">Everything you need</h2>
               <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Product Result - Target.</p>
               <p className="mt-6 text-lg leading-8 text-gray-600">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque,
-                iste dolor cupiditate blanditiis.
+
               </p>
             </div>
           </div>
@@ -215,7 +220,7 @@ export default function Example() {
               <div className="relative aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
                 <img
                   className="absolute inset-0 h-full w-full rounded-2xl bg-gray-800 object-cover shadow-2xl"
-                  src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80"
+                  src={Bill}
                   alt=""
                 />
               </div>
@@ -236,14 +241,12 @@ export default function Example() {
                 </svg>
                 <blockquote className="text-xl font-semibold leading-8 text-white sm:text-2xl sm:leading-9">
                   <p>
-                    Gravida quam mi erat tortor neque molestie. Auctor aliquet at porttitor a enim nunc suscipit
-                    tincidunt nunc. Et non lorem tortor posuere. Nunc eu scelerisque interdum eget tellus non nibh
-                    scelerisque bibendum.
+                    If you have a body, you are an athlete!
                   </p>
                 </blockquote>
                 <figcaption className="mt-8 text-base">
-                  <div className="font-semibold text-white">Judith Black</div>
-                  <div className="mt-1 text-gray-400">CEO of Tuple</div>
+                  <div className="font-semibold text-white"> Bill Bowerman</div>
+                  <div className="mt-1 text-gray-400">Co-Founder of Nike</div>
                 </figcaption>
               </figure>
             </div>
@@ -320,6 +323,8 @@ export default function Example() {
           </div>
         </div>
       </footer>
+      
     </div>
+    </>
   )
 }

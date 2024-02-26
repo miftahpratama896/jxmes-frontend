@@ -48,10 +48,15 @@ function ScanStatus() {
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1); // Mendapatkan tanggal kemarin
   
+  if (yesterday.getDay() === 0) {
+    yesterday.setDate(yesterday.getDate() - 1); // Set menjadi hari Sabtu (tanggal sebelumnya)
+  }
+
   const [fromDate, setfromDate] = useState(yesterday.toISOString().split('T')[0]);
-  const [toDate, settoDate] = useState(yesterday.toISOString().split('T')[0]);
+  const [toDate, settoDate] = useState(new Date().toISOString().split('T')[0]);
   const [totalScanWhInput, setTotalScanWhInput] = useState(0);
   const [totalScanWhOutput, setTotalScanWhOutput] = useState(0);
+  const [totalScanWhLoading, setTotalScanWhLoading] = useState(0);
   const [totalInputJX, setTotalInputJX] = useState(0);
   const [totalInputJXASM, setTotalInputJXASM] = useState(0);
   const [selectedStyle, setSelectedStyle] = useState(''); 
@@ -104,19 +109,19 @@ function ScanStatus() {
     setSelectedPCard(selectedValue);
   };
 
-
-  const [releaseDate, setreleaseDate] = useState('');
-  const [convertedDateFrom, setConvertedDateFrom] = useState('');
-
+  const [release, setRelease] = useState(' ');
   const convertToCustomFormat = (dateString) => {
+    if (dateString.trim() === '') {
+      return ''; // Jika release adalah string kosong, kembalikan string kosong
+    }
+    
     const dateObj = new Date(dateString);
     const year = String(dateObj.getFullYear()).slice(-2);
     const month = String(dateObj.getMonth() + 1).padStart(2, '0');
     const day = String(dateObj.getDate()).padStart(2, '0');
     return `${day}${month}${year}`;
   };
-
-
+  const convertedRelease = convertToCustomFormat(release);
 
   const fetchData = async () => {
     try {
@@ -132,7 +137,7 @@ function ScanStatus() {
         D_STYLE: sanitizedStyle,
         D_MODEL: selectedModel,
         D_GENDER: selectedGender,
-        D_RLS: ' ',
+        D_RLS: convertedRelease,
         D_BARCODE: selectedPCard,
         D_CHEK: parsedFilter,
         CEK_IP: '172.16.208.33'
@@ -156,8 +161,10 @@ function ScanStatus() {
     } else {
       fetchData();
     }
-  }, [autoUpdate, fromDate, toDate, selectedStyle, selectedModel, selectedJXLine, selectedJX2Line,selectedGender, selectedPCard, selectedFactory, selectedFilter,releaseDate]);
+  }, [autoUpdate, fromDate, toDate, selectedStyle, selectedModel, selectedJXLine, selectedJX2Line,selectedGender, selectedPCard, selectedFactory, selectedFilter, release]);
 
+
+  
   useEffect(() => {
     const uniqueModelOptions = [...new Set(data.map(item => item.MODEL))];
     setFilteredModelOptions(uniqueModelOptions);
@@ -177,7 +184,6 @@ function ScanStatus() {
     const uniquePCardOptions = [...new Set(data.map(item => item.BARCODE))];
     setFilteredPCardOptions(uniquePCardOptions);
 
-    setConvertedDateFrom(convertToCustomFormat(releaseDate));
   }, [data]);
 
 
@@ -187,6 +193,7 @@ function ScanStatus() {
     let totalOutput = 0
     let totalInputJX = 0
     let totalInputJXASM = 0
+    let totalScanWhLoading = 0
     data.forEach(item => {
       if (item.SCAN_WH_INPUT) {
         total += item.QTY;
@@ -194,17 +201,22 @@ function ScanStatus() {
       if (item.SCAN_WH_OUTPUT) {
         totalOutput += item.QTY;
       }
+      if (item.SCAN_LOADING) {
+        totalScanWhLoading += item.QTY;
+      }
       if (item.JX_INPUT) {
         totalInputJX += item.QTY;
       }
       if (item.JX_ASM_INPUT) {
         totalInputJXASM += item.QTY;
       }
+      
     });
     setTotalScanWhInput(total);
     setTotalScanWhOutput(totalOutput)
     setTotalInputJX(totalInputJX)
     setTotalInputJXASM(totalInputJXASM)
+    setTotalScanWhLoading(totalScanWhLoading)
   }, [data]);
 
   console.log(data)
@@ -313,25 +325,30 @@ function ScanStatus() {
                                         {/* Add other factory options as needed */}
                                       </select>
                                     </div>
-                                    <div className="mt-4 sm:mt-0 sm:ml-4">
-                                      <label className="block text-sm font-medium leading-6 text-gray-900">
-                                          RELEASE DATE
-                                      </label>  
-                                      <input
-                                        type="date"
-                                        value={releaseDate}
-                                        onChange={(e) => setreleaseDate(e.target.value)}
-                                        className="W-full z-10 mt-1 rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                      />
-                                      
-                                  </div>
+                                  <div className="mt-4 sm:mt-0 sm:ml-4">
+                                    <label className="block text-sm font-medium leading-6 text-gray-900">
+                                        RELEASE 
+                                    </label>  
+                                    <input
+                                      type="date"
+                                      value={release}
+                                      onChange={(e) => setRelease(e.target.value)}
+                                      className="W-full z-10 mt-1 rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    />
+                                    <button
+                                        onClick={() => setRelease('')} // Mengatur release menjadi string kosong saat tombol diklik
+                                        className="mt-2 px-4 py-1 sm:ml-4 rounded-md bg-gray-700 text-gray-50 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                                    >
+                                        Clear Release
+                                    </button>
+                                 </div>
                               </div>
                               </div>
                       <div className="sm:flex justify-between items-center py-3">
                         <div className="sm:flex sm:items-center">
                         <div className="mt-4 sm:mt-0 sm:ml-4">
                           <Combobox as="div" onChange={handleJXLineChange} value={selectedJXLine} >
-                            <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">JX LINE</Combobox.Label>
+                            <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">JX2 LINE</Combobox.Label>
                             <div className="relative mt-2">
                               <Combobox.Input
                                 className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -408,7 +425,7 @@ function ScanStatus() {
 
                         <div className="mt-4 sm:mt-0 sm:ml-4">
                           <Combobox as="div" onChange={handleJX2LineChange} value={selectedJX2Line} >
-                            <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">JX2 LINE</Combobox.Label>
+                            <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">JX LINE</Combobox.Label>
                             <div className="relative mt-2">
                               <Combobox.Input
                                 className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -786,6 +803,9 @@ function ScanStatus() {
                                     JX2 W/H OUTPUT 
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                    JX2 W/H LOADING 
+                                  </th>
+                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                     JX W/H INPUT 
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
@@ -800,6 +820,10 @@ function ScanStatus() {
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" style={{
                                     backgroundColor:'#374151'}}>
                                     {totalScanWhOutput.toLocaleString()}
+                                  </th>
+                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" style={{
+                                    backgroundColor:'#374151'}}>
+                                    {totalScanWhLoading.toLocaleString()}
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" style={{
                                     backgroundColor:'#374151'}}>
@@ -855,6 +879,9 @@ function ScanStatus() {
                                         </td>
                                         <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
                                           {item.SCAN_WH_OUTPUT && item.SCAN_WH_OUTPUT.replace('T', ' ').replace('.000Z', '')}
+                                        </td>
+                                        <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
+                                          {item.SCAN_LOADING && item.SCAN_LOADING.replace('T', ' ').replace('.000Z', '')}
                                         </td>
                                         <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
                                           {item.JX_INPUT && item.JX_INPUT.replace('T', ' ').replace('.000Z', '')}
