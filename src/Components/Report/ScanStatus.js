@@ -73,6 +73,7 @@ function ScanStatus() {
   const [filteredPCardOptions, setFilteredPCardOptions] = useState([]);
   const [selectedFactory, setSelectedFactory] = useState('ALL');
   const [selectedFilter, setSelectedFilter] = useState(0);
+  const itemsPerPage = 250;
 
 
   function classNames(...classes) {
@@ -262,9 +263,9 @@ function ScanStatus() {
                     <div className="sm:flex justify-between items-center py-3">
                     <div className="sm:flex sm:items-center">
                         <div className="smt-4 sm:mt-0 sm:ml-4">
-                          <h1 className="text-base font-semibold leading-6 text-gray-900">Product</h1>
+                          <h1 className="text-base font-semibold leading-6 text-gray-900">Report</h1>
                           <p className="mt-2 text-sm text-gray-700">
-                            A list of all the Product - Time 
+                            A list of all the Scan Status JX2-JX 
                           </p>
                         </div>
                         </div>

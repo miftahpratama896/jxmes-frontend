@@ -213,9 +213,9 @@ function DailyHourProd() {
                     <div className="px-4 sm:px-6 lg:px-8">
                       <div className="sm:flex justify-between items-center py-3">
                         <div className="sm:flex-auto">
-                          <h1 className="text-base font-semibold leading-6 text-gray-900">Product</h1>
+                          <h1 className="text-base font-semibold leading-6 text-gray-900">Report</h1>
                           <p className="mt-2 text-sm text-gray-700">
-                            A list of all the Product - Time 
+                            A list of all the Daily Hour Production
                           </p>
                         </div>
                         

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom'
 import axios from 'axios';
 import Logo from "../../assets/img/New Logo White.png";
+import * as XLSX from 'xlsx';
 
 function ScanStatus() {
   useEffect(() => {
@@ -89,6 +90,20 @@ function ScanStatus() {
       // Cleanup the interval on unmount or when dependencies change
       return () => clearInterval(intervalId);
     }, [autoUpdate, date]);
+    const exportToExcel = () => {
+      const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+      const fileExtension = '.xlsx';
+      const ws = XLSX.utils.json_to_sheet(data[0]); // Assuming data[0] contains table data
+      const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+      const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+      const blob = new Blob([excelBuffer], { type: fileType });
+      const fileName = 'scan_status' + fileExtension;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      a.click();
+    };
   
   console.log(data)
   return (
@@ -142,9 +157,9 @@ function ScanStatus() {
           </div>
           <div className="sm:flex sm:items-center py-3">
             <div className="sm:flex-auto">
-              <h1 className="text-base font-semibold leading-6 text-gray-900">PO Balance</h1>
+              <h1 className="text-base font-semibold leading-6 text-gray-900">Report</h1>
               <p className="mt-2 text-sm text-gray-700">
-                A list of all the PO Balance
+                A list of all the Setting Sewing QTY
               </p>
             </div>
             <div className="mt-4 sm:mt-0 sm:ml-4">
@@ -257,10 +272,10 @@ function ScanStatus() {
                             data[2].map(item => (
                               <>
                                 <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {item.ASSY_TARGET.toLocaleString()} 
+                                  {item.ASSY_TARGET?.toLocaleString()} 
                                 </th>
                                 <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {item.STOCK.toLocaleString()} 
+                                  {item.STOCK?.toLocaleString()} 
                                 </th>
                                 <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                             
@@ -276,22 +291,22 @@ function ScanStatus() {
                             data[3].map(item => (
                               <>
                                 <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {item.TARGET.toLocaleString()} 
+                                  {item.TARGET?.toLocaleString()} 
                                 </th>
                                 <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {item.SETTING_MARKET.toLocaleString()} 
+                                  {item.SETTING_MARKET?.toLocaleString()} 
                                 </th>
                                 <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                   {item.DI_CUTTING} 
                                 </th>
                                 <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {item.DONE_DI_UPS.toLocaleString()} 
+                                  {item.DONE_DI_UPS?.toLocaleString()} 
                                 </th>
                                 <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {item.SELISIH.toLocaleString()} 
+                                  {item.SELISIH?.toLocaleString()} 
                                 </th>
                                 <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {item.AVAIABLE_SETTING.toLocaleString()} 
+                                  {item.AVAIABLE_SETTING?.toLocaleString()} 
                                 </th>
                                 <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                   {item.SETTTING_DAY.toFixed(2)}

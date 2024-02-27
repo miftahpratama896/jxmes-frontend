@@ -25,6 +25,8 @@ const navigation = [
       { name: 'Product - Time', href: '/ProductTime' },
       { name: 'Product - PCard', href: '/ProductPCard' },
       { name: 'Product - Result Target', href: '/ProductResultTargetLine' },
+      { name: 'Product - Personnel', href: '/ProductPersonel' },
+      { name: 'Product - Nosew Mesin', href: '/ProductNosewMesin' },
     ]
   },
   { 

@@ -29,6 +29,10 @@ function ProductPCard() {
   const [filteredGenderOptions, setFilteredGenderOptions] = useState([]);
   const [selectedPCard, setSelectedPCard] = useState(''); 
   const [filteredPCardOptions, setFilteredPCardOptions] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState('0');
+  const [selectedFilter2, setSelectedFilter2] = useState('1');
+  const [numColumns, setNumColumns] = useState(0);
+  const [totalAllRows, setTotalAllRows] = useState(0);
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -107,6 +111,8 @@ function ProductPCard() {
     const fetchData = async () => {
       try {
         setUpdating(true);
+        const parsedFilter = parseInt(selectedFilter);
+        const parsedFilter2 = parseInt(selectedFilter2);
         const sanitizedStyle = selectedStyle.replace(/-/g, '');
         // Lakukan permintaan HTTP GET ke endpoint server
         const response = await axios.get('http://172.16.200.28:3000/product-pcard', {
@@ -120,12 +126,12 @@ function ProductPCard() {
             cGender: selectedGender,
             cCek: 0,
             cCekDate: 0,
-            cCekNull: 1,
+            cCekNull: parsedFilter2,
             cReq: selectedPCard,
             wc: selectedWC,
             plant: selectedFactory,
             jxCell: selectedJX2Line,
-            iGubun: 0
+            iGubun: parsedFilter
           }
         });
         // Simpan data yang diterima dari respons ke dalam state data
@@ -148,32 +154,70 @@ function ProductPCard() {
         } else {
           fetchData();
         }
-      }, [autoUpdate, ProdDatefrom, ProdDateto,selectedFactory,selectedWC, release, selectedJX2Line, selectedJXLine,  selectedStyle, selectedModel,selectedGender, selectedPCard]);
+      }, [autoUpdate, ProdDatefrom, ProdDateto,selectedFactory,selectedWC, release, selectedJX2Line, selectedJXLine,  selectedStyle, selectedModel,selectedGender, selectedPCard,selectedFilter, selectedFilter2]);
 
-   const totalqty = data.reduce((total, item) => {
-    return total + item.QTY;
-  }, 0);
+      const getColumnNames = () => {
+        if (data.length === 0) return [];
+        return Object.keys(data[0]).filter(key => key.match(/^\d{6}$/));
+      };
 
-  useEffect(() => {
-    const uniqueJXLineOptions = [...new Set(data.map(item => item.CELL))];
-    setFilteredJXLineOptions(uniqueJXLineOptions);
+       // Fungsi untuk menghitung total dari kolom tertentu
+      const calculateColumnTotal = (columnName) => {
+        // Menggunakan reduce untuk menjumlahkan nilai-nilai dalam kolom columnName
+        const total = data.reduce((accumulator, currentItem) => {
+          return accumulator + currentItem[columnName];
+        }, 0);
+        
+        // Kembalikan total
+        return total;
+      };
+      
+      useEffect(() => {
+        const columns = getColumnNames();
+        setNumColumns(columns.length);
+      }, [data]); // Jika data berubah, perbaharui jumlah kolom
+      const columns = getColumnNames();
+      
+      useEffect(() => {
+        let total = 0;
+      
+        data.forEach((item) => {
+          const totalColumnValue = columns.reduce((total, columnName) => {
+            return total + item[columnName];
+          }, 0);
+      
+          total += totalColumnValue;
+      
+        });
+      
+        setTotalAllRows(total);
 
-    const uniqueJX2LineOptions = [...new Set(data.map(item => item.JX_CELL))];
-    setFilteredJX2LineOptions(uniqueJX2LineOptions);
+      }, [data, columns]);
+      
+      const totalqty = data.reduce((total, item) => {
+        return total + item.QTY;
+        }, 0);
 
-    const uniqueModelOptions = [...new Set(data.map(item => item.STYLE_NAME))];
-    setFilteredModelOptions(uniqueModelOptions);
+    useEffect(() => {
+      const uniqueJXLineOptions = [...new Set(data.map(item => item.CELL))];
+      setFilteredJXLineOptions(uniqueJXLineOptions);
 
-    const uniqueStyleOptions = [...new Set(data.map(item => item.STYLE))];
-    setFilteredStyleOptions(uniqueStyleOptions);
+      const uniqueJX2LineOptions = [...new Set(data.map(item => item.JX_CELL))];
+      setFilteredJX2LineOptions(uniqueJX2LineOptions);
 
-    const uniqueGenderOptions = [...new Set(data.map(item => item.GENDER_S))];
-    setFilteredGenderOptions(uniqueGenderOptions);
+      const uniqueModelOptions = [...new Set(data.map(item => item.STYLE_NAME))];
+      setFilteredModelOptions(uniqueModelOptions);
 
-    const uniquePCardOptions = [...new Set(data.map(item => item.REQ))];
-    setFilteredPCardOptions(uniquePCardOptions);
-  }, [data]);
-  console.log(data)
+      const uniqueStyleOptions = [...new Set(data.map(item => item.STYLE))];
+      setFilteredStyleOptions(uniqueStyleOptions);
+
+      const uniqueGenderOptions = [...new Set(data.map(item => item.GENDER_S))];
+      setFilteredGenderOptions(uniqueGenderOptions);
+
+      const uniquePCardOptions = [...new Set(data.map(item => item.REQ))];
+      setFilteredPCardOptions(uniquePCardOptions);
+    }, [data]);
+    console.log(data)
   return (
     <>
     <style>
@@ -207,6 +251,7 @@ function ProductPCard() {
           max-height: 70vh;
           max-width: 197vh;
           overflow-y: auto;
+          overflow-x: auto;
         }
         
         
@@ -220,7 +265,7 @@ function ProductPCard() {
                         <div className="smt-4 sm:mt-0 sm:ml-4">
                           <h1 className="text-base font-semibold leading-6 text-gray-900">Product</h1>
                           <p className="mt-2 text-sm text-gray-700">
-                            A list of all the Product - Time 
+                            A list of all the Product - PCard 
                           </p>
                         </div>
                         </div>
@@ -288,6 +333,38 @@ function ProductPCard() {
                                 <option value="W/H">W/H</option>
                                 {/* Add other factory options as needed */}
                               </select>
+                            </div>
+                            <div className="mt-4 sm:mt-0 sm:ml-4">
+                              <label htmlFor="filter" className="block text-sm font-medium text-gray-700">
+                                FILTER
+                              </label>
+                              <select
+                                id="filter"
+                                name="filter"
+                                onChange={(e) => setSelectedFilter(e.target.value)}
+                                value={selectedFilter}
+                                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
+                              >
+                                <option value="0">DETAIL</option>
+                                <option value="1">SUMMARY</option>
+                                {/* Add other factory options as needed */}
+                              </select>
+                            </div>
+                            <div className="mt-4 sm:mt-0 sm:ml-4">
+                                  <label htmlFor="filter" className="block text-sm font-medium text-gray-700">
+                                    OUTPUT DATE
+                                  </label>
+                                  <select
+                                    id="filter"
+                                    name="filter"
+                                    onChange={(e) => setSelectedFilter2(e.target.value)}
+                                    value={selectedFilter2}
+                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
+                                  >
+                                    <option value="0">NULL</option>
+                                    <option value="1">NOT NULL</option>
+                                    {/* Add other factory options as needed */}
+                                  </select>
                             </div>
                             <div className="mt-4 sm:mt-0 sm:ml-4">
                                     <label className="block text-sm font-medium leading-6 text-gray-900">
@@ -708,6 +785,22 @@ function ProductPCard() {
                             </div>
                           </Combobox>
                         </div>
+                        
+                        <div className="mt-4 sm:mt-0 sm:ml-4">
+                          <label htmlFor="autoUpdateCheckbox" className="block text-sm font-medium text-gray-700">
+                            {`Last updated:`}
+                          </label>
+                          <label htmlFor="autoUpdateCheckbox" className="block text-sm font-medium text-gray-700">
+                            {` ${new Date().toLocaleString()}`}
+                          </label>
+                          <input
+                            type="checkbox"
+                            id="autoUpdateCheckbox"
+                            checked={autoUpdate}
+                            onChange={() => setAutoUpdate(!autoUpdate)}
+                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
+                          />
+                        </div>
                     </div>
                     </div>
                       <div className="mt-8 flow-root">
@@ -715,12 +808,15 @@ function ProductPCard() {
                         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                           <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
                           <div className="table-container">
+                          {selectedFilter === '0' && (
                             <table className="min-w-full divide-y divide-neutral-950 sticky-header border border-slate-500">
                               <thead className="bg-slate-300 " >
                                 <tr>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    JX2 LINE 
-                                  </th>
+                                  {selectedWC !== 'CUTTING' && (
+                                      <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                        JX2 LINE 
+                                      </th>
+                                  )}
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                     JX LINE 
                                   </th>
@@ -759,9 +855,14 @@ function ProductPCard() {
                                   </th>
                                 </tr>
                                 <tr>
-                                 <th scope="col" colSpan={8} className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    TOTAL
+                                <th
+                                      scope="col"
+                                      colSpan={selectedWC !== 'CUTTING' ? 8 : 7}
+                                      className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                                  >
+                                      TOTAL
                                   </th>
+
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                     {totalqty.toLocaleString()}
                                   </th>
@@ -791,9 +892,11 @@ function ProductPCard() {
                                 <tbody className="divide-y divide-neutral-950 bg-white">
                                 {data.map((item, rowIndex) => (
                                       <tr key={rowIndex}>
+                                        {selectedWC !== 'CUTTING' && (
                                         <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
                                           {item.CELL}
                                         </td>
+                                        )}
                                         <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
                                           {item.JX_CELL}
                                         </td>
@@ -835,6 +938,71 @@ function ProductPCard() {
                                   ))}
                                 </tbody>
                             </table>
+                            )}
+                            {selectedFilter === '1' && (
+                            <table className="min-w-full divide-y divide-neutral-950 sticky-header border border-slate-500">
+                              <thead className="bg-slate-300 " >
+                                <tr>
+                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                     LINE 
+                                  </th>
+                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                     TOTAL 
+                                  </th>
+                                  {columns.map((columnName, index) => (
+                                  <th key={index} scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"  >
+                                    {columnName}
+                                  </th>
+                                  ))}
+                                </tr>
+                                <tr>
+                                 <th scope="col" className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium">
+                                    GRAND TOTAL
+                                  </th>
+                                  <th scope="col" className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium">
+                                  {totalAllRows !== null ? totalAllRows.toLocaleString() : ''}
+                                  </th>
+                                  {columns.map((columnName, index) => (
+                                  <th key={index} scope="col" className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium" >
+                                    {calculateColumnTotal(columnName) !== null && calculateColumnTotal(columnName) !== undefined ? calculateColumnTotal(columnName).toLocaleString() : ''}
+                                  </th>
+                                ))}
+                                </tr>
+                              </thead>
+                              {updating && (
+                              <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+                                  <img
+                                      className="max-h-28 w-auto animate-bounce animate-infinite"
+                                      src={Logo}
+                                      alt="Your Company"
+                                    />
+                              </div>
+                              )}
+                                <tbody className="divide-y divide-neutral-950 bg-white">
+                                  {data.map((item, rowIndex) => {
+                                    const totalColumnValue = columns.reduce((total, columnName) => {
+                                      return total + (item[columnName] || 0); // Menambahkan penanganan jika item[columnName] adalah null atau undefined
+                                    }, 0);
+
+                                    return (
+                                      <tr key={rowIndex}>
+                                        <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6">
+                                          {item.LINE}
+                                        </td>
+                                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium" >
+                                          {totalColumnValue.toLocaleString()}
+                                        </td>
+                                        {columns.map((columnName, columnIndex) => (
+                                          <td key={columnIndex} className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium ${((item[columnName] / item.TARG_HOUR) * 100) === 0 || isNaN((item[columnName] / item.TARG_HOUR) * 100) ? 'bg-gray-50' : ((item[columnName] / item.TARG_HOUR) * 100) >= 100 ? 'bg-green-400' : ((item[columnName] / item.TARG_HOUR) * 100) >= 97 ? 'bg-yellow-400' : 'bg-red-400'} sm:pl-6`}>
+                                            {item[columnName] !== null && item[columnName] !== undefined ? item[columnName].toLocaleString() : ''}
+                                          </td>
+                                        ))}
+                                      </tr>
+                                    );
+                                  })}
+                                </tbody>
+                            </table>
+                            )}
                           </div>
                           </div>
                         </div>

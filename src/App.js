@@ -15,6 +15,8 @@ import SettingSewingQTY from "./Components/Report/SettingSewingQTY";
 import DailyHourProd from "./Components/Report/dailyHourProd";
 import Login from "./Components/Login/Login";
 import ProductPCard from './Components/Product/ProductPCard';
+import ProductPersonel from './Components/Product/ProductPersonel';
+import ProductNosewMesin from './Components/Product/ProductNosewMesin';
 
 
 function App() {
@@ -44,6 +46,14 @@ function App() {
         <Route path="/ProductPCard" >
           <Dashboard/>
           <ProductPCard />
+        </Route>
+        <Route path="/ProductPersonel" >
+          <Dashboard/>
+          <ProductPersonel />
+        </Route>
+        <Route path="/ProductNosewMesin" >
+          <Dashboard/>
+          <ProductNosewMesin />
         </Route>
         <Route path="/ProductResultTargetLine" >
           <Dashboard/>
