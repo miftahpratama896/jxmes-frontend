@@ -2,7 +2,7 @@ import React, { useState, Fragment } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import JXMESLogo2 from "../../assets/img/New Logo White.png";
-import Background from "../../assets/img/Nike2.mp4";
+import Background from "../../assets/img/NikeAir.mp4";
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Login() {
@@ -67,10 +67,10 @@ export default function Login() {
           >
             <source src={Background} type="video/mp4" />
           </video>
-          <div className="flex relative items-center h-full z-30 px-20  bg-opacity-40">
+          <div className="flex relative items-center h-full z-30 px-20 bg-gray-900 bg-opacity-40">
             <div>
-              <h2 className="text-4xl font-bold text-white">Crafted Footwear with Confidence</h2>
-              <p className="max-w-xl mt-3 text-gray-300">Our dedicated team of employees has consistently demonstrated exemplary performance in driving our company towards the realization of becoming a global leader in the footwear industry.</p>
+              <h2 className="text-4xl font-bold text-gray-50">Crafted Footwear with Confidence</h2>
+              <p className="max-w-xl mt-3 text-gray-50">Our dedicated team of employees has consistently demonstrated exemplary performance in driving our company towards the realization of becoming a global leader in the footwear industry.</p>
             </div>
           </div>
         </div>

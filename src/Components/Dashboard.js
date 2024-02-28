@@ -27,6 +27,8 @@ const navigation = [
       { name: 'Product - Result Target', href: '/ProductResultTargetLine' },
       { name: 'Product - Personnel', href: '/ProductPersonel' },
       { name: 'Product - Nosew Mesin', href: '/ProductNosewMesin' },
+      { name: 'Product - KK Material MO', href: '/ProductKKMaterial' },
+      { name: 'Product - Material Setting Balance', href: '/ProductMaterialBalance' },
     ]
   },
   { 

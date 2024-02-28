@@ -33,6 +33,7 @@ function ProductPCard() {
   const [selectedFilter2, setSelectedFilter2] = useState('1');
   const [numColumns, setNumColumns] = useState(0);
   const [totalAllRows, setTotalAllRows] = useState(0);
+  const [release, setRelease] = useState(' ');
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -94,7 +95,7 @@ function ProductPCard() {
     // Panggil fungsi untuk mengirim data ke backend
     sendDataToBackend();
   }, []);
-  const [release, setRelease] = useState(' ');
+  
   const convertToCustomFormat = (dateString) => {
     if (dateString.trim() === '') {
       return ''; // Jika release adalah string kosong, kembalikan string kosong
@@ -248,7 +249,7 @@ function ProductPCard() {
         }
         
         .table-container {
-          max-height: 70vh;
+          max-height: 300vh;
           max-width: 197vh;
           overflow-y: auto;
           overflow-x: auto;

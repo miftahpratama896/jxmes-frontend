@@ -249,9 +249,10 @@ function ScanStatus() {
         }
         
         .table-container {
-          max-height: 70vh;
+          max-height: 700vh;
           max-width: 197vh;
           overflow-y: auto;
+          overflow-x: auto;
         }
         
         

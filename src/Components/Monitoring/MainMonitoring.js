@@ -165,8 +165,10 @@ export default function Example() {
           }
           
           .table-container {
-            max-height: 100vh;
+            max-height: 70vh;
+            max-width: 197vh;
             overflow-y: auto;
+            overflow-x: auto;
           }
         `}
       </style>        

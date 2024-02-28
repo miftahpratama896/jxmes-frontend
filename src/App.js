@@ -17,6 +17,8 @@ import Login from "./Components/Login/Login";
 import ProductPCard from './Components/Product/ProductPCard';
 import ProductPersonel from './Components/Product/ProductPersonel';
 import ProductNosewMesin from './Components/Product/ProductNosewMesin';
+import ProductKKMaterial from './Components/Product/ProductKKMaterial';
+import ProductMaterialBalance from './Components/Product/ProductMaterialBalance';
 
 
 function App() {
@@ -54,6 +56,14 @@ function App() {
         <Route path="/ProductNosewMesin" >
           <Dashboard/>
           <ProductNosewMesin />
+        </Route>
+        <Route path="/ProductKKMaterial" >
+          <Dashboard/>
+          <ProductKKMaterial />
+        </Route>
+        <Route path="/ProductMaterialBalance" >
+          <Dashboard/>
+          <ProductMaterialBalance />
         </Route>
         <Route path="/ProductResultTargetLine" >
           <Dashboard/>
