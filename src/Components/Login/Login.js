@@ -79,7 +79,7 @@ export default function Login() {
           <div className="flex-1">
             <div className="text-center">
               <img
-                className="mx-12 w-72"
+                className="mx-auto"
                 src={JXMESLogo2}
                 alt="Your Company"
                 href="/Dashboard"

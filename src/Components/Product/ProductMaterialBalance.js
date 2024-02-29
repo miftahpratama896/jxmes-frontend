@@ -462,7 +462,9 @@ const ProductMaterialBalance = () => {
                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.MAT_UNIT}</td>
                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.PO_QTY}</td>
                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.INPUT_QTY}</td>
-                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.BALANCE}</td>
+                            <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 ${item.BALANCE === 0 ? 'bg-green-500' : 'bg-red-500'}`}>
+                              {item.BALANCE}
+                            </td>
                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.RECD_DATE}</td>
                           </tr>
                         ))}

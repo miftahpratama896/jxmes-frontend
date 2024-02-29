@@ -19,6 +19,8 @@ import ProductPersonel from './Components/Product/ProductPersonel';
 import ProductNosewMesin from './Components/Product/ProductNosewMesin';
 import ProductKKMaterial from './Components/Product/ProductKKMaterial';
 import ProductMaterialBalance from './Components/Product/ProductMaterialBalance';
+import ProductSewingMesinCounter from './Components/Product/ProductSewingMesinCounter';
+import ProductDailyProdTrend from './Components/Product/ProductDailyProdTrend';
 
 
 function App() {
@@ -64,6 +66,14 @@ function App() {
         <Route path="/ProductMaterialBalance" >
           <Dashboard/>
           <ProductMaterialBalance />
+        </Route>
+        <Route path="/ProductSewingMesinCounter" >
+          <Dashboard/>
+          <ProductSewingMesinCounter />
+        </Route>
+        <Route path="/ProductDailyProdTrend" >
+          <Dashboard/>
+          <ProductDailyProdTrend />
         </Route>
         <Route path="/ProductResultTargetLine" >
           <Dashboard/>

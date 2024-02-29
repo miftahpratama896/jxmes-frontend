@@ -40,7 +40,7 @@ const ProductTime = () => {
   const [updating, setUpdating] = useState(false); // State untuk menunjukkan apakah sedang dalam proses pembaruan
   const [autoUpdate, setAutoUpdate] = useState(false);
   const calculateTotal = (item) => {
-    const columnsToSum = ['07:00', '08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00'];
+    const columnsToSum = ['07:00', '08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
   
     const total = columnsToSum.reduce((accumulator, column) => {
       const columnValue = item[column];
@@ -70,6 +70,7 @@ const ProductTime = () => {
   const [selectedTodayDate, setSelectedTodayDate] = useState(formattedToday);
   const [selectedWC, setSelectedWC] = useState('SEWING');
   const [selectedCTime, setSelectedCTime] = useState('ALL');
+  const [numColumns, setNumColumns] = useState(0);
  
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -121,7 +122,7 @@ const ProductTime = () => {
       callStoredProcedure();
     }
   }, [autoUpdate,selectedFactory, selectedYesdayDate, selectedTodayDate, selectedWC, selectedCTime]); // Dependensi kosong agar efek ini hanya dipanggil sekali saat komponen dipasang
-
+  
   // Menampilkan hasil data di console
   console.log('Data from server:', apiResponse);
 
@@ -266,6 +267,7 @@ const ProductTime = () => {
                               <option value="14:00">2 PM</option>
                               <option value="15:00">3 PM</option>
                               <option value="16:00">4 PM</option>
+                              <option value="17:00">5 PM</option>
                               {/* Add other C Time options as needed */}
                             </select>
                           </div>
@@ -338,7 +340,13 @@ const ProductTime = () => {
                                     15:00
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    Total [All Time]
+                                    16:00
+                                  </th>
+                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                    17:00
+                                  </th>
+                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                    TOTAL [ALL TIME]
                                   </th>
                                 </tr>
                                 {apiResponse[0] && apiResponse[0].length > 0 && apiResponse[0][0].FACTORY =='TOTAL' && (apiResponse[0][0].DAY !== 'TODAY' || apiResponse[0][0].DAY !== 'YESTERDAY') && (
@@ -384,6 +392,12 @@ const ProductTime = () => {
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                   {apiResponse[0][0]['15:00'] !== null && !isNaN(apiResponse[0][0]['15:00']) ? parseFloat(apiResponse[0][0]['15:00']).toLocaleString() : 0}
+                                  </th>
+                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                  {apiResponse[0][0]['16:00'] !== null && !isNaN(apiResponse[0][0]['16:00']) ? parseFloat(apiResponse[0][0]['16:00']).toLocaleString() : 0}
+                                  </th>
+                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                  {apiResponse[0][0]['17:00'] !== null && !isNaN(apiResponse[0][0]['17:00']) ? parseFloat(apiResponse[0][0]['17:00']).toLocaleString() : 0}
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                   {calculateTotal(apiResponse[0][0])}
@@ -433,6 +447,12 @@ const ProductTime = () => {
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                   {apiResponse[0][1]['15:00'] !== null && !isNaN(apiResponse[0][1]['15:00']) ? parseFloat(apiResponse[0][1]['15:00']).toLocaleString() : 0}
+                                  </th>
+                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                  {apiResponse[0][1]['16:00'] !== null && !isNaN(apiResponse[0][1]['16:00']) ? parseFloat(apiResponse[0][1]['16:00']).toLocaleString() : 0}
+                                  </th>
+                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                  {apiResponse[0][1]['17:00'] !== null && !isNaN(apiResponse[0][1]['17:00']) ? parseFloat(apiResponse[0][1]['17:00']).toLocaleString() : 0}
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                   {calculateTotal(apiResponse[0][1])}
@@ -492,6 +512,12 @@ const ProductTime = () => {
                                         {item['15:00'] !== null && !isNaN(item['15:00']) ? parseFloat(item['15:00']).toLocaleString() : 0}
                                       </td>
                                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
+                                      {item['16:00'] !== null && !isNaN(item['16:00']) ? parseFloat(item['16:00']).toLocaleString() : 0}
+                                      </td>
+                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
+                                        {item['17:00'] !== null && !isNaN(item['17:00']) ? parseFloat(item['17:00']).toLocaleString() : 0}
+                                      </td>
+                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 bg-orange-600" >
                                           {calculateTotal(item)}
                                       </td>
                                       

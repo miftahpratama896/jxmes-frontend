@@ -29,6 +29,8 @@ const navigation = [
       { name: 'Product - Nosew Mesin', href: '/ProductNosewMesin' },
       { name: 'Product - KK Material MO', href: '/ProductKKMaterial' },
       { name: 'Product - Material Setting Balance', href: '/ProductMaterialBalance' },
+      { name: 'Product - Sewing Mesin Counter', href: '/ProductSewingMesinCounter' },
+      { name: 'Product - Daily Prod Trend', href: '/ProductDailyProdTrend' },
     ]
   },
   { 
