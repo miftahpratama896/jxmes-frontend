@@ -204,7 +204,7 @@ const InventoryLongTerm = () => {
                 <p className="mt-2 text-sm text-gray-700">A list of all the Inventory [Long Term]</p>
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-4">
-                <label className="block text-sm font-medium leading-6 text-gray-900">STOCk DATE</label>
+                <label className="block text-sm font-medium leading-6 text-gray-900">STOCK DATE</label>
                 <input
                   type="date"
                   value={selectedDate}

@@ -40,7 +40,7 @@ const ProductTime = () => {
   const [updating, setUpdating] = useState(false); // State untuk menunjukkan apakah sedang dalam proses pembaruan
   const [autoUpdate, setAutoUpdate] = useState(false);
   const calculateTotal = (item) => {
-    const columnsToSum = ['07:00', '08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
+    const columnsToSum = getColumnNames();
   
     const total = columnsToSum.reduce((accumulator, column) => {
       const columnValue = item[column];
@@ -68,7 +68,7 @@ const ProductTime = () => {
   const [selectedFactory, setSelectedFactory] = useState('ALL');
   const [selectedYesdayDate, setSelectedYesdayDate] = useState(formattedYesterday);
   const [selectedTodayDate, setSelectedTodayDate] = useState(formattedToday);
-  const [selectedWC, setSelectedWC] = useState('SEWING');
+  const [selectedWC, setSelectedWC] = useState('Cutting');
   const [selectedCTime, setSelectedCTime] = useState('ALL');
   const [numColumns, setNumColumns] = useState(0);
  
@@ -121,9 +121,19 @@ const ProductTime = () => {
       // Pemanggilan pertama kali saat komponen dipasang
       callStoredProcedure();
     }
-  }, [autoUpdate,selectedFactory, selectedYesdayDate, selectedTodayDate, selectedWC, selectedCTime]); // Dependensi kosong agar efek ini hanya dipanggil sekali saat komponen dipasang
-  
-  // Menampilkan hasil data di console
+  }, [autoUpdate,selectedFactory, selectedYesdayDate, selectedTodayDate, selectedWC, selectedCTime]); 
+
+  const getColumnNames = () => {
+   if (apiResponse.length === 0) return [];
+   return Object.keys(apiResponse[0][0]).filter(key => key.match(/^\d{2}:\d{2}$/));
+  };
+
+  useEffect(() => {
+    const columns = getColumnNames();
+    setNumColumns(columns.length);
+  }, [apiResponse[0]]); // Jika data berubah, perbaharui jumlah kolom
+  const columns = getColumnNames();
+
   console.log('Data from server:', apiResponse);
 
   return (
@@ -315,36 +325,12 @@ const ProductTime = () => {
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                     DAY
                                   </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    07:00
+                                  {columns.map((columnName, index) => (
+                                  <th key={index} scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" style={{
+                                    backgroundColor:'#374151'}}>
+                                    {columnName}
                                   </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    08:00
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    09:00
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    10:00
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    11:00
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    13:00
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    14:00
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    15:00
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    16:00
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    17:00
-                                  </th>
+                                  ))}
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                     TOTAL [ALL TIME]
                                   </th>
@@ -369,36 +355,11 @@ const ProductTime = () => {
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                   {apiResponse[0][0].DAY}
                                   </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][0]['07:00'] !== null && !isNaN(apiResponse[0][0]['07:00']) ? parseFloat(apiResponse[0][0]['07:00']).toLocaleString() : 0}
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][0]['08:00'] !== null && !isNaN(apiResponse[0][0]['08:00']) ? parseFloat(apiResponse[0][0]['08:00']).toLocaleString() : 0}
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][0]['09:00'] !== null && !isNaN(apiResponse[0][0]['09:00']) ? parseFloat(apiResponse[0][0]['09:00']).toLocaleString() : 0}
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][0]['10:00'] !== null && !isNaN(apiResponse[0][0]['10:00']) ? parseFloat(apiResponse[0][0]['10:00']).toLocaleString() : 0}
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][0]['11:00'] !== null && !isNaN(apiResponse[0][0]['11:00']) ? parseFloat(apiResponse[0][0]['11:00']).toLocaleString() : 0}
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][0]['13:00'] !== null && !isNaN(apiResponse[0][0]['13:00']) ? parseFloat(apiResponse[0][0]['13:00']).toLocaleString() : 0}
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][0]['14:00'] !== null && !isNaN(apiResponse[0][0]['14:00']) ? parseFloat(apiResponse[0][0]['14:00']).toLocaleString() : 0}
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][0]['15:00'] !== null && !isNaN(apiResponse[0][0]['15:00']) ? parseFloat(apiResponse[0][0]['15:00']).toLocaleString() : 0}
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][0]['16:00'] !== null && !isNaN(apiResponse[0][0]['16:00']) ? parseFloat(apiResponse[0][0]['16:00']).toLocaleString() : 0}
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][0]['17:00'] !== null && !isNaN(apiResponse[0][0]['17:00']) ? parseFloat(apiResponse[0][0]['17:00']).toLocaleString() : 0}
-                                  </th>
+                                  {columns.map((columnName) => (
+                                        <th className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium sm:pl-6`}>
+                                          {apiResponse[0][0][columnName]?.toLocaleString()}
+                                        </th>
+                                  ))}
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                   {calculateTotal(apiResponse[0][0])}
                                   </th>
@@ -424,36 +385,11 @@ const ProductTime = () => {
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                   {apiResponse[0][1].DAY}
                                   </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][1]['07:00'] !== null && !isNaN(apiResponse[0][1]['07:00']) ? parseFloat(apiResponse[0][1]['07:00']).toLocaleString() : 0}
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][1]['08:00'] !== null && !isNaN(apiResponse[0][1]['08:00']) ? parseFloat(apiResponse[0][1]['08:00']).toLocaleString() : 0}
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][1]['09:00'] !== null && !isNaN(apiResponse[0][1]['09:00']) ? parseFloat(apiResponse[0][1]['09:00']).toLocaleString() : 0}
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][1]['10:00'] !== null && !isNaN(apiResponse[0][1]['10:00']) ? parseFloat(apiResponse[0][1]['10:00']).toLocaleString() : 0}
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][1]['11:00'] !== null && !isNaN(apiResponse[0][1]['11:00']) ? parseFloat(apiResponse[0][1]['11:00']).toLocaleString() : 0}
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][1]['13:00'] !== null && !isNaN(apiResponse[0][1]['13:00']) ? parseFloat(apiResponse[0][1]['13:00']).toLocaleString() : 0}
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][1]['14:00'] !== null && !isNaN(apiResponse[0][1]['14:00']) ? parseFloat(apiResponse[0][1]['14:00']).toLocaleString() : 0}
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][1]['15:00'] !== null && !isNaN(apiResponse[0][1]['15:00']) ? parseFloat(apiResponse[0][1]['15:00']).toLocaleString() : 0}
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][1]['16:00'] !== null && !isNaN(apiResponse[0][1]['16:00']) ? parseFloat(apiResponse[0][1]['16:00']).toLocaleString() : 0}
-                                  </th>
-                                  <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                  {apiResponse[0][1]['17:00'] !== null && !isNaN(apiResponse[0][1]['17:00']) ? parseFloat(apiResponse[0][1]['17:00']).toLocaleString() : 0}
-                                  </th>
+                                  {columns.map((columnName) => (
+                                        <th className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium sm:pl-6`}>
+                                          {apiResponse[0][1][columnName]?.toLocaleString()}
+                                        </th>
+                                  ))}
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                                   {calculateTotal(apiResponse[0][1])}
                                   </th>
@@ -487,36 +423,11 @@ const ProductTime = () => {
                                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.MODEL}</td>
                                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.GENDER}</td>
                                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.DAY}</td>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                        {item['07:00'] !== null && !isNaN(item['07:00']) ? parseFloat(item['07:00']).toLocaleString() : 0}
-                                      </td>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                        {item['08:00'] !== null && !isNaN(item['08:00']) ? parseFloat(item['08:00']).toLocaleString() : 0}
-                                      </td>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                        {item['09:00'] !== null && !isNaN(item['09:00']) ? parseFloat(item['09:00']).toLocaleString() : 0}
-                                      </td>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                        {item['10:00'] !== null && !isNaN(item['10:00']) ? parseFloat(item['10:00']).toLocaleString() : 0}
-                                      </td>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                        {item['11:00'] !== null && !isNaN(item['11:00']) ? parseFloat(item['11:00']).toLocaleString() : 0}
-                                      </td>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                        {item['13:00'] !== null && !isNaN(item['13:00']) ? parseFloat(item['13:00']).toLocaleString() : 0}
-                                      </td>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                      {item['14:00'] !== null && !isNaN(item['14:00']) ? parseFloat(item['14:00']).toLocaleString() : 0}
-                                      </td>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                        {item['15:00'] !== null && !isNaN(item['15:00']) ? parseFloat(item['15:00']).toLocaleString() : 0}
-                                      </td>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                      {item['16:00'] !== null && !isNaN(item['16:00']) ? parseFloat(item['16:00']).toLocaleString() : 0}
-                                      </td>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                        {item['17:00'] !== null && !isNaN(item['17:00']) ? parseFloat(item['17:00']).toLocaleString() : 0}
-                                      </td>
+                                      {columns.map((columnName) => (
+                                        <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium  sm:pl-6`}>
+                                          {item[columnName]}
+                                        </td>
+                                      ))}
                                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 bg-orange-600" >
                                           {calculateTotal(item)}
                                       </td>

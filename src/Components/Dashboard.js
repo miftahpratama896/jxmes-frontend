@@ -31,6 +31,8 @@ const navigation = [
       { name: 'Product - Material Setting Balance', href: '/ProductMaterialBalance' },
       { name: 'Product - Sewing Mesin Counter', href: '/ProductSewingMesinCounter' },
       { name: 'Product - Daily Prod Trend', href: '/ProductDailyProdTrend' },
+      { name: 'Product - Cutting Mesin Counter', href: '#' },
+      { name: 'Product - SPK Balance', href: '#' },
     ]
   },
   { 

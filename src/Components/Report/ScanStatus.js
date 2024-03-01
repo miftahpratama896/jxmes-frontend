@@ -847,7 +847,7 @@ function ScanStatus() {
                               </div>
                               )}
                                 <tbody className="divide-y divide-neutral-950 bg-white">
-                                {data.map((item, rowIndex) => (
+                                {data.slice(0, 500).map((item, rowIndex) => (
                                       <tr key={rowIndex}>
                                         <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
                                           {item.JX2_LINE}
