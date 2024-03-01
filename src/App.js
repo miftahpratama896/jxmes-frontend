@@ -21,6 +21,8 @@ import ProductKKMaterial from './Components/Product/ProductKKMaterial';
 import ProductMaterialBalance from './Components/Product/ProductMaterialBalance';
 import ProductSewingMesinCounter from './Components/Product/ProductSewingMesinCounter';
 import ProductDailyProdTrend from './Components/Product/ProductDailyProdTrend';
+import NotFound from './Components/NotFound';
+import ProductSPKBalance from './Components/Product/ProductSPKBalance';
 
 
 function App() {
@@ -30,6 +32,9 @@ function App() {
       <Switch>
         <Route exact path="/" >
           <Login />
+        </Route>
+        <Route exact path="/NotFound" >
+          <NotFound />
         </Route>
         <Route path="/Dashboard" >
             <Dashboard />
@@ -74,6 +79,10 @@ function App() {
         <Route path="/ProductDailyProdTrend" >
           <Dashboard/>
           <ProductDailyProdTrend />
+        </Route>
+        <Route path="/ProductSPKBalance" >
+          <Dashboard/>
+          <ProductSPKBalance />
         </Route>
         <Route path="/ProductResultTargetLine" >
           <Dashboard/>
