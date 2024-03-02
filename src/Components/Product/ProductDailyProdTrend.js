@@ -106,11 +106,23 @@ function ProductDailyProdTrend() {
     return Object.keys(data[0]).filter(key => key.match(/^\d{4}-\d{2}-\d{2}_\d+$/));
   };
 
+  const calculateColumnTotal = (columnName) => {
+    // Menggunakan reduce untuk menjumlahkan nilai-nilai dalam kolom columnName
+    const total = data.reduce((accumulator, currentItem) => {
+      return accumulator + currentItem[columnName];
+    }, 0);
+    
+    // Kembalikan total
+    return total;
+  };
+
   useEffect(() => {
     const columns = getColumnNames();
     setNumColumns(columns.length);
   }, [data]); // Jika data berubah, perbaharui jumlah kolom
   const columns = getColumnNames();
+
+
 
   console.log(data)
   return (
@@ -315,7 +327,17 @@ function ProductDailyProdTrend() {
                             AVG RATE 
                           </th>
                         </tr>
+                        <tr>
+                        <th scope="col" colSpan={3} className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
+                            TOTAL
+                        </th>
+                        {columns.map((columnName, index) => (
+                                  <th key={index} scope="col" className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium sm:pl-6`}>
+                                    {calculateColumnTotal(columnName).toLocaleString()}
+                                  </th>
+                        ))}
                         
+                        </tr>
                         
                       </thead>
                       {updating && (

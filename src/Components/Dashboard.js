@@ -22,6 +22,7 @@ const navigation = [
     href: '/ProductTime', 
     current: false,
     subItems: [
+      { name: 'Product - Detail', href: '/ProductDetail' },
       { name: 'Product - Time', href: '/ProductTime' },
       { name: 'Product - PCard', href: '/ProductPCard' },
       { name: 'Product - Result Target', href: '/ProductResultTargetLine' },
