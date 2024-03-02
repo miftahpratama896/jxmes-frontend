@@ -9,8 +9,8 @@ export default function Login() {
   const history = useHistory();
 
   const [formData, setFormData] = useState({
-    user_id: 'mesuser',
-    password: '1234'
+    user_id: 'admin',
+    password: 'pai2015'
   });
 
   const [notification, setNotification] = useState(null);
@@ -34,6 +34,8 @@ export default function Login() {
       const token = uuidv4();
       console.log('Token yang didapatkan:', token);
       localStorage.setItem('token', token);
+      localStorage.setItem('user_id', formData.user_id);
+      console.log(token, formData.user_id)
 
       // Redirect ke halaman Dashboard
       history.push('/Dashboard');

@@ -5,13 +5,14 @@ import Logo from "../../assets/img/New Logo White.png";
 
 function ProductDailyProdTrend() {
   useEffect(() => {
+    const user_id = localStorage.getItem('user_id');
     const sendDataToBackend = async () => {
       try {
         const data = {
           division: 'JXMES-WEB',
           menuName: 'PRODUCT',
           programName: 'PRODUCT - DAILY PROD TREND',
-          userID: 'mesuser',
+          userID: user_id,
         };
 
         // Kirim data ke backend
@@ -150,6 +151,14 @@ function ProductDailyProdTrend() {
          background-color: #B84600;
          z-index: 3;
        }
+
+       .sticky-header thead tr:nth-child(3) th {
+        position: sticky;
+        top: 97px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
+        background-color: #B84600;
+        z-index: 3;
+      }
+      
         .table-container {
           max-height: 70vh;
           max-width: 197vh;
@@ -336,7 +345,30 @@ function ProductDailyProdTrend() {
                                     {calculateColumnTotal(columnName).toLocaleString()}
                                   </th>
                         ))}
-                        
+                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
+                            0000
+                        </th>
+                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
+                            0000
+                        </th>
+                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
+                            0000
+                        </th>
+                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
+                            0000
+                        </th>
+                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
+                            0000
+                        </th>
+                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
+                            0000
+                        </th>
+                        <th scope="col"  className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
+                            0000
+                        </th>
+                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
+                            0000
+                        </th>
                         </tr>
                         
                       </thead>

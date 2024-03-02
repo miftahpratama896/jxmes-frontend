@@ -6,13 +6,14 @@ import * as XLSX from 'xlsx';
 
 function ScanStatus() {
   useEffect(() => {
+    const user_id = localStorage.getItem('user_id');
     const sendDataToBackend = async () => {
       try {
         const data = {
           division: 'JXMES-WEB',
           menuName: 'REPORT',
           programName: 'SETTING SEWING QTY',
-          userID: 'mesuser',
+          userID: user_id,
         };
 
         // Kirim data ke backend

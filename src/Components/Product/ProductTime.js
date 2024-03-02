@@ -5,13 +5,14 @@ import axios from 'axios';
 
 const ProductTime = () => {
   useEffect(() => {
+    const user_id = localStorage.getItem('user_id');
     const sendDataToBackend = async () => {
       try {
         const data = {
           division: 'JXMES-WEB',
           menuName: 'PRODUCT',
           programName: 'PRODUCT TIME',
-          userID: 'mesuser',
+          userID: user_id,
         };
 
         // Kirim data ke backend

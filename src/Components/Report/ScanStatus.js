@@ -11,13 +11,14 @@ import Logo from "../../assets/img/New Logo White.png";
 
 function ScanStatus() {
   useEffect(() => {
+    const user_id = localStorage.getItem('user_id');
     const sendDataToBackend = async () => {
       try {
         const data = {
           division: 'JXMES-WEB',
           menuName: 'REPORT',
           programName: 'SCAN STATUS JX2-JX',
-          userID: 'mesuser',
+          userID: user_id,
         };
 
         // Kirim data ke backend

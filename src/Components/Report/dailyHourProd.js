@@ -5,13 +5,14 @@ import Logo from "../../assets/img/New Logo White.png";
 
 function DailyHourProd() {
   useEffect(() => {
+    const user_id = localStorage.getItem('user_id');
     const sendDataToBackend = async () => {
       try {
         const data = {
           division: 'JXMES-WEB',
           menuName: 'REPORT',
           programName: 'DAILY HOUR PRODUCTION',
-          userID: 'mesuser',
+          userID: user_id,
         };
 
         // Kirim data ke backend

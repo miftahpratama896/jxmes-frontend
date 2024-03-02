@@ -32,9 +32,7 @@ const navigation = [
       { name: 'Product - Material Setting Balance', href: '/ProductMaterialBalance' },
       { name: 'Product - Sewing Mesin Counter', href: '/ProductSewingMesinCounter' },
       { name: 'Product - Daily Prod Trend', href: '/ProductDailyProdTrend' },
-      { name: 'Product - Cutting Mesin Counter', href: '/NotFound' },
       { name: 'Product - SPK Balance', href: 'ProductSPKBalance' },
-      { name: 'Product - Laminating', href: '/NotFound' },
     ]
   },
   { 
@@ -50,10 +48,7 @@ const navigation = [
     href: '/InventoryLongTerm', 
     current: false,
     subItems: [
-      { name: 'Inventory', href: '/NotFound' },
       { name: 'Inventory - Long Term', href: '/InventoryLongTerm' },
-      { name: 'Inventory - Mesin', href: '/NotFound' },
-      { name: 'Inventory - Summary', href: '/NotFound' },
     ]
   },
   { 

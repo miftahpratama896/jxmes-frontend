@@ -7,13 +7,14 @@ import Logo from "../../assets/img/New Logo White.png";
 
 function POBalance() {
   useEffect(() => {
+    const user_id = localStorage.getItem('user_id');
     const sendDataToBackend = async () => {
       try {
         const data = {
           division: 'JXMES-WEB',
           menuName: 'ORDER TRACKING',
           programName: 'PO BALANCE',
-          userID: 'mesuser',
+          userID: user_id,
         };
 
         // Kirim data ke backend
