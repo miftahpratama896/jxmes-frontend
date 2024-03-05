@@ -560,9 +560,15 @@ const [dateFrom, setDateFrom] = useState(formatDate(nextSunday));
                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.PO}</td>
                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.STYLE}</td>
                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.MODEL}</td>
-                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.OGAC}</td>
-                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.OGAC_UPDATE}</td>
-                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.ASSY_INPUT}</td>
+                            <td className="whitespace-nowrap text-center py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ">
+                              {item.OGAC ? new Date(item.OGAC).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-') : ''}
+                            </td>
+                            <td className="whitespace-nowrap text-center py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ">
+                              {item.OGAC_UPDATE ? new Date(item.OGAC_UPDATE).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-') : ''}
+                            </td>
+                            <td className="whitespace-nowrap text-center py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ">
+                              {item.ASSY_INPUT ? new Date(item.ASSY_INPUT).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-') : ''}
+                            </td>
                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.SPK_QTY.toLocaleString()}</td>
                             <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium ${item.CUTTING_BL < 0 ? 'text-red-500' : 'text-gray-900'} sm:pl-6`}>{item.CUTTING_BL.toLocaleString()}</td>
                             <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium ${item.SEWING_BL < 0 ? 'text-red-500' : 'text-gray-900'} sm:pl-6`}>{item.SEWING_BL.toLocaleString()}</td>

@@ -44,6 +44,14 @@ function ProductDailyProdTrend() {
   const [numColumns, setNumColumns] = useState(0);
   const [selectedFactory, setSelectedFactory] = useState('ALL');
   const [selectedWC, setSelectedWC] = useState('Sewing');
+  const [totalAllRowsPlan, setTotalAllRowsPlan] = useState(0);
+  const [totalAllRowsProd, setTotalAllRowsProd] = useState(0);
+  const [totalAllRowsDiff, setTotalAllRowsDiff] = useState(0);
+  const [totalAllRowsRate, setTotalAllRowsRate] = useState(0);
+  const [avgAllRowsPlan, setAvgAllRowsPlan] = useState(0);
+  const [avgAllRowsProd, setAvgAllRowsProd] = useState(0);
+  const [avgAllRowsDiff, setAvgAllRowsDiff] = useState(0);
+  const [avgAllRowsRate, setAvgAllRowsRate] = useState(0);
 
     // Format tanggal ke format YYYY-MM-DD
     const formatDate = (date) => {
@@ -123,6 +131,68 @@ function ProductDailyProdTrend() {
   }, [data]); // Jika data berubah, perbaharui jumlah kolom
   const columns = getColumnNames();
 
+  useEffect(() => {
+    let totalPlan = 0;
+    let totalProd = 0;
+    let totalDiff = 0;
+    let totalRate = 0;
+    let avgPlan = 0;
+    let avgProd = 0;
+    let avgDiff = 0;
+    let avgRate = 0;
+
+    const countColumnName_1 = columns.filter(columnName => columnName.endsWith('_1')).length;
+    console.log('Count 1', countColumnName_1)
+    const countColumnName_2 = columns.filter(columnName => columnName.endsWith('_2')).length;
+    const countColumnName_3 = columns.filter(columnName => columnName.endsWith('_3')).length;
+    data.forEach((item) => {
+
+      const totalColumnValuePlan = columns.reduce((totalPlan, columnName) => {
+        if (columnName.endsWith('_1')) { // Check if columnName ends with '_1'
+          return totalPlan + item[columnName];
+        }
+        return totalPlan;
+      }, 0);
+
+      const totalColumnValueProd = columns.reduce((totalProd, columnName) => {
+        if (columnName.endsWith('_2')) { // Check if columnName ends with '_1'
+          return totalProd + item[columnName];
+        }
+        return totalProd;
+      }, 0);
+
+      const totalColumnValueDiff = columns.reduce((totalDiff, columnName) => {
+        if (columnName.endsWith('_3')) { // Check if columnName ends with '_1'
+          return totalDiff + item[columnName];
+        }
+        return totalDiff;
+      }, 0);
+    
+      
+      
+      totalPlan += totalColumnValuePlan;
+      totalProd += totalColumnValueProd;
+      totalDiff += totalColumnValueDiff;
+      totalRate = ((totalProd / totalPlan) * 100).toFixed(2)
+
+      
+    });
+
+      avgPlan = (totalPlan / countColumnName_1)
+      avgProd = (totalProd / countColumnName_2)
+      avgDiff = (totalDiff / countColumnName_3)
+      avgRate = ((avgProd / avgPlan) * 100).toFixed(2)
+
+    setTotalAllRowsPlan(totalPlan);
+    setTotalAllRowsProd(totalProd);
+    setTotalAllRowsDiff(totalDiff);
+    setTotalAllRowsRate(totalRate);
+
+    setAvgAllRowsPlan(avgPlan);
+    setAvgAllRowsProd(avgProd);
+    setAvgAllRowsDiff(avgDiff);
+    setAvgAllRowsRate(avgRate);
+  }, [data, columns]);
 
 
   console.log(data)
@@ -134,28 +204,29 @@ function ProductDailyProdTrend() {
         .sticky-header thead th {
           position: sticky;
           top: 0;
-          background-color: #1F2937;
           z-index: 1;
-          color: #D1D5DB;
+          
         }
         .sticky-header th,
         .sticky-header td {
           white-space: nowrap;
         }
         .sticky-header thead tr:first-child th {
-         
+          background-color: #1F2937;
+          color: #D1D5DB;
         }
         .sticky-header thead tr:nth-child(2) th {
+         background-color: #1F2937;
+         color: #D1D5DB;
          position: sticky;
          top: 49px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-         background-color: #B84600;
          z-index: 3;
        }
 
        .sticky-header thead tr:nth-child(3) th {
         position: sticky;
         top: 97px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-        background-color: #B84600;
+        
         z-index: 3;
       }
       
@@ -178,11 +249,22 @@ function ProductDailyProdTrend() {
           </div>
           <div className="sm:flex sm:items-center py-3">
             <div className="sm:flex-auto">
-              <h1 className="text-base font-semibold leading-6 text-gray-900">PO Balance</h1>
+              <h1 className="text-base font-semibold leading-6 text-gray-900">Product</h1>
               <p className="mt-2 text-sm text-gray-700">
-                A list of all the PO Balance
+                A list of all the Product Daily Prod Trend
               </p>
             </div>
+            <div className="mt-4 sm:mt-0 sm:ml-4">
+                        <p className="bg-green-200 text-green-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0">
+                            RATE {'>'}= 100 
+                        </p>
+                        <p className="bg-yellow-200 text-yellow-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0">
+                            RATE {'>'}= 98 
+                        </p>
+                        <p className="bg-red-200 text-red-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0">
+                            RATE {'<'}= 97 
+                        </p>
+                        </div>
             <div className="mt-4 sm:mt-0 sm:ml-4">
                               <label htmlFor="productOption" className="block text-sm font-medium text-gray-700">
                                   DATE FROM
@@ -267,25 +349,28 @@ function ProductDailyProdTrend() {
                             JX2 LINE 
                           </th>
                           {columns.map((columnName, index) => {
-                                  // Memeriksa apakah columnName berakhir dengan "_1"
-                                  if (columnName.endsWith('_1')) {
-                                      const displayName = columnName.replace(/_1$/, '');
-                                      const bgColor = index % 2 === 1 ? '' : '#374151';
-                                      return (
-                                          <th 
-                                              colSpan={3}
-                                              key={index} 
-                                              scope="col" 
-                                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" 
-                                              style={{ backgroundColor:bgColor}}
-                                          >
-                                              {displayName}
-                                          </th>
-                                      );
-                                  }
-                                  // Jika tidak, maka tidak merender elemen <th>
-                                  return null;
-                              })}
+                                // Memeriksa apakah columnName berakhir dengan "_1"
+                                if (columnName.endsWith('_1')) {
+                                    const displayName = columnName.replace(/_1$/, '');
+                                    const bgColor = index % 2 === 1 ? '' : '#374151';
+                                    const dateParts = displayName.split('-');
+                                    const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+                                    return (
+                                        <th 
+                                            colSpan={3}
+                                            key={index} 
+                                            scope="col" 
+                                            className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" 
+                                            style={{ backgroundColor:bgColor}}
+                                        >
+                                            {formattedDate}
+                                        </th>
+                                    );
+                                }
+                                // Jika tidak, maka tidak merender elemen <th>
+                                return null;
+                            })}
+
                             <th scope="col"  colSpan={4} className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                               TOTAL
                             </th>
@@ -323,51 +408,51 @@ function ProductDailyProdTrend() {
                           <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
                             TOTAL RATE 
                           </th>
-                          <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                          <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" style={{ backgroundColor: '#374151' }}>
                             AVG PLAN 
                           </th>
-                          <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
+                          <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" style={{ backgroundColor: '#374151' }}>
                             AVG PROD 
                           </th>
-                          <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
+                          <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" style={{ backgroundColor: '#374151' }}>
                             AVG DIFF 
                           </th>
-                          <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
+                          <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" style={{ backgroundColor: '#374151' }}>
                             AVG RATE 
                           </th>
                         </tr>
                         <tr>
-                        <th scope="col" colSpan={3} className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
+                        <th scope="col" colSpan={3} className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-500" >
                             TOTAL
                         </th>
                         {columns.map((columnName, index) => (
-                                  <th key={index} scope="col" className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium sm:pl-6`}>
+                                  <th key={index} scope="col" className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium bg-orange-500 sm:pl-6`}>
                                     {calculateColumnTotal(columnName).toLocaleString()}
                                   </th>
                         ))}
-                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
-                            0000
+                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-500" >
+                            {totalAllRowsPlan.toLocaleString()}
                         </th>
-                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
-                            0000
+                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-500" >
+                           {totalAllRowsProd.toLocaleString()}
                         </th>
-                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
-                            0000
+                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-500" >
+                           {totalAllRowsDiff.toLocaleString()}
                         </th>
-                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
-                            0000
+                        <th scope="col" className={`px-3 py-3.5 text-center text-sm font-semibold text-gray-900 ${totalAllRowsRate >= 100 ? 'bg-green-400' : totalAllRowsRate >= 98 ? 'bg-yellow-400' : 'bg-red-400'} `} >
+                          {totalAllRowsRate}%
                         </th>
-                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
-                            0000
+                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-500" >
+                            {avgAllRowsPlan.toLocaleString()}
                         </th>
-                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
-                            0000
+                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-500" >
+                           {avgAllRowsProd.toLocaleString()}
                         </th>
-                        <th scope="col"  className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
-                            0000
+                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-500" >
+                           {avgAllRowsDiff.toLocaleString()}
                         </th>
-                        <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
-                            0000
+                        <th scope="col" className={`px-3 py-3.5 text-center text-sm font-semibold text-gray-900 ${totalAllRowsRate >= 100 ? 'bg-green-400' : totalAllRowsRate >= 98 ? 'bg-yellow-400' : 'bg-red-400'} `} >
+                          {avgAllRowsRate}%
                         </th>
                         </tr>
                         
@@ -383,7 +468,7 @@ function ProductDailyProdTrend() {
                         )}
                       <tbody className="divide-y divide-neutral-950 bg-white">
                         
-                      {data.map((item, index) => {
+                      {data?.map((item, index) => {
                           let totalPlan = 0; // variabel untuk menyimpan total penjumlahan
                           let totalProd = 0;
                           let totalDiff = 0;
@@ -393,6 +478,7 @@ function ProductDailyProdTrend() {
                           let avgDiff = 0;
                           let avgRate = 0;
                           const countColumnName_1 = columns.filter(columnName => columnName.endsWith('_1')).length;
+                          console.log('Count 2', countColumnName_1)
                           const countColumnName_2 = columns.filter(columnName => columnName.endsWith('_2')).length;
                           const countColumnName_3 = columns.filter(columnName => columnName.endsWith('_3')).length;
                           return (
@@ -416,9 +502,9 @@ function ProductDailyProdTrend() {
                                         totalDiff += valueDiff; // menambahkan nilai ke total
                                       }
                                       totalRate = ((totalProd / totalPlan) * 100).toFixed(2)
-                                      avgPlan = (totalPlan / countColumnName_1).toFixed(0)
-                                      avgProd = (totalProd / countColumnName_2).toFixed(0)
-                                      avgDiff = (totalDiff / countColumnName_3).toFixed(0)
+                                      avgPlan = (totalPlan / countColumnName_1)
+                                      avgProd = (totalProd / countColumnName_2)
+                                      avgDiff = (totalDiff / countColumnName_3)
                                       avgRate = ((avgProd / avgPlan) * 100).toFixed(2)
                                       return (
                                           <td key={colIndex} className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium sm:pl-6`}>

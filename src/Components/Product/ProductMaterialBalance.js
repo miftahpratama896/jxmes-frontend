@@ -466,7 +466,9 @@ const ProductMaterialBalance = () => {
                             <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 ${item.BALANCE === 0 ? 'bg-green-500' : 'bg-red-500'}`}>
                               {item.BALANCE}
                             </td>
-                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{item.RECD_DATE}</td>
+                            <td className="whitespace-nowrap text-center py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 ">
+                              {item.RECD_DATE ? new Date(item.RECD_DATE).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-') : ''}
+                            </td>
                           </tr>
                         ))}
                       </tbody>

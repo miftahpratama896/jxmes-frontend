@@ -54,7 +54,7 @@ function ScanStatus() {
   }
 
   const [fromDate, setfromDate] = useState(yesterday.toISOString().split('T')[0]);
-  const [toDate, settoDate] = useState(new Date().toISOString().split('T')[0]);
+  const [toDate, settoDate] = useState(yesterday.toISOString().split('T')[0]);
   const [totalScanWhInput, setTotalScanWhInput] = useState(0);
   const [totalScanWhOutput, setTotalScanWhOutput] = useState(0);
   const [totalScanWhLoading, setTotalScanWhLoading] = useState(0);
@@ -877,20 +877,33 @@ function ScanStatus() {
                                         <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
                                           {item.BARCODE}
                                         </td>
-                                        <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
-                                          {item.SCAN_WH_INPUT && item.SCAN_WH_INPUT.replace('T', ' ').replace('.000Z', '')}
+                                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-center text-sm font-medium text-gray-900 sm:pl-6">
+                                          {new Date(item.SCAN_WH_INPUT && item.SCAN_WH_INPUT.replace('T', ' ').replace('.000Z', '')).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')} {' '}
+                                          {new Date(item.SCAN_WH_INPUT && item.SCAN_WH_INPUT.replace('T', ' ').replace('.000Z', '')).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                                         </td>
-                                        <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
-                                          {item.SCAN_WH_OUTPUT && item.SCAN_WH_OUTPUT.replace('T', ' ').replace('.000Z', '')}
+                                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-center text-sm font-medium text-gray-900 sm:pl-6">
+                                          {new Date(item.SCAN_WH_OUTPUT && item.SCAN_WH_OUTPUT.replace('T', ' ').replace('.000Z', '')).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')} {' '}
+                                          {new Date(item.SCAN_WH_OUTPUT && item.SCAN_WH_OUTPUT.replace('T', ' ').replace('.000Z', '')).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                                         </td>
-                                        <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
-                                          {item.SCAN_LOADING && item.SCAN_LOADING.replace('T', ' ').replace('.000Z', '')}
+                                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-center text-sm font-medium text-gray-900 sm:pl-6">
+                                          {new Date(item.SCAN_LOADING && item.SCAN_LOADING.replace('T', ' ').replace('.000Z', '')).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')} {' '}
+                                          {new Date(item.SCAN_LOADING && item.SCAN_LOADING.replace('T', ' ').replace('.000Z', '')).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                                         </td>
-                                        <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
-                                          {item.JX_INPUT && item.JX_INPUT.replace('T', ' ').replace('.000Z', '')}
+                                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-center text-sm font-medium text-gray-900 sm:pl-6">
+                                            {item.JX_INPUT &&
+                                                <>
+                                                    {new Date(item.JX_INPUT.replace('T', ' ').replace('.000Z', '')).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')} {' '}
+                                                    {new Date(item.JX_INPUT.replace('T', ' ').replace('.000Z', '')).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                                                </>
+                                            }
                                         </td>
-                                        <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
-                                          {item.JX_ASM_INPUT && item.JX_ASM_INPUT.replace('T', ' ').replace('.000Z', '')}
+                                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-center text-sm font-medium text-gray-900 sm:pl-6">
+                                            {item.JX_ASM_INPUT &&
+                                                <>
+                                                    {new Date(item.JX_ASM_INPUT && item.JX_ASM_INPUT.replace('T', ' ').replace('.000Z', '')).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')} {' '}
+                                                    {new Date(item.JX_ASM_INPUT && item.JX_ASM_INPUT.replace('T', ' ').replace('.000Z', '')).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                                                </>
+                                            }
                                         </td>
                                       </tr>
                                   ))}

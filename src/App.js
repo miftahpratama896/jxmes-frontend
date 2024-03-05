@@ -24,6 +24,7 @@ import ProductDailyProdTrend from './Components/Product/ProductDailyProdTrend';
 import NotFound from './Components/NotFound';
 import ProductSPKBalance from './Components/Product/ProductSPKBalance';
 import ProductDetail from './Components/Product/ProductDetail';
+import ProductLaminating from './Components/Product/ProductLaminating';
 
 
 function App() {
@@ -80,6 +81,10 @@ function App() {
         <Route path="/ProductSewingMesinCounter" >
           <Dashboard/>
           <ProductSewingMesinCounter />
+        </Route>
+        <Route path="/ProductLaminating" >
+          <Dashboard/>
+          <ProductLaminating />
         </Route>
         <Route path="/ProductDailyProdTrend" >
           <Dashboard/>

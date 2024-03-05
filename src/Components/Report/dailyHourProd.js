@@ -221,6 +221,17 @@ function DailyHourProd() {
                         </div>
                         
                         <div className="sm:flex sm:items-center">
+                        <div className="mt-4 sm:mt-0 sm:ml-4">
+                        <p className="bg-green-200 text-green-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0">
+                            RATE {'>'}= 100 
+                        </p>
+                        <p className="bg-yellow-200 text-yellow-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0">
+                            RATE {'>'}= 98 
+                        </p>
+                        <p className="bg-red-200 text-red-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0">
+                            RATE {'<'}= 97 
+                        </p>
+                        </div>
                           <div className="mt-4 sm:mt-0 sm:ml-4">
                               <label htmlFor="plant" className="block text-sm font-medium text-gray-700">
                                 PLANT
@@ -377,13 +388,13 @@ function DailyHourProd() {
                                     {calculateColumnTotal(columnName).toLocaleString()}
                                   </th>
                                 ))}
-                                  <th scope="col" className={`px-3 py-3.5 text-center text-sm font-semibold text-gray-900 ${averagePercentage >= 100 ? 'bg-green-400' : averagePercentage >= 97 ? 'bg-yellow-400' : 'bg-red-400'} sm:pl-6`}>
+                                  <th scope="col" className={`px-3 py-3.5 text-center text-sm font-semibold text-gray-900 ${averagePercentage >= 100 ? 'bg-green-400' : averagePercentage >= 98 ? 'bg-yellow-400' : 'bg-red-400'} sm:pl-6`}>
                                     {totalAllRows.toLocaleString() }
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-700 ">
                                     {averagePercentage.toFixed(2)}%
                                   </th>
-                                  <th scope="col" className={`px-3 py-3.5 text-center text-sm font-semibold text-gray-900 ${TotalAvgPercent >= 100 ? 'bg-green-400' : TotalAvgPercent >= 97 ? 'bg-yellow-400' : 'bg-red-400'} sm:pl-6`}>
+                                  <th scope="col" className={`px-3 py-3.5 text-center text-sm font-semibold text-gray-900 ${TotalAvgPercent >= 100 ? 'bg-green-400' : TotalAvgPercent >= 98 ? 'bg-yellow-400' : 'bg-red-400'} sm:pl-6`}>
                                     {TotalAvgHour.toLocaleString()}
                                   </th>
                                   <th scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-700">
@@ -440,11 +451,11 @@ function DailyHourProd() {
                                         </td>
                                       ))}
 
-                                      <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium ${percentage >= 100 ? 'bg-green-400' : percentage >= 97 ? 'bg-yellow-400' : 'bg-red-400'} sm:pl-6`}>
+                                      <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium ${percentage >= 100 ? 'bg-green-400' : percentage >= 98 ? 'bg-yellow-400' : 'bg-red-400'} sm:pl-6`}>
                                         {totalColumnValue.toLocaleString()}
                                       </td>
                                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{percentage}%</td>
-                                      <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium ${avgHour >= 100 ? 'bg-green-400' : avgHour >= 97 ? 'bg-yellow-400' : 'bg-red-400'} sm:pl-6`}>
+                                      <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium ${avgHour >= 100 ? 'bg-green-400' : avgHour >= 98 ? 'bg-yellow-400' : 'bg-red-400'} sm:pl-6`}>
                                         {avgHourValue}</td>
                                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">{avgHour}%</td>
                                     </tr>

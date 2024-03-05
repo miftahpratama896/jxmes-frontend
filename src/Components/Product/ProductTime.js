@@ -213,7 +213,7 @@ const ProductTime = () => {
                           {/* Combobox for selecting Yesterday Date */}
                           <div className="mt-4 sm:mt-0 sm:ml-4">
                             <label htmlFor="yesdayDate" className="block text-sm font-medium text-gray-700">
-                              YESTERDAY DATE
+                              FROM DATE
                             </label>
                             <input
                               type="date"
@@ -227,7 +227,7 @@ const ProductTime = () => {
                           {/* Combobox for selecting Today Date */}
                           <div className="mt-4 sm:mt-0 sm:ml-4">
                             <label htmlFor="todayDate" className="block text-sm font-medium text-gray-700">
-                              TODAY DATE
+                              TO DATE
                             </label>
                             <input
                               type="date"
@@ -327,8 +327,7 @@ const ProductTime = () => {
                                     DAY
                                   </th>
                                   {columns.map((columnName, index) => (
-                                  <th key={index} scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" style={{
-                                    backgroundColor:'#374151'}}>
+                                  <th key={index} scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
                                     {columnName}
                                   </th>
                                   ))}
@@ -409,7 +408,7 @@ const ProductTime = () => {
                               {error && <div style={{ color: 'red' }}>{error}</div>}
                               {apiResponse && apiResponse.length > 0 ? (
                                 <tbody className="divide-y divide-neutral-950 bg-white">
-                                  {apiResponse[0].map((item, index) => item.FACTORY !== 'TOTAL' && (
+                                  {apiResponse[0]?.map((item, index) => item.FACTORY !== 'TOTAL' && (
                                     <tr
                                     key={index}
                                     className={`${

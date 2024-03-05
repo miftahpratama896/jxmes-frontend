@@ -9,8 +9,8 @@ export default function Login() {
   const history = useHistory();
 
   const [formData, setFormData] = useState({
-    user_id: 'admin',
-    password: 'pai2015'
+    user_id: 'mesuser',
+    password: '1234'
   });
 
   const [notification, setNotification] = useState(null);

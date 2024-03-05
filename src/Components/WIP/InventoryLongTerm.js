@@ -573,8 +573,9 @@ const InventoryLongTerm = () => {
                               if(shouldDisplay) {
                                 return (
                               <tr key={index}>
-                                <td className="whitespace-nowrap text-center py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 ">
-                                  {item.SCAN_DATE}
+                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-center text-sm font-medium text-gray-900 sm:pl-6">
+                                  {new Date(item.SCAN_DATE).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')} {' '}
+                                  {new Date(item.SCAN_DATE).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                                 </td>
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                   {item.WC}

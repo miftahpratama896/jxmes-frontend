@@ -636,8 +636,7 @@ function ProductSPKBalance() {
                             TOTAL 
                           </th>
                            {columns.map((columnName, index) => (
-                                  <th key={index} scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" style={{
-                                    backgroundColor:'#374151'}}>
+                                  <th key={index} scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900" >
                                     {columnName}
                                   </th>
                             ))}

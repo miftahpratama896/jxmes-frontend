@@ -274,6 +274,17 @@ const ProductResultTargetModel = () => {
                 <p className="mt-2 text-sm text-gray-700">A list of all the Product [Result - Target]</p>
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-4">
+                        <p className="bg-green-200 text-green-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0">
+                            RATE {'>'}= 100 
+                        </p>
+                        <p className="bg-yellow-200 text-yellow-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0">
+                            RATE {'>'}= 98 
+                        </p>
+                        <p className="bg-red-200 text-red-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0">
+                            RATE {'<'}= 97 
+                        </p>
+                        </div>
+              <div className="mt-4 sm:mt-0 sm:ml-4">
                 <label htmlFor="productOption" className="block text-sm font-medium text-gray-700">
                   DATE FROM
                 </label>
@@ -392,7 +403,7 @@ const ProductResultTargetModel = () => {
                           <tr>
                             {dynamicColumns.map((column, index) => (
                               <React.Fragment key={index}>
-                               <th
+                                <th
                                   scope="col"
                                   className="py-3.5 pl-4 pr-3 text-sm font-semibold text-gray-900 sm:pl-6 text-center"
                                   style={{
@@ -405,11 +416,15 @@ const ProductResultTargetModel = () => {
                                 >
                                   {column.endsWith('_1') || column.endsWith('_3') ? (
                                     <span style={{ color: 'rgba(0, 0, 0, 0)' }}>okay</span>
-                                    ) : column.replace(/_2$/, '')}
-                              </th>
-                            </React.Fragment>
-                            ))}  
+                                  ) : (
+                                    // Ubah format tanggal dari YYYY-MM-DD menjadi DD-MM-YYYY
+                                    new Date(column.replace(/_2$/, '')).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')
+                                  )}
+                                </th>
+                              </React.Fragment>
+                            ))}
                           </tr>
+
                           {data.map((item, index) =>
                                       index === 0 ? (
                             <tr key={index}>
@@ -516,7 +531,7 @@ const ProductResultTargetModel = () => {
                           </div>
                         )}
                         <tbody className="divide-y divide-neutral-950 bg-white">
-                        {data.map((item, index) =>
+                        {data?.map((item, index) =>
                                       index !== 0 ? (
                             <tr key={index}>
                               <td className={`sticky-first-row bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6 ${index === 0 ? 'bg-yellow-500' : ''}`}>

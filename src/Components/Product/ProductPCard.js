@@ -926,16 +926,21 @@ function ProductPCard() {
                                         <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
                                           {item.PCARD_NO}
                                         </td>
-                                        <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
-                                          {item.ASSY_DATE}
+                                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900">
+                                          {new Date(item.ASSY_DATE).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')}
                                         </td>
-                                        <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
-                                          {item.INPUT_DATE}
+                                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-center text-sm font-medium text-gray-900 sm:pl-6">
+                                          {new Date(item.INPUT_DATE).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')} {' '}
+                                          {new Date(item.INPUT_DATE).toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                                         </td>
-                                        <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
-                                          {item.OUTPUT_DATE}
-                                        </td>
-                                        
+                                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-center text-sm font-medium text-gray-900 sm:pl-6">
+                                            {item.OUTPUT_DATE ? (
+                                              <>
+                                                {new Date(item.OUTPUT_DATE).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')} {' '}
+                                                {new Date(item.OUTPUT_DATE).toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                                              </>
+                                            ) : null}
+                                          </td>   
                                       </tr>
                                   ))}
                                 </tbody>
