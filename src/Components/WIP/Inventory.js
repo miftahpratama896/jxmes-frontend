@@ -5,15 +5,15 @@ import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { Combobox } from "@headlessui/react";
 import Logo from "../../assets/img/New Logo White.png";
 
-const ProductDetail = () => {
+const Inventory = () => {
   useEffect(() => {
     const user_id = localStorage.getItem("user_id");
     const sendDataToBackend = async () => {
       try {
         const data = {
           division: "JXMES-WEB",
-          menuName: "PRODUCT",
-          programName: "PRODUCT - DETAIL;",
+          menuName: "INVENTORY",
+          programName: "MAIN INVENTORY;",
           userID: user_id,
         };
 
@@ -27,7 +27,7 @@ const ProductDetail = () => {
         console.error("Error:", error);
       }
     };
-
+ 
     // Panggil fungsi untuk mengirim data ke backend
     sendDataToBackend();
   }, []);
@@ -45,37 +45,19 @@ const ProductDetail = () => {
   const [data, setData] = useState([]);
   const [autoUpdate, setAutoUpdate] = useState(false);
   const [updating, setUpdating] = useState(false);
+  const [numColumns, setNumColumns] = useState(0);
+  const [totalAllRows, setTotalAllRows] = useState(0);
   const [selectedFactory, setSelectedFactory] = useState("ALL");
   const [selectedWC, setSelectedWC] = useState("Cutting");
-  const [totalAllRows, setTotalAllRows] = useState(0);
-  const [numColumns, setNumColumns] = useState(0);
   const [selectedJXLine, setSelectedJXLine] = useState("ALL");
   const [filteredJXLineOptions, setFilteredJXLineOptions] = useState([]);
+  const [release, setRelease] = useState(" ");
   const [selectedStyle, setSelectedStyle] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
   const [filteredStyleOptions, setFilteredStyleOptions] = useState([]);
   const [filteredModelOptions, setFilteredModelOptions] = useState([]);
   const [selectedGender, setSelectedGender] = useState("ALL");
   const [filteredGenderOptions, setFilteredGenderOptions] = useState([]);
-  const [selectedFilter, setSelectedFilter] = useState("");
-  const [release, setRelease] = useState(" ");
-
-  // Format tanggal ke format YYYY-MM-DD
-  const formatDate = (date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
-  // Mendapatkan tanggal sekarang
-  const currentDate = new Date();
-
-  // Menetapkan dateFrom ke hari Minggu berikutnya dengan tanggal hari ini
-  const nextSunday = new Date(currentDate);
-  const [dateFrom, setDateFrom] = useState(formatDate(nextSunday));
-
-  // Menetapkan dateTo ke tanggal hari ini
-  const [dateTo, setDateTo] = useState(formatDate(nextSunday));
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -100,6 +82,18 @@ const ProductDetail = () => {
     setSelectedGender(selectedValue);
   };
 
+  // Format tanggal ke format YYYY-MM-DD
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+  // Mendapatkan tanggal sekarang
+  const currentDate = new Date();
+
+  const [dateFrom, setDateFrom] = useState(formatDate(currentDate));
+
   const convertToCustomFormat = (dateString) => {
     if (dateString.trim() === "") {
       return ""; // Jika release adalah string kosong, kembalikan string kosong
@@ -117,27 +111,20 @@ const ProductDetail = () => {
     try {
       setUpdating(true);
       const sanitizedStyle = selectedStyle.replace(/-/g, "");
-      const response = await axios.get(
-        "http://172.16.200.28:3000/product-detail",
-        {
-          params: {
-            DATEFROM: dateFrom,
-            DATETO: dateTo,
-            WC: selectedWC,
-            TYPE: selectedFilter,
-            SCAN_LINE: selectedJXLine,
-            RLS: convertedRelease,
-            STYLE_NAME: selectedModel,
-            STYLE: sanitizedStyle,
-            GENDER: selectedGender,
-            C_CEK: 0,
-            PLANT: selectedFactory,
-          },
-        }
-      );
-      setData(response.data);
+      const response = await axios.post("http://172.16.200.28:3000/inventory", {
+        STOCK_DATE: dateFrom,
+        PLANT: selectedFactory,
+        WC: selectedWC,
+        SCAN_LINE: selectedJXLine,
+        RLS: convertedRelease,
+        STYLE: sanitizedStyle,
+        STYLE_NAME: selectedModel,
+        GENDER: selectedGender,
+        C_CEK: 1,
+      });
+      setData(response.data); // Menyimpan data dari prosedur ke state
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error:", error);
     } finally {
       setUpdating(false);
     }
@@ -164,21 +151,19 @@ const ProductDetail = () => {
     return () => clearInterval(intervalId);
   }, [
     autoUpdate,
-    dateFrom,
-    dateTo,
-    selectedWC,
     selectedFactory,
+    selectedWC,
+    dateFrom,
+    release,
     selectedJXLine,
     selectedStyle,
     selectedModel,
     selectedGender,
-    selectedFilter,
-    release,
   ]);
 
   const getColumnNames = () => {
     if (data.length === 0) return [];
-    return Object.keys(data[0][0]).filter((key) => key.match(/^S\d{2}$/));
+    return Object.keys(data[0]).filter((key) => key.match(/^S\d{2}$/));
   };
 
   useEffect(() => {
@@ -190,7 +175,7 @@ const ProductDetail = () => {
   // Fungsi untuk menghitung total dari kolom tertentu
   const calculateColumnTotal = (columnName) => {
     // Menggunakan reduce untuk menjumlahkan nilai-nilai dalam kolom columnName
-    const total = data[0].reduce((accumulator, currentItem) => {
+    const total = data.reduce((accumulator, currentItem) => {
       return accumulator + currentItem[columnName];
     }, 0);
 
@@ -201,7 +186,7 @@ const ProductDetail = () => {
   useEffect(() => {
     let total = 0;
 
-    data[0]?.forEach((item) => {
+    data?.forEach((item) => {
       const totalColumnValue = columns.reduce((total, columnName) => {
         return total + item[columnName];
       }, 0);
@@ -214,30 +199,23 @@ const ProductDetail = () => {
 
   useEffect(() => {
     if (data.length > 0) {
-      const uniqueJXLineOptions = [
-        ...new Set(data[0].map((item) => item.SCAN_CELL)),
-      ];
+      const uniqueJXLineOptions = [...new Set(data.map((item) => item.LINE))];
       setFilteredJXLineOptions(uniqueJXLineOptions);
 
       const uniqueModelOptions = [
-        ...new Set(data[0].map((item) => item.STYLE_NAME)),
+        ...new Set(data.map((item) => item.STYLE_NAME)),
       ];
       setFilteredModelOptions(uniqueModelOptions);
 
-      const uniqueStyleOptions = [
-        ...new Set(data[0].map((item) => item.STYLE)),
-      ];
+      const uniqueStyleOptions = [...new Set(data.map((item) => item.STYLE))];
       setFilteredStyleOptions(uniqueStyleOptions);
 
-      const uniqueGenderOptions = [
-        ...new Set(data[0].map((item) => item.GENDER)),
-      ];
+      const uniqueGenderOptions = [...new Set(data.map((item) => item.GENDER))];
       setFilteredGenderOptions(uniqueGenderOptions);
     }
   }, [data]);
 
   console.log(data);
-
   return (
     <>
       <style>
@@ -310,16 +288,16 @@ const ProductDetail = () => {
               <div className="sm:flex-auto">
                 <div className="smt-4 sm:mt-0 sm:ml-4">
                   <h1 className="text-base font-semibold leading-6 text-gray-900">
-                    Product
+                    WIP
                   </h1>
                   <p className="mt-2 text-sm text-gray-700">
-                    A list of all the Product - Detail
+                    A list of all the Main Inventory
                   </p>
                 </div>
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-4">
                 <label className="block text-sm font-medium leading-6 text-gray-900">
-                  DATE FROM
+                  STOCK DATE
                 </label>
                 <input
                   type="date"
@@ -328,18 +306,6 @@ const ProductDetail = () => {
                   className="W-full z-10 mt-1 rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
-              <div className="mt-4 sm:mt-0 sm:ml-4">
-                <label className="block text-sm font-medium leading-6 text-gray-900">
-                  DATE TO
-                </label>
-                <input
-                  type="date"
-                  value={dateTo}
-                  onChange={(e) => setDateTo(e.target.value)}
-                  className="W-full z-10 mt-1 rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-
               <div className="mt-4 sm:mt-0 sm:ml-4">
                 <label
                   htmlFor="plant"
@@ -379,28 +345,6 @@ const ProductDetail = () => {
                   <option value="W/H">W/H</option>
                 </select>
               </div>
-              {selectedWC !== "Cutting" && (
-                <div className="mt-4 sm:mt-0 sm:ml-4">
-                  <label
-                    htmlFor="filter"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    TYPE
-                  </label>
-                  <select
-                    id="filter"
-                    name="filter"
-                    onChange={(e) => setSelectedFilter(e.target.value)}
-                    value={selectedFilter}
-                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
-                  >
-                    <option value="">ALL</option>
-                    <option value="INPUT">INPUT</option>
-                    <option value="OUTPUT">OUTPUT</option>
-                    {/* Add other factory options as needed */}
-                  </select>
-                </div>
-              )}
               <div className="mt-4 sm:mt-0 sm:ml-4">
                 <label className="block text-sm font-medium leading-6 text-gray-900">
                   RELEASE
@@ -533,7 +477,6 @@ const ProductDetail = () => {
                   </Combobox>
                 </div>
               )}
-
               <div className="mt-4 sm:mt-0 sm:ml-4">
                 <Combobox
                   as="div"
@@ -643,7 +586,6 @@ const ProductDetail = () => {
                   </div>
                 </Combobox>
               </div>
-
               <div className="mt-4 sm:mt-0 sm:ml-4">
                 <Combobox
                   as="div"
@@ -899,14 +841,14 @@ const ProductDetail = () => {
                               rowSpan={6}
                               className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
                             >
-                              SCAN DATE
+                              STOCK DATE
                             </th>
                             <th
                               scope="col"
                               rowSpan={6}
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
-                              PLANT
+                              WORK CENTER
                             </th>
                             {selectedWC !== "Cutting" && (
                               <th
@@ -917,27 +859,15 @@ const ProductDetail = () => {
                                 LINE
                               </th>
                             )}
-                            <th
-                              scope="col"
-                              rowSpan={6}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
-                            >
-                              JX LINE
-                            </th>
-                            <th
-                              scope="col"
-                              rowSpan={6}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
-                            >
-                              WORK CENTER
-                            </th>
-                            <th
-                              scope="col"
-                              rowSpan={6}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
-                            >
-                              TYPE
-                            </th>
+                            {selectedWC === "Cutting" && (
+                              <th
+                                scope="col"
+                                rowSpan={6}
+                                className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              >
+                                JX LINE
+                              </th>
+                            )}
                             <th
                               scope="col"
                               rowSpan={6}
@@ -1494,12 +1424,11 @@ const ProductDetail = () => {
                           <tr>
                             <th
                               scope="col"
-                              colSpan={selectedWC !== "Cutting" ? 10 : 9}
+                              colSpan={7}
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
                               TOTAL
                             </th>
-
                             <th
                               scope="col"
                               className={`px-3 py-3.5 text-center text-sm font-semibold text-gray-900  sm:pl-6`}
@@ -1529,7 +1458,7 @@ const ProductDetail = () => {
                           </div>
                         )}
                         <tbody className="divide-y divide-neutral-950 bg-white">
-                          {data[0]?.map((item, index) => {
+                          {data?.map((item, index) => {
                             const totalColumnValue = columns.reduce(
                               (total, columnName) => {
                                 return total + item[columnName];
@@ -1540,7 +1469,7 @@ const ProductDetail = () => {
                             return (
                               <tr key={index}>
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900">
-                                  {new Date(item.SCAN_DATE)
+                                  {new Date(item.STCOK_DATE)
                                     .toLocaleDateString("en-GB", {
                                       day: "2-digit",
                                       month: "2-digit",
@@ -1550,21 +1479,10 @@ const ProductDetail = () => {
                                 </td>
 
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
-                                  {item.PLANT}
-                                </td>
-                                {selectedWC !== "Cutting" && (
-                                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
-                                    {item.SCAN_CELL}
-                                  </td>
-                                )}
-                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
-                                  {item.JX_CELL}
+                                  {item.WC}
                                 </td>
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
-                                  {item.POPD_OPCD}
-                                </td>
-                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
-                                  {item.TYPE}
+                                  {item.LINE}
                                 </td>
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
                                   {item.RELEASE}
@@ -1620,4 +1538,4 @@ const ProductDetail = () => {
   );
 };
 
-export default ProductDetail;
+export default Inventory;

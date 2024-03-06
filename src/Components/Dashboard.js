@@ -1,96 +1,126 @@
-import { useState, useEffect  } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Logo from "../assets/img/New Logo White.png";
-import { Fragment } from 'react';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { useHistory } from 'react-router-dom';
-import Person from "../assets/img/Person.jpg"
-
+import { Fragment } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useHistory } from "react-router-dom";
+import Person from "../assets/img/Person.jpg";
 
 const navigation = [
-  { 
-    name: 'Monitoring', 
-    href: '/MainMonitoring', 
+  {
+    name: "Monitoring",
+    href: "/MainMonitoring",
     current: false,
     subItems: [
-      { name: 'Monitoring', href: '/MainMonitoring', active: true },
-      { name: 'Daily Monitoring', href: '/DailyMonitoring', active: true },
-    ]  
+      { name: "Monitoring", href: "/MainMonitoring", active: true },
+      { name: "Daily Monitoring", href: "/DailyMonitoring", active: true },
+    ],
   },
-  { 
-    name: 'Product', 
-    href: '/ProductTime', 
+  {
+    name: "Product",
+    href: "/ProductTime",
     current: false,
     subItems: [
-      { name: 'Product - Time', href: '/ProductTime', active: true },
-      { name: 'Product - PCard', href: '/ProductPCard', active: true },
-      { name: 'Product - Result Target', href: '/ProductResultTargetLine', active: true },
-      { name: 'Product - Personnel', href: '/ProductPersonel', active: true },
-      { name: 'Product - Nosew Mesin', href: '/ProductNosewMesin', active: true },
-      { name: 'Product - KK Material MO', href: '/ProductKKMaterial', active: true },
-      { name: 'Product - Material Setting Balance', href: '/ProductMaterialBalance', active: true },
-      { name: 'Product - Sewing Mesin Counter', href: '/ProductSewingMesinCounter', active: true },
-      { name: 'Product - Daily Prod Trend', href: '/ProductDailyProdTrend', active: true },
-      { name: 'Product - SPK Balance', href: 'ProductSPKBalance', active: true },
-    ]
+      { name: "Product - Time", href: "/ProductTime", active: true },
+      { name: "Product - PCard", href: "/ProductPCard", active: true },
+      {
+        name: "Product - Result Target",
+        href: "/ProductResultTargetLine",
+        active: true,
+      },
+      { name: "Product - Personnel", href: "/ProductPersonel", active: true },
+      {
+        name: "Product - Nosew Mesin",
+        href: "/ProductNosewMesin",
+        active: true,
+      },
+      {
+        name: "Product - KK Material MO",
+        href: "/ProductKKMaterial",
+        active: true,
+      },
+      {
+        name: "Product - Material Setting Balance",
+        href: "/ProductMaterialBalance",
+        active: true,
+      },
+      {
+        name: "Product - Sewing Mesin Counter",
+        href: "/ProductSewingMesinCounter",
+        active: true,
+      },
+      {
+        name: "Product - Daily Prod Trend",
+        href: "/ProductDailyProdTrend",
+        active: true,
+      },
+      {
+        name: "Product - SPK Balance",
+        href: "ProductSPKBalance",
+        active: true,
+      },
+    ],
   },
-  { 
-    name: 'Order Tracking', 
-    href: '/POBalance', 
-    current: false, 
-    subItems: [
-      { name: 'PO Balance', href: '/POBalance', active: true },
-    ]
+  {
+    name: "Order Tracking",
+    href: "/POBalance",
+    current: false,
+    subItems: [{ name: "PO Balance", href: "/POBalance", active: true }],
   },
-  { 
-    name: 'WIP', 
-    href: '/InventoryLongTerm', 
+  {
+    name: "WIP",
+    href: "/InventoryLongTerm",
     current: false,
     subItems: [
-      { name: 'Inventory - Long Term', href: '/InventoryLongTerm', active: true },
-    ]
+      {
+        name: "Inventory - Long Term",
+        href: "/InventoryLongTerm",
+        active: true,
+      },
+    ],
   },
-  { 
-    name: 'Report', 
-    href: '#', 
+  {
+    name: "Report",
+    href: "#",
     current: false,
     subItems: [
-      { name: 'Daily Hour Production', href: '/DailyHourProd', active: true },
-      { name: 'Scan Status JX2-JX', href: '/ScanStatus', active: true },
-      { name: 'Setting Sewing QTY', href: '/SettingSewingQTY', active: true },
-    ]
+      { name: "Daily Hour Production", href: "/DailyHourProd", active: true },
+      { name: "Scan Status JX2-JX", href: "/ScanStatus", active: true },
+      { name: "Setting Sewing QTY", href: "/SettingSewingQTY", active: true },
+    ],
   },
 ];
 
 // Setiap subItem sekarang memiliki properti active dengan nilai true
 
-
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function Example() {
-
-  const [userID, setuserID] = useState('');
+  const [userID, setuserID] = useState("");
 
   useEffect(() => {
-    const user_id = localStorage.getItem('user_id');
-    setuserID(user_id)
+    const user_id = localStorage.getItem("user_id");
+    setuserID(user_id);
     const sendDataToBackend = async () => {
       try {
         const data = {
-          division: 'JXMES-WEB',
-          menuName: 'MAIN MENU',
-          programName: 'MAIN MENU',
+          division: "JXMES-WEB",
+          menuName: "MAIN MENU",
+          programName: "MAIN MENU",
           userID: user_id,
         };
 
         // Kirim data ke backend
-        const response = await axios.post('http://172.16.200.28:3000/api/log-menu-access', data);
-        console.log('Response:', response.data);
+        const response = await axios.post(
+          "http://172.16.200.28:3000/api/log-menu-access",
+          data
+        );
+        console.log("Response:", response.data);
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
       }
     };
 
@@ -106,73 +136,109 @@ export default function Example() {
   const history = useHistory();
   const handleLogout = () => {
     // Hapus token dari localStorage
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
 
     // Redirect ke halaman login
-    history.push('/');
+    history.push("/");
   };
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (!token) {
       // Redirect ke halaman login jika tidak ada token
-      history.push('/');
+      history.push("/");
     }
   }, [history]);
 
   const navigation = [
-    { 
-      name: 'Monitoring', 
-      href: '/MainMonitoring', 
+    {
+      name: "Monitoring",
+      href: "/MainMonitoring",
       current: false,
       subItems: [
-        { name: 'Monitoring', href: '/MainMonitoring', active: true },
-        { name: 'Daily Monitoring', href: '/DailyMonitoring', active: true },
-      ]  
+        { name: "Monitoring", href: "/MainMonitoring", active: true },
+        { name: "Daily Monitoring", href: "/DailyMonitoring", active: true },
+      ],
     },
-    { 
-      name: 'Product', 
-      href: '/ProductTime', 
+    {
+      name: "Product",
+      href: "/ProductTime",
       current: false,
       subItems: [
-        { name: 'Product - Detail', href: '/ProductDetail', active: true },
-        { name: 'Product - Time', href: '/ProductTime', active: true },
-        { name: 'Product - PCard', href: '/ProductPCard', active: true },
-        { name: 'Product - Result Target', href: '/ProductResultTargetLine', active: true },
-        { name: 'Product - Personnel', href: '/ProductPersonel', active: true },
-        { name: 'Product - Nosew Mesin', href: '/ProductNosewMesin', active: true },
-        { name: 'Product - KK Material MO', href: '/ProductKKMaterial', active: true },
-        { name: 'Product - Material Setting Balance', href: '/ProductMaterialBalance', active: true },
-        { name: 'Product - Sewing Mesin Counter', href: '/ProductSewingMesinCounter', active: true },
-        { name: 'Product - Daily Prod Trend', href: '/ProductDailyProdTrend', active: true },
-        { name: 'Product - SPK Balance', href: 'ProductSPKBalance', active: true },
-        { name: 'Product - Laminating', href: 'ProductLaminating', active: true },
-      ]
+        { name: "Product - Detail", href: "/ProductDetail", active: true },
+        { name: "Product - Time", href: "/ProductTime", active: true },
+        { name: "Product - PCard", href: "/ProductPCard", active: true },
+        {
+          name: "Product - Result Target",
+          href: "/ProductResultTargetModel",
+          active: true,
+        },
+        { name: "Product - Personnel", href: "/ProductPersonel", active: true },
+        {
+          name: "Product - Nosew Mesin",
+          href: "/ProductNosewMesin",
+          active: true,
+        },
+        {
+          name: "Product - KK Material MO",
+          href: "/ProductKKMaterial",
+          active: true,
+        },
+        {
+          name: "Product - Material Setting Balance",
+          href: "/ProductMaterialBalance",
+          active: true,
+        },
+        {
+          name: "Product - Sewing Mesin Counter",
+          href: "/ProductSewingMesinCounter",
+          active: true,
+        },
+        {
+          name: "Product - Daily Prod Trend",
+          href: "/ProductDailyProdTrend",
+          active: true,
+        },
+        {
+          name: "Product - SPK Balance",
+          href: "ProductSPKBalance",
+          active: true,
+        },
+        {
+          name: "Product - Laminating",
+          href: "ProductLaminating",
+          active: true,
+        },
+      ],
     },
-    { 
-      name: 'Order Tracking', 
-      href: '/POBalance', 
-      current: false, 
-      subItems: [
-        { name: 'PO Balance', href: '/POBalance', active: true },
-      ]
+    {
+      name: "Order Tracking",
+      href: "/POBalance",
+      current: false,
+      subItems: [{ name: "PO Balance", href: "/POBalance", active: true }],
     },
-    { 
-      name: 'WIP', 
-      href: '/InventoryLongTerm', 
+    {
+      name: "WIP",
+      href: "/InventoryLongTerm",
       current: false,
       subItems: [
-        { name: 'Inventory - Long Term', href: '/InventoryLongTerm', active: true },
-      ]
+        { name: "Inventory", href: "/Inventory", active: true },
+        {
+          name: "Inventory - Long Term",
+          href: "/InventoryLongTerm",
+          active: true,
+        },
+        { name: "Inventory - Mesin", href: "/InventoryMesin", active: false },
+      ],
     },
-    { 
-      name: 'Report', 
-      href: '#', 
+    {
+      name: "Report",
+      href: "#",
       current: false,
       subItems: [
-        { name: 'Daily Hour Production', href: '/DailyHourProd', active: true },
-        { name: 'Scan Status JX2-JX', href: '/ScanStatus', active: true },
-        { name: 'Setting Sewing QTY', href: '/SettingSewingQTY', active: true },
-      ]
+        { name: "Daily Hour Production", href: "/DailyHourProd", active: true },
+        { name: "Scan Status JX2-JX", href: "/ScanStatus", active: true },
+        { name: "Setting Sewing QTY", href: "/SettingSewingQTY", active: true },
+      ],
     },
   ];
   return (
@@ -201,20 +267,25 @@ export default function Example() {
                         className="h-8 w-auto"
                         src={Logo}
                         alt="Your Company"
-                        href = "/Dashboard"
+                        href="/Dashboard"
                       />
                     </a>
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
                       {navigation.map((item, index) => (
-                        <DropdownItem key={item.name} item={item} isOpen={openDropdownIndex === index} userID={userID} onToggle={() => handleToggleDropdown(index)} />
+                        <DropdownItem
+                          key={item.name}
+                          item={item}
+                          isOpen={openDropdownIndex === index}
+                          userID={userID}
+                          onToggle={() => handleToggleDropdown(index)}
+                        />
                       ))}
                     </div>
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
                     <div>
@@ -242,7 +313,10 @@ export default function Example() {
                           {({ active }) => (
                             <a
                               onClick={handleLogout}
-                              className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
                             >
                               Sign out
                             </a>
@@ -257,20 +331,26 @@ export default function Example() {
           </div>
 
           <Disclosure.Panel className="sm:hidden">
-          <div className="space-y-1 px-2 pb-3 pt-2">
+            <div className="space-y-1 px-2 pb-3 pt-2">
               {navigation.map((item, index) => (
-                            <DropdownItem key={item.name} item={item} isOpen={openDropdownIndex === index} userID={userID} onToggle={() => handleToggleDropdown(index)} />
+                <DropdownItem
+                  key={item.name}
+                  item={item}
+                  isOpen={openDropdownIndex === index}
+                  userID={userID}
+                  onToggle={() => handleToggleDropdown(index)}
+                />
               ))}
-          </div>
-        </Disclosure.Panel>
+            </div>
+          </Disclosure.Panel>
         </>
       )}
     </Disclosure>
-  )
+  );
 }
 
-function DropdownItem({ item, isOpen, onToggle, userID  }) {
-  console.log('User :' , userID)
+function DropdownItem({ item, isOpen, onToggle, userID }) {
+  console.log("User :", userID);
   return (
     <div className="relative">
       <button
@@ -281,23 +361,27 @@ function DropdownItem({ item, isOpen, onToggle, userID  }) {
         {item.name}
       </button>
       {isOpen && (
-        <div
-          className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute mt-1"
-        >
+        <div className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute mt-1">
           <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
             {item.subItems.map((subItem, index) => {
-              if (userID === 'mesuser' && subItem.active) {
+              if (userID === "mesuser" && subItem.active) {
                 return (
                   <li key={index}>
-                    <a href={subItem.href} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                    <a
+                      href={subItem.href}
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
                       {subItem.name}
                     </a>
                   </li>
                 );
-              } else if (userID === 'admin') {
+              } else if (userID === "admin") {
                 return (
                   <li key={index}>
-                    <a href={subItem.href} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                    <a
+                      href={subItem.href}
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
                       {subItem.name}
                     </a>
                   </li>
@@ -306,7 +390,6 @@ function DropdownItem({ item, isOpen, onToggle, userID  }) {
               return null; // Jika tidak memenuhi kondisi, kembalikan null
             })}
           </ul>
-
         </div>
       )}
     </div>
