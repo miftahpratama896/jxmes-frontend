@@ -709,7 +709,7 @@ const InventoryLongTerm = () => {
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
-                              {totalQty}
+                              {totalQty.toLocaleString()}
                             </th>
                             <th
                               scope="col"
@@ -728,8 +728,6 @@ const InventoryLongTerm = () => {
                         )}
                         <tbody className="divide-y divide-neutral-950 bg-white">
                           {data.slice(0, 500).map((item, index) => {
-                            
-
                             const scanDate = new Date(item.SCAN_DATE);
                             const selected = new Date(selectedDate);
                             scanDate.setHours(0, 0, 0, 0);
@@ -802,9 +800,29 @@ const InventoryLongTerm = () => {
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                     {item.QTY}
                                   </td>
-                                  <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 bg-red-800 sm:pl-6`}>
-                                  {differenceInDays}
-                                </td>
+                                  <td
+                                    className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 ${
+                                      differenceInDays <= 6
+                                        ? "bg-red-100"
+                                        : differenceInDays <= 13
+                                        ? "bg-red-200"
+                                        : differenceInDays <= 20
+                                        ? "bg-red-300"
+                                        : differenceInDays <= 27
+                                        ? "bg-red-400"
+                                        : differenceInDays <= 34
+                                        ? "bg-red-500"
+                                        : differenceInDays <= 41
+                                        ? "bg-red-600"
+                                        : differenceInDays <= 48
+                                        ? "bg-red-700"
+                                        : differenceInDays <= 55
+                                        ? "bg-red-800"
+                                        : "bg-red-900"
+                                    } sm:pl-6`}
+                                  >
+                                    {differenceInDays}
+                                  </td>
                                 </tr>
                               );
                             } else {

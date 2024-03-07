@@ -32,6 +32,7 @@ import ProductDetail from "./Components/Product/ProductDetail";
 import ProductLaminating from "./Components/Product/ProductLaminating";
 import Inventory from "./Components/WIP/Inventory";
 import InventoryMesin from "./Components/WIP/InventoryMesin";
+import InventorySummary from "./Components/WIP/InventorySummary";
 
 function App() {
   return (
@@ -123,6 +124,10 @@ function App() {
           <Route path="/InventoryMesin">
             <Dashboard />
             <InventoryMesin />
+          </Route>
+          <Route path="/InventorySummary">
+            <Dashboard />
+            <InventorySummary />
           </Route>
           <Route path="/ScanStatus">
             <Dashboard />

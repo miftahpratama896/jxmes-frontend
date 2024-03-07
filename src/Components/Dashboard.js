@@ -7,90 +7,6 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useHistory } from "react-router-dom";
 import Person from "../assets/img/Person.jpg";
 
-const navigation = [
-  {
-    name: "Monitoring",
-    href: "/MainMonitoring",
-    current: false,
-    subItems: [
-      { name: "Monitoring", href: "/MainMonitoring", active: true },
-      { name: "Daily Monitoring", href: "/DailyMonitoring", active: true },
-    ],
-  },
-  {
-    name: "Product",
-    href: "/ProductTime",
-    current: false,
-    subItems: [
-      { name: "Product - Time", href: "/ProductTime", active: true },
-      { name: "Product - PCard", href: "/ProductPCard", active: true },
-      {
-        name: "Product - Result Target",
-        href: "/ProductResultTargetLine",
-        active: true,
-      },
-      { name: "Product - Personnel", href: "/ProductPersonel", active: true },
-      {
-        name: "Product - Nosew Mesin",
-        href: "/ProductNosewMesin",
-        active: true,
-      },
-      {
-        name: "Product - KK Material MO",
-        href: "/ProductKKMaterial",
-        active: true,
-      },
-      {
-        name: "Product - Material Setting Balance",
-        href: "/ProductMaterialBalance",
-        active: true,
-      },
-      {
-        name: "Product - Sewing Mesin Counter",
-        href: "/ProductSewingMesinCounter",
-        active: true,
-      },
-      {
-        name: "Product - Daily Prod Trend",
-        href: "/ProductDailyProdTrend",
-        active: true,
-      },
-      {
-        name: "Product - SPK Balance",
-        href: "ProductSPKBalance",
-        active: true,
-      },
-    ],
-  },
-  {
-    name: "Order Tracking",
-    href: "/POBalance",
-    current: false,
-    subItems: [{ name: "PO Balance", href: "/POBalance", active: true }],
-  },
-  {
-    name: "WIP",
-    href: "/InventoryLongTerm",
-    current: false,
-    subItems: [
-      {
-        name: "Inventory - Long Term",
-        href: "/InventoryLongTerm",
-        active: true,
-      },
-    ],
-  },
-  {
-    name: "Report",
-    href: "#",
-    current: false,
-    subItems: [
-      { name: "Daily Hour Production", href: "/DailyHourProd", active: true },
-      { name: "Scan Status JX2-JX", href: "/ScanStatus", active: true },
-      { name: "Setting Sewing QTY", href: "/SettingSewingQTY", active: true },
-    ],
-  },
-];
 
 // Setiap subItem sekarang memiliki properti active dengan nilai true
 
@@ -227,7 +143,8 @@ export default function Example() {
           href: "/InventoryLongTerm",
           active: true,
         },
-        { name: "Inventory - Mesin", href: "/InventoryMesin", active: false },
+        { name: "Inventory - Mesin", href: "/InventoryMesin", active: true },
+        { name: "Inventory - Summary", href: "/InventorySummary", active: false },
       ],
     },
     {
