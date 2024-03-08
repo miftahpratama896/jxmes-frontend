@@ -144,7 +144,7 @@ export default function Example() {
           active: true,
         },
         { name: "Inventory - Mesin", href: "/InventoryMesin", active: true },
-        { name: "Inventory - Summary", href: "/InventorySummary", active: false },
+        { name: "Inventory - Summary", href: "/InventorySummary", active: true },
       ],
     },
     {

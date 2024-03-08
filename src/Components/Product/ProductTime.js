@@ -69,7 +69,8 @@ const ProductTime = () => {
   const formattedYesterday = yesterday.toISOString().split("T")[0];
   // States for filters
   const [selectedFactory, setSelectedFactory] = useState("ALL");
-  const [selectedYesdayDate, setSelectedYesdayDate] = useState(formattedYesterday);
+  const [selectedYesdayDate, setSelectedYesdayDate] =
+    useState(formattedYesterday);
   const [selectedTodayDate, setSelectedTodayDate] = useState(formattedToday);
   const [selectedWC, setSelectedWC] = useState("Cutting");
   const [selectedCTime, setSelectedCTime] = useState("ALL");
@@ -181,7 +182,7 @@ const ProductTime = () => {
         .sticky-header thead tr:nth-child(3) th {
           position: sticky;
           top: 96px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-          background-color: #B84600;
+          background-color: #f1f5f9;
           z-index: 3;
         }
         
@@ -548,23 +549,42 @@ const ProductTime = () => {
                                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                       {item.LINE}
                                     </td>
-                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
+                                    <td
+                                      className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ${
+                                        item.DAY === "YESTERDAY"
+                                          ? "bg-orange-500 text-center"
+                                          : ""
+                                      }`}
+                                    >
                                       {item.MODEL}
                                     </td>
-                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
+
+                                    <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ${
+                                        item.DAY === "YESTERDAY"
+                                          ? "bg-orange-500 text-center"
+                                          : ""
+                                      }`}>
                                       {item.GENDER}
                                     </td>
-                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
+                                    <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ${
+                                        item.DAY === "YESTERDAY"
+                                          ? "bg-orange-500 text-center"
+                                          : ""
+                                      }`}>
                                       {item.DAY}
                                     </td>
                                     {columns.map((columnName) => (
                                       <td
-                                        className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium  sm:pl-6`}
+                                      className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ${
+                                        item.DAY === "YESTERDAY"
+                                          ? "bg-orange-500 text-center"
+                                          : ""
+                                      }`}
                                       >
                                         {item[columnName]}
                                       </td>
                                     ))}
-                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 bg-orange-600">
+                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 bg-orange-500">
                                       {calculateTotal(item)}
                                     </td>
                                   </tr>
