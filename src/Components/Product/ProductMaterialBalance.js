@@ -533,12 +533,14 @@ const ProductMaterialBalance = () => {
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              style={{ backgroundColor: "#dc2626" }}
                             >
                               INPUT QTY
                             </th>
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              style={{ backgroundColor: "#dc2626" }}
                             >
                               BALANCE
                             </th>

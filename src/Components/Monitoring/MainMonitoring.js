@@ -209,20 +209,27 @@ export default function Example() {
           }
           
           .sticky-header thead tr:nth-child(2) th {
+            color: #D1D5DB;
             position: sticky;
-            top: 68px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-            background-color: #FA7625;
+            top: 49px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
+            background-color: #1F2937;
             z-index: 2;
           }
           .sticky-header thead tr:nth-child(3) th {
             position: sticky;
-            top: 116px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
+            top: 97px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
             background-color: #FA7625;
             z-index: 3;
           }
           .sticky-header thead tr:nth-child(4) th {
             position: sticky;
-            top: 164px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
+            top: 145px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
+            background-color: #B84600;
+            z-index: 3;
+          }
+          .sticky-header thead tr:nth-child(5) th {
+            position: sticky;
+            top: 193px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
             background-color: #B84600;
             z-index: 3;
           }
@@ -291,105 +298,157 @@ export default function Example() {
                           <tr>
                             <th
                               scope="col"
+                              rowSpan={2}
                               className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
                             >
                               PLANT
                             </th>
                             <th
                               scope="col"
+                              rowSpan={2}
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
                               MODEL
                             </th>
                             <th
                               scope="col"
+                              rowSpan={2}
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
                               GENDER
                             </th>
                             <th
                               scope="col"
+                              colSpan={3}
+                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              style={{ backgroundColor: "#374151" }}
+                            >
+                              UPS
+                            </th>
+                            <th
+                              scope="col"
+                              colSpan={3}
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
-                              UPS [SHIFT1]
+                              CUTTING
+                            </th>
+                            <th
+                              scope="col"
+                              colSpan={2}
+                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              style={{ backgroundColor: "#374151" }}
+                            >
+                              MARKET
+                            </th>
+                            <th
+                              scope="col"
+                              colSpan={3}
+                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                            >
+                              SEWING
+                            </th>
+                            <th
+                              scope="col"
+                              colSpan={3}
+                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              style={{ backgroundColor: "#374151" }}
+                            >
+                              W/H
+                            </th>
+                          </tr>
+                          <tr>
+                            <th
+                              scope="col"
+                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              style={{ backgroundColor: "#374151" }}
+                            >
+                              SHIFT1
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              style={{ backgroundColor: "#374151" }}
+                            >
+                              SHIFT2
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              style={{ backgroundColor: "#374151" }}
+                            >
+                              TOTAL
                             </th>
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
-                              UPS [SHIFT2]
+                              SHIFT1
                             </th>
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
-                              UPS [TOTAL]
+                              SHIFT2
                             </th>
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
-                              Cutting [SHIFT1]
+                              TOTAL
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              style={{ backgroundColor: "#166534" }}
+                            >
+                              WIP
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              style={{ backgroundColor: "#374151" }}
+                            >
+                              OUTPUT
                             </th>
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
-                              Cutting [SHIFT2]
+                              INPUT
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              style={{ backgroundColor: "#166534" }}
+                            >
+                              WIP
                             </th>
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
-                              Cutting [TOTAL]
+                              OUTPUT
                             </th>
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              style={{ backgroundColor: "#374151" }}
                             >
-                              Market [WIP]
+                              INPUT
                             </th>
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              style={{ backgroundColor: "#166534" }}
                             >
-                              Market [OUTPUT]
+                              WIP
                             </th>
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              style={{ backgroundColor: "#374151" }}
                             >
-                              Sewing [INPUT]
-                            </th>
-                            <th
-                              scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
-                            >
-                              Sewing [WIP]
-                            </th>
-                            <th
-                              scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
-                            >
-                              Sewing [OUTPUT]
-                            </th>
-                            <th
-                              scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
-                            >
-                              W/H [INPUT]
-                            </th>
-                            <th
-                              scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
-                            >
-                              W/H [WIP]
-                            </th>
-                            <th
-                              scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
-                            >
-                              W/H [OUTPUT]
+                              OUTPUT
                             </th>
                           </tr>
                           {data.map(
@@ -716,8 +775,11 @@ export default function Example() {
                           </div>
                         )}
                         <tbody className="divide-y divide-neutral-950 bg-white">
-                          {data.map(
-                            (item, index) =>
+                          {data.map((item, index) => {
+                            const colymng = data.filter(
+                              (item) => item.LINE_GROUP === "F1"
+                            ).length;
+                            return (
                               item.STYLE_S_NAME !== "SUB.TOTAL" && (
                                 <tr key={index}>
                                   <td className="whitespace-nowrap text-center py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 ">
@@ -773,7 +835,8 @@ export default function Example() {
                                   </td>
                                 </tr>
                               )
-                          )}
+                            );
+                          })}
                         </tbody>
                       </table>
                     </div>

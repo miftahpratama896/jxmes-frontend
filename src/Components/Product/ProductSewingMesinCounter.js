@@ -153,7 +153,7 @@ function ProductSewingMesinCounter() {
                   Product
                 </h1>
                 <p className="mt-2 text-sm text-gray-700">
-                  A list of all the Product sewing Mesin Counter
+                  A list of all the Product Sewing Mesin Counter
                 </p>
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-4">
@@ -253,6 +253,7 @@ function ProductSewingMesinCounter() {
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              style={{ backgroundColor: "#166534" }}
                             >
                               TOTAL
                             </th>
@@ -261,9 +262,6 @@ function ProductSewingMesinCounter() {
                                 key={index}
                                 scope="col"
                                 className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
-                                style={{
-                                  backgroundColor: "#374151",
-                                }}
                               >
                                 {columnName}
                               </th>

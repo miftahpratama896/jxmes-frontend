@@ -154,6 +154,7 @@ export default function Example() {
       subItems: [
         { name: "Daily Hour Production", href: "/DailyHourProd", active: true },
         { name: "Scan Status JX2-JX", href: "/ScanStatus", active: true },
+        { name: "Daily Prod QTY Trend", href: "/DailyProdQTYTrend", active: false },
         { name: "Setting Sewing QTY", href: "/SettingSewingQTY", active: true },
       ],
     },

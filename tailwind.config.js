@@ -1,3 +1,6 @@
+// tailwind.config.js
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
     content: ["./src/**/*.{html,js}"],
     theme: {
@@ -7,4 +10,4 @@ module.exports = {
         require('@tailwindcss/forms'),
         require('tailwindcss-animated')
     ],
-}
+};

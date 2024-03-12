@@ -679,7 +679,7 @@ function POBalance() {
                               TOTAL
                             </th>
                             <th className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 bg-yellow-500">
-                              {calculateSPKTotal()}
+                              {calculateSPKTotal().toLocaleString()}
                             </th>
                             <th
                               className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium ${
@@ -688,7 +688,7 @@ function POBalance() {
                                   : "text-gray-900"
                               } sm:pl-6 bg-yellow-500`}
                             >
-                              {calculateCuttingTotal()}
+                              {calculateCuttingTotal().toLocaleString()}
                             </th>
                             <th
                               className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium ${
@@ -697,7 +697,7 @@ function POBalance() {
                                   : "text-gray-900"
                               } sm:pl-6 bg-yellow-500`}
                             >
-                              {calculateSewingTotal()}
+                              {calculateSewingTotal().toLocaleString()}
                             </th>
                             <th
                               className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium ${
@@ -706,7 +706,7 @@ function POBalance() {
                                   : "text-gray-900"
                               } sm:pl-6 bg-yellow-500`}
                             >
-                              {calculateWhInputTotal()}
+                              {calculateWhInputTotal().toLocaleString()}
                             </th>
                             <th
                               className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium ${
@@ -715,7 +715,7 @@ function POBalance() {
                                   : "text-gray-900"
                               } sm:pl-6 bg-yellow-500`}
                             >
-                              {calculateWhOutTotal()}
+                              {calculateWhOutTotal().toLocaleString()}
                             </th>
                           </tr>
                         </thead>

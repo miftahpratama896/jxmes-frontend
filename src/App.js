@@ -33,6 +33,7 @@ import ProductLaminating from "./Components/Product/ProductLaminating";
 import Inventory from "./Components/WIP/Inventory";
 import InventoryMesin from "./Components/WIP/InventoryMesin";
 import InventorySummary from "./Components/WIP/InventorySummary";
+import DailyProdQTYTrend from "./Components/Report/DailyProdQTYTrend";
 
 function App() {
   return (
@@ -132,6 +133,10 @@ function App() {
           <Route path="/ScanStatus">
             <Dashboard />
             <ScanStatus />
+          </Route>
+          <Route path="/DailyProdQTYTrend">
+            <Dashboard />
+            <DailyProdQTYTrend />
           </Route>
           <Route path="/SettingSewingQTY">
             <Dashboard />

@@ -457,7 +457,7 @@ function InventorySummary() {
                                       item.WC === "SUB_TOTAL"
                                         ? ""
                                         : item[columnName]
-                                        ? "bg-gray-300"
+                                        ? ""
                                         : ""
                                     }`}
                                   >
