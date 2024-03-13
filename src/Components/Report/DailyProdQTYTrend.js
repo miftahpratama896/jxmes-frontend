@@ -453,7 +453,7 @@ export default function DailyProdQTYTrend() {
                         borderColor: ["#204075"],
                       },
                       {
-                        label: "OUTPUT",
+                        label: "ACTUAL",
                         data: data.map((item) => item.PROD_DAY_OUTPUT), // Misalnya, nilai diambil dari setiap item dalam array data
                         backgroundColor: ["#8D1C2F"],
                         borderColor: ["#8D1C2F"],
@@ -476,6 +476,125 @@ export default function DailyProdQTYTrend() {
                         data: data.map((item) => item.PROD_DAY_OUTPUT_RATE), // Misalnya, nilai diambil dari setiap item dalam array data
                         backgroundColor: ["#204075"],
                         borderColor: ["#204075"],
+                      },
+                    ],
+                  }}
+                />
+              </div>
+              <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+                <h6 className="uppercase text-blueGray-100 mb-1 text-xm font-semibold">
+                  PROD QTY PER HOUR UNIT
+                </h6>
+                <TEChart
+                  type="line"
+                  data={{
+                    labels: data.map((item) => item.TARGET_DATE), // Misalnya, label diambil dari setiap item dalam array data
+                    datasets: [
+                      {
+                        label: "TARGET",
+                        data: data.map((item) => item.PROD_HOUR), // Misalnya, nilai diambil dari setiap item dalam array data
+                        backgroundColor: ["#204075"],
+                        borderColor: ["#204075"],
+                      },
+                      {
+                        label: "OUTPUT",
+                        data: data.map((item) => item.PROD_HOUR_OUTPUT), // Misalnya, nilai diambil dari setiap item dalam array data
+                        backgroundColor: ["#8D1C2F"],
+                        borderColor: ["#8D1C2F"],
+                      },
+                    ],
+                  }}
+                />
+              </div>
+              <div className="mx-auto max-w-7xl py-12 sm:px-6 lg:px-8">
+                <h6 className="uppercase text-blueGray-100 mb-1 text-xm font-semibold">
+                  PROD QTY PER HOUR ACHIVE
+                </h6>
+                <TEChart
+                  type="bar"
+                  data={{
+                    labels: data.map((item) => item.TARGET_DATE), // Misalnya, label diambil dari setiap item dalam array data
+                    datasets: [
+                      {
+                        label: "TOTAL RATE",
+                        data: data.map((item) => item.PROD_HOUR_OUTPUT_RATE), // Misalnya, nilai diambil dari setiap item dalam array data
+                        backgroundColor: ["#204075"],
+                        borderColor: ["#204075"],
+                      },
+                    ],
+                  }}
+                />
+              </div>
+              <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+                <h6 className="uppercase text-blueGray-100 mb-1 text-xm font-semibold">
+                  PROD QTY PER LINE AVG UNIT
+                </h6>
+                <TEChart
+                  type="line"
+                  data={{
+                    labels: data.map((item) => item.TARGET_DATE), // Misalnya, label diambil dari setiap item dalam array data
+                    datasets: [
+                      {
+                        label: "TARGET",
+                        data: data.map((item) => item.PROD_HOUR_RATE), // Misalnya, nilai diambil dari setiap item dalam array data
+                        backgroundColor: ["#204075"],
+                        borderColor: ["#204075"],
+                      },
+                      {
+                        label: "ACTUAL",
+                        data: data.map((item) => item.PROD_H_OUTPUT), // Misalnya, nilai diambil dari setiap item dalam array data
+                        backgroundColor: ["#8D1C2F"],
+                        borderColor: ["#8D1C2F"],
+                      },
+                    ],
+                  }}
+                />
+              </div>
+              <div className="mx-auto max-w-7xl py-12 sm:px-6 lg:px-8">
+                <h6 className="uppercase text-blueGray-100 mb-1 text-xm font-semibold">
+                  PROD QTY PER LINE AVG ACHIVE
+                </h6>
+                <TEChart
+                  type="bar"
+                  data={{
+                    labels: data.map((item) => item.TARGET_DATE), // Misalnya, label diambil dari setiap item dalam array data
+                    datasets: [
+                      {
+                        label: "TOTAL RATE",
+                        data: data.map((item) => item.PROD_H_OUTPUT_RATE), // Misalnya, nilai diambil dari setiap item dalam array data
+                        backgroundColor: ["#204075"],
+                        borderColor: ["#204075"],
+                      },
+                    ],
+                  }}
+                />
+              </div>
+              <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+                <h6 className="uppercase text-blueGray-100 mb-1 text-xm font-semibold">
+                  PROD QTY TARGET INPUT QTY - OUTPUT QTY
+                </h6>
+                <TEChart
+                  type="line"
+                  data={{
+                    labels: data.map((item) => item.TARGET_DATE), // Misalnya, label diambil dari setiap item dalam array data
+                    datasets: [
+                      {
+                        label: "TARGET",
+                        data: data.map((item) => item.PROD_DAY), // Misalnya, nilai diambil dari setiap item dalam array data
+                        backgroundColor: ["#204075"],
+                        borderColor: ["#204075"],
+                      },
+                      {
+                        label: "INPUT",
+                        data: data.map((item) => item.INPUT_ACT), // Misalnya, nilai diambil dari setiap item dalam array data
+                        backgroundColor: ["#8D1C2F"],
+                        borderColor: ["#8D1C2F"],
+                      },
+                      {
+                        label: "OUTPUT",
+                        data: data.map((item) => item.PROD_DAY_OUTPUT), // Misalnya, nilai diambil dari setiap item dalam array data
+                        backgroundColor: ["#166534"],
+                        borderColor: ["#166534"],
                       },
                     ],
                   }}

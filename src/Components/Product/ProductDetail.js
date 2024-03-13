@@ -240,69 +240,6 @@ const ProductDetail = () => {
 
   return (
     <>
-      <style>
-        {`
-        /* CSS Styles */
-        .sticky-header thead th {
-          position: sticky;
-          top: 0;
-          background-color: #1F2937;
-          z-index: 1;
-          
-          
-        }
-        .sticky-header th,
-        .sticky-header td {
-          white-space: nowrap;  
-        }
-        .sticky-header thead tr:first-child th {
-          color: #D1D5DB;
-        }
-        .sticky-header thead tr:nth-child(2) th {
-          position: sticky;
-          top: 0px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-          background-color: #fcd34d;
-          z-index: 3;
-         }
-         .sticky-header thead tr:nth-child(3) th {
-          position: sticky;
-          top: 48px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-          background-color: #fca5a5;
-          z-index: 3;
-         }
-         .sticky-header thead tr:nth-child(4) th {
-          position: sticky;
-          top: 97px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-          background-color: #bae6fd;
-          z-index: 3;
-         }
-         .sticky-header thead tr:nth-child(5) th {
-          position: sticky;
-          top: 145px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-          background-color: #86efac;
-          z-index: 3;
-         }
-         .sticky-header thead tr:nth-child(6) th {
-          position: sticky;
-          top: 193px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-          background-color: #d8b4fe;
-          z-index: 3;
-         }
-        .sticky-header thead tr:nth-child(7) th {
-         position: sticky;
-         top: 240px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-         background-color: #B84600;
-         z-index: 3;
-        }
-        .table-container {
-          max-height: 99vh;
-          max-width: 197vh;
-          overflow-y: auto;
-          overflow-x: auto;
-        }
-      `}
-      </style>
-
       <main className="py-12">
         <div className="mx-auto max-w-full px-6 lg:px-1">
           <div className="px-4 sm:px-6 lg:px-8">
@@ -887,24 +824,24 @@ const ProductDetail = () => {
             </div>
 
             <div className="mt-8 flow-root">
-              <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div className="relative -mx-4 -my-2 overflow-y-scroll overflow-x-scroll sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                  <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-                    <div className="table-container">
-                      <table className="min-w-full divide-y divide-neutral-950 sticky-header border border-slate-500 ">
-                        <thead className="bg-slate-300">
-                          <tr>
+                  <div className=" shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+                    <div className="max-h-screen max-w-screen ">
+                      <table className="min-w-full divide-y divide-neutral-950 border border-slate-500 ">
+                        <thead className="bg-slate-300 whitespace-nowrap">
+                          <tr className="sticky top-0 text-white z-50">
                             <th
                               scope="col"
                               rowSpan={6}
-                              className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
+                              className="sticky left-0 top-0 bg-gray-900 py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
                             >
                               SCAN DATE
                             </th>
                             <th
                               scope="col"
                               rowSpan={6}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="sticky left-[109px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               PLANT
                             </th>
@@ -912,125 +849,191 @@ const ProductDetail = () => {
                               <th
                                 scope="col"
                                 rowSpan={6}
-                                className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                                className="sticky left-[176px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
                               >
                                 LINE
                               </th>
                             )}
+                            {selectedWC === "Cutting" && (
+                              <th
+                                scope="col"
+                                rowSpan={6}
+                                className="sticky left-[176px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                              >
+                                JX LINE
+                              </th>
+                            )}
+                            {selectedWC !== "Cutting" && (
+                              <th
+                                scope="col"
+                                rowSpan={6}
+                                className="sticky left-[229px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                              >
+                                JX LINE
+                              </th>
+                            )}
+                            {selectedWC !== "Cutting" && (
+                              <th
+                                scope="col"
+                                rowSpan={6}
+                                className="sticky left-[300px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                              >
+                                WORK CENTER
+                              </th>
+                            )}
+                            {selectedWC === "Cutting" && (
+                              <th
+                                scope="col"
+                                rowSpan={6}
+                                className="sticky left-[247px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                              >
+                                WORK CENTER
+                              </th>
+                            )}
+                            {selectedWC !== "Cutting" && (
+                              <th
+                                scope="col"
+                                rowSpan={6}
+                                className="sticky left-[419px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                              >
+                                TYPE
+                              </th>
+                            )}
+                            {selectedWC === "Cutting" && (
+                              <th
+                                scope="col"
+                                rowSpan={6}
+                                className="sticky left-[366px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                              >
+                                TYPE
+                              </th>
+                            )}
+                            {selectedWC !== "Cutting" && (
                             <th
                               scope="col"
                               rowSpan={6}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
-                            >
-                              JX LINE
-                            </th>
-                            <th
-                              scope="col"
-                              rowSpan={6}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
-                            >
-                              WORK CENTER
-                            </th>
-                            <th
-                              scope="col"
-                              rowSpan={6}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
-                            >
-                              TYPE
-                            </th>
-                            <th
-                              scope="col"
-                              rowSpan={6}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="sticky left-[493px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               RELEASE
                             </th>
+                            )}
+                            {selectedWC === "Cutting" && (
                             <th
                               scope="col"
                               rowSpan={6}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="sticky left-[426px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                            >
+                              RELEASE
+                            </th>
+                            )}
+                            {selectedWC === "Cutting" && (
+                            <th
+                              scope="col"
+                              rowSpan={6}
+                              className="sticky left-[501px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               STYLE
                             </th>
+                            )}
+                            {selectedWC !== "Cutting" && (
                             <th
                               scope="col"
                               rowSpan={6}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="sticky left-[572px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                            >
+                              STYLE
+                            </th>
+                            )}
+                            {selectedWC === "Cutting" && (
+                            <th
+                              scope="col"
+                              rowSpan={6}
+                              className="sticky left-[598px] top-0 bg-gray-900  px-3 py-3.5 text-center text-sm font-semibol"
                             >
                               MODEL
                             </th>
+                            )}
+                            {selectedWC !== "Cutting" && (
                             <th
                               scope="col"
                               rowSpan={6}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="sticky left-[669px] top-0 bg-gray-900  px-3 py-3.5 text-center text-sm font-semibol"
+                            >
+                              MODEL
+                            </th>
+                            )}
+                            <th
+                              scope="col"
+                              rowSpan={6}
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               GENDER
                             </th>
                           </tr>
-                          <tr>
+                          <tr className="sticky top-0 bg-yellow-300 z-10">
                             <th
                               scope="col"
-                              className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
+                              className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
                             >
                               TD
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               2
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               3
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               4
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               5
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               6
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               7
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               8
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               9
                             </th>
                             <th
                               scope="col"
                               colSpan={14}
-                              className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-left text-sm font-semibold"
                             >
                               10
                             </th>
                           </tr>
-                          <tr>
+                          <tr className="sticky top-12 bg-red-300 z-10">
                             <th
                               scope="col"
                               className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
@@ -1117,7 +1120,7 @@ const ProductDetail = () => {
                               7
                             </th>
                           </tr>
-                          <tr>
+                          <tr className="sticky top-24 bg-blue-300 z-10">
                             <th
                               scope="col"
                               className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
@@ -1228,7 +1231,7 @@ const ProductDetail = () => {
                               13T
                             </th>
                           </tr>
-                          <tr>
+                          <tr className="sticky top-36 bg-green-300 z-10">
                             <th
                               scope="col"
                               className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
@@ -1351,7 +1354,7 @@ const ProductDetail = () => {
                               14
                             </th>
                           </tr>
-                          <tr>
+                          <tr className="sticky top-48 bg-purple-300 z-10">
                             <th
                               scope="col"
                               className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
@@ -1491,7 +1494,7 @@ const ProductDetail = () => {
                               15
                             </th>
                           </tr>
-                          <tr>
+                          <tr className="sticky top-60 bg-orange-700 z-10">
                             <th
                               scope="col"
                               colSpan={selectedWC !== "Cutting" ? 10 : 9}

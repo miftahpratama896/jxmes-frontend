@@ -80,7 +80,7 @@ export default function Example() {
       href: "/ProductTime",
       current: false,
       subItems: [
-        { name: "Product - Detail", href: "/ProductDetail", active: true },
+        { name: "Product - Detail", href: "/ProductDetail", active: false },
         { name: "Product - Time", href: "/ProductTime", active: true },
         { name: "Product - PCard", href: "/ProductPCard", active: true },
         {
@@ -154,7 +154,7 @@ export default function Example() {
       subItems: [
         { name: "Daily Hour Production", href: "/DailyHourProd", active: true },
         { name: "Scan Status JX2-JX", href: "/ScanStatus", active: true },
-        { name: "Daily Prod QTY Trend", href: "/DailyProdQTYTrend", active: false },
+        { name: "Daily Prod QTY Trend", href: "/DailyProdQTYTrend", active: true },
         { name: "Setting Sewing QTY", href: "/SettingSewingQTY", active: true },
       ],
     },

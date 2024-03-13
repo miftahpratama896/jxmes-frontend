@@ -27,7 +27,7 @@ const Inventory = () => {
         console.error("Error:", error);
       }
     };
- 
+
     // Panggil fungsi untuk mengirim data ke backend
     sendDataToBackend();
   }, []);
@@ -218,69 +218,6 @@ const Inventory = () => {
   console.log(data);
   return (
     <>
-      <style>
-        {`
-        /* CSS Styles */
-        .sticky-header thead th {
-          position: sticky;
-          top: 0;
-          background-color: #1F2937;
-          z-index: 1;
-          
-          
-        }
-        .sticky-header th,
-        .sticky-header td {
-          white-space: nowrap;  
-        }
-        .sticky-header thead tr:first-child th {
-          color: #D1D5DB;
-        }
-        .sticky-header thead tr:nth-child(2) th {
-          position: sticky;
-          top: 0px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-          background-color: #fcd34d;
-          z-index: 3;
-         }
-         .sticky-header thead tr:nth-child(3) th {
-          position: sticky;
-          top: 48px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-          background-color: #fca5a5;
-          z-index: 3;
-         }
-         .sticky-header thead tr:nth-child(4) th {
-          position: sticky;
-          top: 97px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-          background-color: #bae6fd;
-          z-index: 3;
-         }
-         .sticky-header thead tr:nth-child(5) th {
-          position: sticky;
-          top: 145px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-          background-color: #86efac;
-          z-index: 3;
-         }
-         .sticky-header thead tr:nth-child(6) th {
-          position: sticky;
-          top: 193px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-          background-color: #d8b4fe;
-          z-index: 3;
-         }
-        .sticky-header thead tr:nth-child(7) th {
-         position: sticky;
-         top: 240px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-         background-color: #B84600;
-         z-index: 3;
-        }
-        .table-container {
-          max-height: 99vh;
-          max-width: 197vh;
-          overflow-y: auto;
-          overflow-x: auto;
-        }
-      `}
-      </style>
-
       <main className="py-12">
         <div className="mx-auto max-w-full px-6 lg:px-1">
           <div className="px-4 sm:px-6 lg:px-8">
@@ -832,21 +769,21 @@ const Inventory = () => {
               <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                   <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-                    <div className="table-container">
+                    <div className="max-h-screen max-w-screen overflow-y-auto overflow-x-auto">
                       <table className="min-w-full divide-y divide-neutral-950 sticky-header border border-slate-500 ">
-                        <thead className="bg-slate-300">
-                          <tr>
+                        <thead className="bg-slate-300 whitespace-nowrap">
+                          <tr className="sticky left-0 top-0 bg-gray-900 z-40 text-white">
                             <th
                               scope="col"
                               rowSpan={6}
-                              className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
+                              className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
                             >
                               STOCK DATE
                             </th>
                             <th
                               scope="col"
                               rowSpan={6}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               WORK CENTER
                             </th>
@@ -854,7 +791,7 @@ const Inventory = () => {
                               <th
                                 scope="col"
                                 rowSpan={6}
-                                className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                                className="px-3 py-3.5 text-center text-sm font-semibold"
                               >
                                 LINE
                               </th>
@@ -863,7 +800,7 @@ const Inventory = () => {
                               <th
                                 scope="col"
                                 rowSpan={6}
-                                className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                                className="px-3 py-3.5 text-center text-sm font-semibold"
                               >
                                 JX LINE
                               </th>
@@ -871,33 +808,33 @@ const Inventory = () => {
                             <th
                               scope="col"
                               rowSpan={6}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               RELEASE
                             </th>
                             <th
                               scope="col"
                               rowSpan={6}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               STYLE
                             </th>
                             <th
                               scope="col"
                               rowSpan={6}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               MODEL
                             </th>
                             <th
                               scope="col"
                               rowSpan={6}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               GENDER
                             </th>
                           </tr>
-                          <tr>
+                          <tr className="sticky top-0 bg-yellow-300 z-10">
                             <th
                               scope="col"
                               className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
@@ -960,7 +897,7 @@ const Inventory = () => {
                               10
                             </th>
                           </tr>
-                          <tr>
+                          <tr className="sticky top-12 bg-red-300 z-10">
                             <th
                               scope="col"
                               className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
@@ -1047,7 +984,7 @@ const Inventory = () => {
                               7
                             </th>
                           </tr>
-                          <tr>
+                          <tr className="sticky top-24 bg-blue-300 z-10">
                             <th
                               scope="col"
                               className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
@@ -1158,7 +1095,7 @@ const Inventory = () => {
                               13T
                             </th>
                           </tr>
-                          <tr>
+                          <tr className="sticky top-36 bg-green-300 z-10">
                             <th
                               scope="col"
                               className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
@@ -1281,7 +1218,7 @@ const Inventory = () => {
                               14
                             </th>
                           </tr>
-                          <tr>
+                          <tr className="sticky top-48 bg-purple-300 z-10">
                             <th
                               scope="col"
                               className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
@@ -1421,7 +1358,7 @@ const Inventory = () => {
                               15
                             </th>
                           </tr>
-                          <tr>
+                          <tr className="sticky top-60 bg-orange-700 z-10">
                             <th
                               scope="col"
                               colSpan={7}
