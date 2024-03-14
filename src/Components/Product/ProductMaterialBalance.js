@@ -193,6 +193,11 @@ const ProductMaterialBalance = () => {
                 </p>
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-4">
+                <p className="bg-green-200 text-green-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0">
+                  OK
+                </p>
+              </div>
+              <div className="mt-4 sm:mt-0 sm:ml-4">
                 <label className="block text-sm font-medium leading-6 text-gray-900">
                   RELEASE FROM
                 </label>

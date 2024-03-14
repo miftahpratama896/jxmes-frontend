@@ -293,7 +293,7 @@ const ProductResultTarget = () => {
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
-                              Total PROD
+                              TOTAL PROD
                             </th>
                             <th
                               scope="col"
@@ -311,19 +311,19 @@ const ProductResultTarget = () => {
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
-                              Style
+                              STYLE
                             </th>
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
-                              Model
+                              MODEL
                             </th>
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
-                              Gender
+                              GENDER
                             </th>
                             <th
                               scope="col"
@@ -340,7 +340,7 @@ const ProductResultTarget = () => {
                                   colSpan={2}
                                   className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                                 >
-                                  Total
+                                  TOTAL
                                 </th>
                                 <th
                                   scope="col"

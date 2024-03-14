@@ -215,22 +215,22 @@ const ProductDetail = () => {
   useEffect(() => {
     if (data.length > 0) {
       const uniqueJXLineOptions = [
-        ...new Set(data[0].map((item) => item.SCAN_CELL)),
+        ...new Set(data[0]?.map((item) => item.SCAN_CELL)),
       ];
       setFilteredJXLineOptions(uniqueJXLineOptions);
 
       const uniqueModelOptions = [
-        ...new Set(data[0].map((item) => item.STYLE_NAME)),
+        ...new Set(data[0]?.map((item) => item.STYLE_NAME)),
       ];
       setFilteredModelOptions(uniqueModelOptions);
 
       const uniqueStyleOptions = [
-        ...new Set(data[0].map((item) => item.STYLE)),
+        ...new Set(data[0]?.map((item) => item.STYLE)),
       ];
       setFilteredStyleOptions(uniqueStyleOptions);
 
       const uniqueGenderOptions = [
-        ...new Set(data[0].map((item) => item.GENDER)),
+        ...new Set(data[0]?.map((item) => item.GENDER)),
       ];
       setFilteredGenderOptions(uniqueGenderOptions);
     }
@@ -829,12 +829,12 @@ const ProductDetail = () => {
                   <div className=" shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
                     <div className="max-h-screen max-w-screen ">
                       <table className="min-w-full divide-y divide-neutral-950 border border-slate-500 ">
-                        <thead className="bg-slate-300 whitespace-nowrap">
-                          <tr className="sticky top-0 text-white z-50">
+                        <thead className="bg-slate-300 ">
+                          <tr className="sticky top-0 text-white z-20 whitespace-nowrap">
                             <th
                               scope="col"
                               rowSpan={6}
-                              className="sticky left-0 top-0 bg-gray-900 py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
+                              className="sticky left-0 top-0 bg-gray-900  py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
                             >
                               SCAN DATE
                             </th>
@@ -909,74 +909,95 @@ const ProductDetail = () => {
                               </th>
                             )}
                             {selectedWC !== "Cutting" && (
-                            <th
-                              scope="col"
-                              rowSpan={6}
-                              className="sticky left-[493px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
-                            >
-                              RELEASE
-                            </th>
+                              <th
+                                scope="col"
+                                rowSpan={6}
+                                className="sticky left-[493px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                              >
+                                RELEASE
+                              </th>
                             )}
                             {selectedWC === "Cutting" && (
-                            <th
-                              scope="col"
-                              rowSpan={6}
-                              className="sticky left-[426px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
-                            >
-                              RELEASE
-                            </th>
+                              <th
+                                scope="col"
+                                rowSpan={6}
+                                className="sticky left-[426px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                              >
+                                RELEASE
+                              </th>
                             )}
                             {selectedWC === "Cutting" && (
-                            <th
-                              scope="col"
-                              rowSpan={6}
-                              className="sticky left-[501px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
-                            >
-                              STYLE
-                            </th>
+                              <th
+                                scope="col"
+                                rowSpan={6}
+                                className="sticky left-[501px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                              >
+                                STYLE
+                              </th>
                             )}
                             {selectedWC !== "Cutting" && (
-                            <th
-                              scope="col"
-                              rowSpan={6}
-                              className="sticky left-[572px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
-                            >
-                              STYLE
-                            </th>
+                              <th
+                                scope="col"
+                                rowSpan={6}
+                                className="sticky left-[572px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                              >
+                                STYLE
+                              </th>
                             )}
                             {selectedWC === "Cutting" && (
-                            <th
-                              scope="col"
-                              rowSpan={6}
-                              className="sticky left-[598px] top-0 bg-gray-900  px-3 py-3.5 text-center text-sm font-semibol"
-                            >
-                              MODEL
-                            </th>
+                              <th
+                                scope="col"
+                                rowSpan={6}
+                                className="sticky left-[598px] top-0 bg-gray-900  px-3 py-3.5 text-center text-sm font-semibold"
+                              >
+                                MODEL
+                              </th>
                             )}
                             {selectedWC !== "Cutting" && (
-                            <th
-                              scope="col"
-                              rowSpan={6}
-                              className="sticky left-[669px] top-0 bg-gray-900  px-3 py-3.5 text-center text-sm font-semibol"
-                            >
-                              MODEL
-                            </th>
+                              <th
+                                scope="col"
+                                rowSpan={6}
+                                className="sticky left-[669px] top-0 bg-gray-900  px-3 py-3.5 text-center text-sm font-semibold"
+                              >
+                                MODEL
+                              </th>
                             )}
-                            <th
-                              scope="col"
-                              rowSpan={6}
-                              className="px-3 py-3.5 text-center text-sm font-semibold"
-                            >
-                              GENDER
-                            </th>
+                            {selectedWC !== "Cutting" && (
+                              <th
+                                scope="col"
+                                rowSpan={6}
+                                className="sticky left-[859px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                              >
+                                GENDER
+                              </th>
+                            )}
+                            {selectedWC === "Cutting" && (
+                              <th
+                                scope="col"
+                                rowSpan={6}
+                                className="sticky left-[783px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                              >
+                                GENDER
+                              </th>
+                            )}
                           </tr>
                           <tr className="sticky top-0 bg-yellow-300 z-10">
-                            <th
-                              scope="col"
-                              className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
-                            >
-                              TD
-                            </th>
+                            {selectedWC === "Cutting" && (
+                              <th
+                                scope="col"
+                                className="sticky left-[860px] z-50 bg-yellow-300 py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
+                              >
+                                TD
+                              </th>
+                            )}
+                            {selectedWC !== "Cutting" && (
+                              <th
+                                scope="col"
+                                className="sticky left-[935px] z-50 bg-yellow-300 py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
+                              >
+                                TD
+                              </th>
+                            )}
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold"
@@ -1034,12 +1055,22 @@ const ProductDetail = () => {
                             </th>
                           </tr>
                           <tr className="sticky top-12 bg-red-300 z-10">
-                            <th
-                              scope="col"
-                              className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
-                            >
-                              GS
-                            </th>
+                            {selectedWC === "Cutting" && (
+                              <th
+                                scope="col"
+                                className="sticky left-[860px] z-50 bg-red-300 py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
+                              >
+                                GS
+                              </th>
+                            )}
+                            {selectedWC !== "Cutting" && (
+                              <th
+                                scope="col"
+                                className="sticky left-[935px] z-50 bg-red-300 py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
+                              >
+                                GS
+                              </th>
+                            )}
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
@@ -1121,12 +1152,22 @@ const ProductDetail = () => {
                             </th>
                           </tr>
                           <tr className="sticky top-24 bg-blue-300 z-10">
-                            <th
-                              scope="col"
-                              className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
-                            >
-                              PS
-                            </th>
+                            {selectedWC === "Cutting" && (
+                              <th
+                                scope="col"
+                                className="sticky left-[860px] z-50 bg-blue-300 py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
+                              >
+                                PS
+                              </th>
+                            )}
+                            {selectedWC !== "Cutting" && (
+                              <th
+                                scope="col"
+                                className="sticky left-[935px] z-50 bg-blue-300 py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
+                              >
+                                PS
+                              </th>
+                            )}
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
@@ -1232,12 +1273,22 @@ const ProductDetail = () => {
                             </th>
                           </tr>
                           <tr className="sticky top-36 bg-green-300 z-10">
-                            <th
-                              scope="col"
-                              className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
-                            >
-                              WO
-                            </th>
+                            {selectedWC === "Cutting" && (
+                              <th
+                                scope="col"
+                                className="sticky left-[860px] z-50 bg-green-300 py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
+                              >
+                                WO
+                              </th>
+                            )}
+                            {selectedWC !== "Cutting" && (
+                              <th
+                                scope="col"
+                                className="sticky left-[935px] z-50 bg-green-300 py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
+                              >
+                                WO
+                              </th>
+                            )}
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
@@ -1355,12 +1406,22 @@ const ProductDetail = () => {
                             </th>
                           </tr>
                           <tr className="sticky top-48 bg-purple-300 z-10">
-                            <th
-                              scope="col"
-                              className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
-                            >
-                              ME
-                            </th>
+                            {selectedWC === "Cutting" && (
+                              <th
+                                scope="col"
+                                className="sticky left-[860px] z-50 bg-purple-300 py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
+                              >
+                                ME
+                              </th>
+                            )}
+                            {selectedWC !== "Cutting" && (
+                              <th
+                                scope="col"
+                                className="sticky left-[935px] z-50 bg-purple-300 py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
+                              >
+                                ME
+                              </th>
+                            )}
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
@@ -1495,20 +1556,40 @@ const ProductDetail = () => {
                             </th>
                           </tr>
                           <tr className="sticky top-60 bg-orange-700 z-10">
-                            <th
-                              scope="col"
-                              colSpan={selectedWC !== "Cutting" ? 10 : 9}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
-                            >
-                              TOTAL
-                            </th>
-
-                            <th
-                              scope="col"
-                              className={`px-3 py-3.5 text-center text-sm font-semibold text-gray-900  sm:pl-6`}
-                            >
-                              {totalAllRows.toLocaleString()}
-                            </th>
+                            {selectedWC !== "Cutting" && (
+                              <th
+                                scope="col"
+                                colSpan={selectedWC !== "Cutting" ? 10 : 9}
+                                className="sticky left-0 z-30  bg-orange-700 px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              >
+                                TOTAL
+                              </th>
+                            )}
+                            {selectedWC === "Cutting" && (
+                              <th
+                                scope="col"
+                                colSpan={selectedWC !== "Cutting" ? 10 : 9}
+                                className="sticky left-0 z-30  bg-orange-700 px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              >
+                                TOTAL
+                              </th>
+                            )}
+                            {selectedWC === "Cutting" && (
+                              <th
+                                scope="col"
+                                className={`sticky left-[860px] z-50 bg-orange-700 px-3 py-3.5 z-10 text-center text-sm font-semibold text-gray-900  sm:pl-6`}
+                              >
+                                {totalAllRows.toLocaleString()}
+                              </th>
+                            )}
+                             {selectedWC !== "Cutting" && (
+                              <th
+                                scope="col"
+                                className={`sticky left-[935px] z-50 bg-orange-700 px-3 py-3.5 z-10 text-center text-sm font-semibold text-gray-900  sm:pl-6`}
+                              >
+                                {totalAllRows.toLocaleString()}
+                              </th>
+                            )}
                             {columns.map((columnName, index) => (
                               <th
                                 key={index}
@@ -1542,7 +1623,7 @@ const ProductDetail = () => {
 
                             return (
                               <tr key={index}>
-                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900">
+                                <td className="sticky left-0 bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900">
                                   {new Date(item.SCAN_DATE)
                                     .toLocaleDateString("en-GB", {
                                       day: "2-digit",
@@ -1552,40 +1633,98 @@ const ProductDetail = () => {
                                     .replace(/\//g, "-")}
                                 </td>
 
-                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
+                                <td className="sticky left-[109px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
                                   {item.PLANT}
                                 </td>
                                 {selectedWC !== "Cutting" && (
-                                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
+                                  <td className="sticky left-[176px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
                                     {item.SCAN_CELL}
                                   </td>
                                 )}
-                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
-                                  {item.JX_CELL}
-                                </td>
-                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
-                                  {item.POPD_OPCD}
-                                </td>
-                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
-                                  {item.TYPE}
-                                </td>
-                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
-                                  {item.RELEASE}
-                                </td>
-                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
-                                  {item.STYLE}
-                                </td>
-                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
-                                  {item.STYLE_NAME}
-                                </td>
-                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
-                                  {item.GENDER}
-                                </td>
-                                <td
-                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium`}
-                                >
-                                  {totalColumnValue.toLocaleString()}
-                                </td>
+                                {selectedWC === "Cutting" && (
+                                  <td className="sticky left-[176px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
+                                    {item.JX_CELL}
+                                  </td>
+                                )}
+                                {selectedWC !== "Cutting" && (
+                                  <td className="sticky left-[229px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
+                                    {item.JX_CELL}
+                                  </td>
+                                )}
+                                {selectedWC === "Cutting" && (
+                                  <td className="sticky left-[247px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
+                                    {item.POPD_OPCD}
+                                  </td>
+                                )}
+                                {selectedWC !== "Cutting" && (
+                                  <td className="sticky left-[300px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
+                                    {item.POPD_OPCD}
+                                  </td>
+                                )}
+                                {selectedWC === "Cutting" && (
+                                  <td className="sticky left-[366px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
+                                    {item.TYPE}
+                                  </td>
+                                )}
+                                {selectedWC !== "Cutting" && (
+                                  <td className="sticky left-[419px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
+                                    {item.TYPE}
+                                  </td>
+                                )}
+                                {selectedWC === "Cutting" && (
+                                  <td className="sticky left-[426px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
+                                    {item.RELEASE}
+                                  </td>
+                                )}
+                                {selectedWC !== "Cutting" && (
+                                  <td className="sticky left-[493px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
+                                    {item.RELEASE}
+                                  </td>
+                                )}
+                                {selectedWC === "Cutting" && (
+                                  <td className="sticky left-[501px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
+                                    {item.STYLE}
+                                  </td>
+                                )}
+                                {selectedWC !== "Cutting" && (
+                                  <td className="sticky left-[572px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
+                                    {item.STYLE}
+                                  </td>
+                                )}
+                                {selectedWC === "Cutting" && (
+                                  <td className="sticky left-[598px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
+                                    {item.STYLE_NAME}
+                                  </td>
+                                )}
+                                {selectedWC !== "Cutting" && (
+                                  <td className="sticky left-[669px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
+                                    {item.STYLE_NAME}
+                                  </td>
+                                )}
+                                {selectedWC === "Cutting" && (
+                                  <td className="sticky left-[783px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
+                                    {item.GENDER}
+                                  </td>
+                                )}
+                                {selectedWC !== "Cutting" && (
+                                  <td className="sticky left-[859px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900">
+                                    {item.GENDER}
+                                  </td>
+                                )}
+                                {selectedWC === "Cutting" && (
+                                  <td
+                                    className={`sticky left-[860px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium`}
+                                  >
+                                    {totalColumnValue.toLocaleString()}
+                                  </td>
+                                )}
+                                {selectedWC !== "Cutting" && (
+                                  <td
+                                    className={`sticky left-[935px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium`}
+                                  >
+                                    {totalColumnValue.toLocaleString()}
+                                  </td>
+                                )}
                                 {columns.map((columnName, columnIndex) => (
                                   <td
                                     key={columnIndex}

@@ -559,32 +559,42 @@ const ProductTime = () => {
                                       {item.MODEL}
                                     </td>
 
-                                    <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ${
-                                        item.DAY === "YESTERDAY"
-                                          ? "bg-orange-500 text-center"
-                                          : ""
-                                      }`}>
-                                      {item.GENDER}
-                                    </td>
-                                    <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ${
-                                        item.DAY === "YESTERDAY"
-                                          ? "bg-orange-500 text-center"
-                                          : ""
-                                      }`}>
-                                      {item.DAY}
-                                    </td>
-                                    {columns.map((columnName) => (
-                                      <td
+                                    <td
                                       className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ${
                                         item.DAY === "YESTERDAY"
                                           ? "bg-orange-500 text-center"
                                           : ""
                                       }`}
+                                    >
+                                      {item.GENDER}
+                                    </td>
+                                    <td
+                                      className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ${
+                                        item.DAY === "YESTERDAY"
+                                          ? "bg-orange-500 text-center"
+                                          : ""
+                                      }`}
+                                    >
+                                      {item.DAY}
+                                    </td>
+                                    {columns.map((columnName) => (
+                                      <td
+                                        className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ${
+                                          item.DAY === "YESTERDAY"
+                                            ? "bg-orange-500 text-center"
+                                            : ""
+                                        }`}
                                       >
                                         {item[columnName]}
                                       </td>
                                     ))}
-                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 bg-orange-500">
+                                    <td
+                                      className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ${
+                                        item.DAY === "YESTERDAY"
+                                          ? "bg-orange-500 text-center"
+                                          : "Wtext-center"
+                                      }`}
+                                    >
                                       {calculateTotal(item)}
                                     </td>
                                   </tr>

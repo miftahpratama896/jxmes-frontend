@@ -80,7 +80,7 @@ export default function Example() {
       href: "/ProductTime",
       current: false,
       subItems: [
-        { name: "Product - Detail", href: "/ProductDetail", active: false },
+        { name: "Product - Detail", href: "/ProductDetail", active: true },
         { name: "Product - Time", href: "/ProductTime", active: true },
         { name: "Product - PCard", href: "/ProductPCard", active: true },
         {
@@ -130,7 +130,7 @@ export default function Example() {
       name: "Order Tracking",
       href: "/POBalance",
       current: false,
-      subItems: [{ name: "PO Balance", href: "/POBalance", active: true }],
+      subItems: [{ name: "PO Balance", href: "/POBalance", active: false }],
     },
     {
       name: "WIP",
