@@ -130,7 +130,7 @@ export default function Example() {
       name: "Order Tracking",
       href: "/POBalance",
       current: false,
-      subItems: [{ name: "PO Balance", href: "/POBalance", active: false }],
+      subItems: [{ name: "PO Balance", href: "/POBalance", active: true }],
     },
     {
       name: "WIP",
