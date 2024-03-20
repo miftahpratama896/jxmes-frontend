@@ -537,7 +537,7 @@ const ProductTime = () => {
                                     className={`${
                                       item.FACTORY === "TOTAL"
                                         ? "bg-yellow-500 text-center"
-                                        : ""
+                                        : "text-center "
                                     } ${index > 0 ? "sticky-row" : ""}`}
                                   >
                                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6">

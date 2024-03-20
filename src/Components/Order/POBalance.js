@@ -244,7 +244,7 @@ function NotFound() {
   useEffect(() => {
     const uniquePOOptions = [...new Set(data?.map((item) => item.PO))];
     setFilteredPOptions(uniquePOOptions);
-  }, [data,data_2]);
+  }, [data, data_2]);
 
   useEffect(() => {
     const uniqueModelOptions = [...new Set(data?.map((item) => item.MODEL))];
@@ -254,7 +254,7 @@ function NotFound() {
   useEffect(() => {
     const uniqueStyleOptions = [...new Set(data?.map((item) => item.STYLE))];
     setFilteredStyleOptions(uniqueStyleOptions);
-  }, [data,data_2]);
+  }, [data, data_2]);
 
   const calculateSPKTotal = () =>
     data?.reduce((total, item) => total + (item.SPK || 0), 0);
@@ -262,8 +262,10 @@ function NotFound() {
     data?.reduce((total, item) => total + (item.PROD_CUT || 0), 0);
   const calculateSewingTotal = () =>
     data?.reduce((total, item) => total + (item.PROD_SEW || 0), 0);
-  const calculateWhInputTotal = () =>
+  const calculateWhOutputTotal = () =>
     data?.reduce((total, item) => total + (item.PROD_ASP || 0), 0);
+  const calculateWhInputTotal = () =>
+    data?.reduce((total, item) => total + (item.PROD_ASPIN || 0), 0);
 
   console.log("Data 1:", data);
   console.log("Data 2:", data_2);
@@ -762,7 +764,7 @@ function NotFound() {
                             </th>
                             <th
                               scope="col"
-                              colSpan={3}
+                              colSpan={4}
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
                               BALANCE
@@ -785,7 +787,13 @@ function NotFound() {
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
-                              W/H
+                              W/H IN
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                            >
+                              W/H OUT
                             </th>
                           </tr>
                           <tr>
@@ -824,6 +832,15 @@ function NotFound() {
                               } sm:pl-6`}
                             >
                               {calculateWhInputTotal()?.toLocaleString()}
+                            </th>
+                            <th
+                              className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium ${
+                                calculateWhInputTotal() < 0
+                                  ? "bg-red-300 text-red-600 text-lg font-extrabold"
+                                  : "text-gray-900 bg-orange-700  "
+                              } sm:pl-6`}
+                            >
+                              {calculateWhOutputTotal()?.toLocaleString()}
                             </th>
                           </tr>
                         </thead>
@@ -967,7 +984,44 @@ function NotFound() {
                                     </button>
                                   )}
                                 </td>
-
+                                <td
+                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium sm:pl-6`}
+                                >
+                                  {item.PROD_ASP !== 0 && item.PROD_ASP ? (
+                                    <button
+                                      type="button"
+                                      className={`rounded px-2 py-1 text-xs font-semibold object-center text-indigo-600 shadow-sm  ${
+                                        item.PROD_ASPIN < 0
+                                          ? "text-red-500 hover:bg-red-300"
+                                          : "text-gray-900"
+                                      } sm:pl-6 mx-auto`}
+                                      onClick={() => {
+                                        setJXLINE(item.JXLINE);
+                                        setWC("ASPIN");
+                                        setRLS(item.RLS);
+                                        setPO(item.PO);
+                                        setSTYLE(item.STYLE);
+                                        setASSY_INPUT(item.ASSY_DATE);
+                                        fetchData_2();
+                                        setUpdating(false);
+                                        setModalIsOpen(true);
+                                      }}
+                                    >
+                                      {item.PROD_ASPIN.toLocaleString()}
+                                    </button>
+                                  ) : (
+                                    <button
+                                      type="button"
+                                      className={`rounded px-2 py-1 text-xs font-semibold object-center text-indigo-600 shadow-sm  ${
+                                        item.PROD_ASPIN < 0
+                                          ? "text-red-500 hover:bg-red-300"
+                                          : "text-gray-900"
+                                      } sm:pl-6 mx-auto`}
+                                    >
+                                      {item.PROD_ASPIN.toLocaleString()}
+                                    </button>
+                                  )}
+                                </td>
                                 <td
                                   className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium sm:pl-6`}
                                 >
@@ -1177,7 +1231,7 @@ function NotFound() {
                                       </td>
 
                                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                        {total}
+                                        {total.toLocaleString()}
                                       </td>
                                       {columns.map((columnName, colIndex) => (
                                         <td

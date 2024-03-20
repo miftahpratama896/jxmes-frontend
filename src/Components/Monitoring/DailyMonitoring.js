@@ -360,8 +360,8 @@ const FetchData = () => {
                       className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
                     >
                       <option value="Line">Line</option>
-                      <option value="Line-Model">Line-Model</option>
                       <option value="Model">Model</option>
+                      <option value="Line-Model">Line-Model</option>
                     </select>
                   </div>
                 )}
@@ -389,67 +389,132 @@ const FetchData = () => {
               </div>
             </div>
             <div className="mt-8 flow-root">
-              <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div className="relative -mx-4 -my-2 overflow-y-scroll overflow-x-scroll sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                  <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-                    <div className="table-container">
-                      <table
-                        key={key}
-                        className="min-w-full divide-y divide-neutral-950 sticky-header border border-slate-500"
-                      >
-                        <thead className="bg-slate-300">
-                          <tr>
+                  <div className=" shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+                    <div className="max-h-[70vh] max-w-screen ">
+                      <table className="min-w-full divide-y divide-neutral-950 border border-slate-500 ">
+                        <thead className="bg-slate-300 ">
+                          <tr className="sticky top-0 text-white z-20 bg-gray-900 whitespace-nowrap">
                             <th
                               scope="col"
-                              className="sticky-main-first-column px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="sticky left-0 top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
                             >
-                              PLANT
+                              WORK CENTER
                             </th>
+
+                            {wc !== "CUTTING" && filterType !== "Model" && (
+                              <th
+                                scope="col"
+                                className="sticky-main-first-column px-3 py-3.5 text-center text-sm font-semibold"
+                              >
+                                JX LINE
+                              </th>
+                            )}
+
+                            {wc !== "CUTTING" && filterType !== "Model" && (
+                              <th
+                                scope="col"
+                                className="sticky-main-first-column px-3 py-3.5 text-center text-sm font-semibold"
+                              >
+                                JX2 LINE
+                              </th>
+                            )}
+                            {wc === "CUTTING" && (
+                              <th
+                                scope="col"
+                                className="sticky left-[114px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                              >
+                                MODEL
+                              </th>
+                            )}
+
+                            {wc === "CUTTING" && (
+                              <th
+                                scope="col"
+                                className="sticky left-[217px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                              >
+                                GENDER
+                              </th>
+                            )}
+
+                            {wc !== "CUTTING" &&
+                              filterType !== "Line" &&
+                              filterType === "Model" && (
+                                <th
+                                  scope="col"
+                                  className="sticky left-[114px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                                >
+                                  MODEL
+                                </th>
+                              )}
+
+                            {wc !== "CUTTING" &&
+                              filterType !== "Line" &&
+                              filterType === "Model" && (
+                                <th
+                                  scope="col"
+                                  className="sticky left-[217px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                                >
+                                  GENDER
+                                </th>
+                              )}
+
+                            {wc !== "CUTTING" &&
+                              filterType !== "Line" &&
+                              filterType === "Line-Model" && (
+                                <th
+                                  scope="col"
+                                  className="sticky-main-first-column px-3 py-3.5 text-center text-sm font-semibold"
+                                >
+                                  MODEL
+                                </th>
+                              )}
+
+                            {wc !== "CUTTING" &&
+                              filterType !== "Line" &&
+                              filterType === "Line-Model" && (
+                                <th
+                                  scope="col"
+                                  className="sticky-main-first-column px-3 py-3.5 text-center text-sm font-semibold"
+                                >
+                                  GENDER
+                                </th>
+                              )}
+
                             <th
                               scope="col"
-                              className="sticky-main-second-column left-20 px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
-                            >
-                              {wc === "SEWING" || wc === "W/H"
-                                ? filterType === "Line" ||
-                                  filterType === "Line-Model"
-                                  ? "JX LINE"
-                                  : "MODEL"
-                                : "MODEL"}
-                            </th>
-                            <th
-                              scope="col"
-                              className="sticky-main-third-column left-32 px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
-                            >
-                              {wc === "SEWING" || wc === "W/H"
-                                ? filterType === "Line" ||
-                                  filterType === "Line-Model"
-                                  ? "JX2 LINE"
-                                  : "GENDER"
-                                : "GENDER"}
-                            </th>
-                            <th
-                              scope="col"
-                              className="sticky-main-fourth-column left-48 px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className={`px-3 py-3.5 text-center text-sm font-semibold ${
+                                wc === "CUTTING" || filterType === "Model"
+                                  ? "sticky left-[291px] top-0 bg-gray-900"
+                                  : ""
+                              }`}
                             >
                               TOTAL
                             </th>
+
                             {columns.map((column, index) => (
                               <th
                                 key={index}
                                 scope="col"
-                                className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                                className="px-3 py-3.5 text-center text-sm font-semibold"
                               >
                                 {column}
                               </th>
                             ))}
                           </tr>
-                          <tr>
-                            <th className="sticky-first-column py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                          <tr className="sticky top-12 bg-orange-700 z-10 whitespace-nowrap">
+                            <th
+                              colSpan={3}
+                              className="sticky left-0 top-0 bg-orange-700 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                            >
                               GRAND TOTAL
                             </th>
-                            <th className="sticky-second-column left-20 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"></th>
-                            <th className="sticky-second-column left-32 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"></th>
-                            <th className="sticky-second-column left-48 px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                            <th className={`px-3 py-3.5 text-center text-sm font-semibold ${
+                                wc === "CUTTING" || filterType === "Model"
+                                  ? "sticky left-[291px] top-0 bg-orange-700"
+                                  : ""
+                              }`}>
                               {totalColumn.toLocaleString()}
                             </th>
                             {columns.map((column, colIndex) => (
@@ -487,28 +552,51 @@ const FetchData = () => {
                               <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
                                 {item.WC}
                               </td>
-                              <td className="sticky-second-row left-20 bg-gray-50  py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
-                                {wc === "SEWING" || wc === "W/H"
-                                  ? filterType === "Line" ||
-                                    filterType === "Line-Model"
-                                    ? item.JX_LINE
-                                    : item.SCAN_CELL
-                                  : item.SCAN_CELL}
-                              </td>
-                              <td className="sticky-third-row bg-gray-50 left-32 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
-                                {wc === "SEWING" || wc === "W/H"
-                                  ? filterType === "Line" ||
-                                    filterType === "Line-Model"
-                                    ? item.SCAN_CELL
-                                    : item.GENDER
-                                  : item.GENDER}
-                              </td>
+                              {wc !== "CUTTING" && filterType !== "Model" && (
+                                <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
+                                  {item.JX_LINE}
+                                </td>
+                              )}
+                              {wc !== "CUTTING" && filterType !== "Model" && (
+                                <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
+                                  {item.SCAN_CELL}
+                                </td>
+                              )}
+                              {(wc === "CUTTING" || filterType === "Model") && (
+                                <td className="sticky left-[114px] top-0 bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
+                                  {item.SCAN_CELL}
+                                </td>
+                              )}
+                              {(wc === "CUTTING" || filterType === "Model") && (
+                                <td className="sticky left-[217px] top-0 bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
+                                  {item.GENDER}
+                                </td>
+                              )}
+                              {wc !== "CUTTING" &&
+                                filterType === "Line-Model" && (
+                                  <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6">
+                                    {item.GENDER}
+                                  </td>
+                                )}
+
+                              {wc !== "CUTTING" &&
+                                filterType === "Line-Model" && (
+                                  <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
+                                    {item.GENDER2}
+                                  </td>
+                                )}
+
                               <td
-                                className="sticky-fourth-row left-48 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6"
+                                className={`sticky-fourth-row left-48 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${
+                                  wc === "CUTTING" || filterType === "Model"
+                                    ? "sticky left-[291px] top-0 bg-gray-900"
+                                    : ""
+                                }`}
                                 style={{ backgroundColor: "#FA7625" }}
                               >
                                 {item.TOTAL.toLocaleString()}
                               </td>
+
                               {columns.map((column, colIndex) => (
                                 <td
                                   key={colIndex}
