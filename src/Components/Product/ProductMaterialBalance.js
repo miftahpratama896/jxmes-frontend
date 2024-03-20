@@ -148,38 +148,6 @@ const ProductMaterialBalance = () => {
   console.log(data);
   return (
     <>
-      <style>
-        {`
-        /* CSS Styles */
-        .sticky-header thead th {
-          position: sticky;
-          top: 0;
-          background-color: #1F2937;
-          z-index: 1;
-          
-        }
-        .sticky-header th,
-        .sticky-header td {
-          white-space: nowrap;
-        }
-        .sticky-header thead tr:first-child th {
-         color: #D1D5DB;
-        }
-        .sticky-header thead tr:nth-child(2) th {
-         position: sticky;
-         top: 48px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-         background-color: #FA7625;
-         z-index: 3;
-       }
-        .table-container {
-            max-height: 70vh;
-            max-width: 197vh;
-            overflow-y: auto;
-            overflow-x: auto;
-        }
-      `}
-      </style>
-
       <main className="py-12">
         <div className="mx-auto max-w-full px-6 lg:px-1">
           <div className="px-4 sm:px-6 lg:px-8">
@@ -242,7 +210,7 @@ const ProductMaterialBalance = () => {
                       />
                     </Combobox.Button>
 
-                    <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                    <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                       {/* Option for All */}
                       <Combobox.Option
                         key="all"
@@ -352,7 +320,7 @@ const ProductMaterialBalance = () => {
                       />
                     </Combobox.Button>
 
-                    <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                    <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                       {/* Option for All */}
                       <Combobox.Option
                         key="all"
@@ -462,96 +430,96 @@ const ProductMaterialBalance = () => {
             </div>
 
             <div className="mt-8 flow-root">
-              <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div className="relative -mx-4 -my-2 overflow-y-scroll overflow-x-scroll sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                  <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-                    <div className="table-container">
-                      <table className="min-w-full divide-y divide-neutral-950 sticky-header border border-slate-500 ">
-                        <thead className="bg-slate-300">
-                          <tr>
+                  <div className=" shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+                    <div className="max-h-[70vh] max-w-screen ">
+                      <table className="min-w-full divide-y divide-neutral-950 border border-slate-500 ">
+                        <thead className="bg-slate-300 ">
+                          <tr className="sticky top-0 text-white z-10 bg-gray-900 whitespace-nowrap">
                             <th
                               scope="col"
-                              className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
+                              className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
                             >
                               RELEASE
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               STYLE
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               MODEL
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               ORDER QTY
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               MAT CODE
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               MAT GROUP
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               MAT NAME
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               MAT SPEC
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               MAT COLOR
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               MAT UNIT
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               PO QTY
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                               style={{ backgroundColor: "#dc2626" }}
                             >
                               INPUT QTY
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                               style={{ backgroundColor: "#dc2626" }}
                             >
                               BALANCE
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               INPUT DATE
                             </th>
@@ -587,13 +555,13 @@ const ProductMaterialBalance = () => {
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                 {item.GROUP_CODE}
                               </td>
-                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
+                              <td className="py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                 {item.MAT_NAME}
                               </td>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                 {item.MAT_SPEC}
                               </td>
-                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
+                              <td className="py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                 {item.MAT_COLOR}
                               </td>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">

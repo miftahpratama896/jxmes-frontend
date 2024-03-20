@@ -72,7 +72,7 @@ export default function Example() {
       current: false,
       subItems: [
         { name: "Monitoring", href: "/MainMonitoring", active: true },
-        { name: "Daily Monitoring", href: "/DailyMonitoring", active: false },
+        { name: "Daily Monitoring", href: "/DailyMonitoring", active: true },
       ],
     },
     {

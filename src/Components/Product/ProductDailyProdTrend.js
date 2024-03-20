@@ -212,46 +212,7 @@ function ProductDailyProdTrend() {
   console.log(data);
   return (
     <>
-      <style>
-        {`
-        /* CSS Styles */
-        .sticky-header thead th {
-          position: sticky;
-          top: 0;
-          z-index: 1;
-          
-        }
-        .sticky-header th,
-        .sticky-header td {
-          white-space: nowrap;
-        }
-        .sticky-header thead tr:first-child th {
-          background-color: #1F2937;
-          color: #D1D5DB;
-        }
-        .sticky-header thead tr:nth-child(2) th {
-         background-color: #1F2937;
-         color: #D1D5DB;
-         position: sticky;
-         top: 49px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-         z-index: 3;
-       }
-
-       .sticky-header thead tr:nth-child(3) th {
-        position: sticky;
-        top: 97px; /* Jarak antara subheader dan header pertama, sesuaikan sesuai kebutuhan */
-        
-        z-index: 3;
-      }
       
-        .table-container {
-          max-height: 70vh;
-          max-width: 197vh;
-          overflow-y: auto;
-          overflow-x: auto;
-        }
-      `}
-      </style>
 
       <main className="py-12">
         <div className="mx-auto max-w-full px-6 lg:px-1">
@@ -361,31 +322,31 @@ function ProductDailyProdTrend() {
               </div>
             </div>
             <div className="mt-8 flow-root">
-              <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div className="relative -mx-4 -my-2 overflow-y-scroll overflow-x-scroll sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                  <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-                    <div className="table-container">
-                      <table className="min-w-full divide-y divide-neutral-950 sticky-header border border-slate-500 ">
-                        <thead className="bg-slate-300">
-                          <tr>
+                  <div className=" shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+                    <div className="max-h-[70vh] max-w-screen ">
+                      <table className="min-w-full divide-y divide-neutral-950 border border-slate-500 ">
+                        <thead className="bg-slate-300 ">
+                          <tr className="sticky top-0 text-white z-20 bg-gray-900 whitespace-nowrap">
                             <th
                               scope="col"
                               rowSpan={2}
-                              className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
+                              className="sticky left-0 top-0 bg-gray-900 py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
                             >
                               PLANT
                             </th>
                             <th
                               scope="col"
                               rowSpan={2}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="sticky left-[73px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               JX LINE
                             </th>
                             <th
                               scope="col"
                               rowSpan={2}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="sticky left-[123px] bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               JX2 LINE
                             </th>
@@ -405,7 +366,7 @@ function ProductDailyProdTrend() {
                                     colSpan={3}
                                     key={index}
                                     scope="col"
-                                    className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                                    className="px-3 py-3.5 text-center text-sm font-semibold"
                                     style={{ backgroundColor: bgColor }}
                                   >
                                     {formattedDate}
@@ -419,20 +380,20 @@ function ProductDailyProdTrend() {
                             <th
                               scope="col"
                               colSpan={4}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               TOTAL
                             </th>
                             <th
                               scope="col"
                               colSpan={4}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                               style={{ backgroundColor: "#374151" }}
                             >
                               AVERAGE
                             </th>
                           </tr>
-                          <tr>
+                          <tr className="sticky top-12 text-white z-10 bg-gray-900 whitespace-nowrap">
                             {columns.map((columnName, index) => {
                               let displayText = columnName;
                               let bgColor =
@@ -449,7 +410,7 @@ function ProductDailyProdTrend() {
                                 <th
                                   key={index}
                                   scope="col"
-                                  className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                                  className="px-3 py-3.5 text-center text-sm font-semibold"
                                   style={{ backgroundColor: bgColor }}
                                 >
                                   {displayText}
@@ -458,62 +419,62 @@ function ProductDailyProdTrend() {
                             })}
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               TOTAL PLAN
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               TOTAL PROD
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               TOTAL DIFF
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               TOTAL RATE
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                               style={{ backgroundColor: "#374151" }}
                             >
                               AVG PLAN
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                               style={{ backgroundColor: "#374151" }}
                             >
                               AVG PROD
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                               style={{ backgroundColor: "#374151" }}
                             >
                               AVG DIFF
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              className="px-3 py-3.5 text-center text-sm font-semibold"
                               style={{ backgroundColor: "#374151" }}
                             >
                               AVG RATE
                             </th>
                           </tr>
-                          <tr>
+                          <tr className="sticky top-24 text-gray-900 z-10 bg-gray-900 whitespace-nowrap">
                             <th
                               scope="col"
                               colSpan={3}
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-500"
+                              className="sticky left-0 top-0 px-3 py-3.5 text-center text-sm font-semibold bg-orange-500"
                             >
                               TOTAL
                             </th>
@@ -530,25 +491,25 @@ function ProductDailyProdTrend() {
                             ))}
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-500"
+                              className="px-3 py-3.5 text-center text-sm font-semibold bg-orange-500"
                             >
                               {totalAllRowsPlan.toLocaleString()}
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-500"
+                              className="px-3 py-3.5 text-center text-sm font-semibold bg-orange-500"
                             >
                               {totalAllRowsProd.toLocaleString()}
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-500"
+                              className="px-3 py-3.5 text-center text-sm font-semibold bg-orange-500"
                             >
                               {totalAllRowsDiff.toLocaleString()}
                             </th>
                             <th
                               scope="col"
-                              className={`px-3 py-3.5 text-center text-sm font-semibold text-gray-900 ${
+                              className={`px-3 py-3.5 text-center text-sm font-semibold ${
                                 totalAllRowsRate >= 100
                                   ? "bg-green-400"
                                   : totalAllRowsRate >= 98
@@ -560,25 +521,25 @@ function ProductDailyProdTrend() {
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-500"
+                              className="px-3 py-3.5 text-center text-sm font-semibold bg-orange-500"
                             >
                               {avgAllRowsPlan.toLocaleString()}
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-500"
+                              className="px-3 py-3.5 text-center text-sm font-semibold bg-orange-500"
                             >
                               {avgAllRowsProd.toLocaleString()}
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 bg-orange-500"
+                              className="px-3 py-3.5 text-center text-sm font-semibold bg-orange-500"
                             >
                               {avgAllRowsDiff.toLocaleString()}
                             </th>
                             <th
                               scope="col"
-                              className={`px-3 py-3.5 text-center text-sm font-semibold text-gray-900 ${
+                              className={`px-3 py-3.5 text-center text-sm font-semibold ${
                                 totalAllRowsRate >= 100
                                   ? "bg-green-400"
                                   : totalAllRowsRate >= 98
@@ -621,13 +582,13 @@ function ProductDailyProdTrend() {
                             ).length;
                             return (
                               <tr key={index}>
-                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 ">
+                                <td className="sticky left-0 bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 ">
                                   {item.PLANT}
                                 </td>
-                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
+                                <td className="sticky left-[73px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                   {item.JX_LINE}
                                 </td>
-                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
+                                <td className="sticky left-[123px] bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                   {item.LINE}
                                 </td>
                                 {columns.map((columnName, colIndex) => {

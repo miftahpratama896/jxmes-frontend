@@ -406,7 +406,7 @@ const FetchData = () => {
                             {wc !== "CUTTING" && filterType !== "Model" && (
                               <th
                                 scope="col"
-                                className="sticky-main-first-column px-3 py-3.5 text-center text-sm font-semibold"
+                                className="sticky left-[114px] top-0 bg-gray-900  px-3 py-3.5 text-center text-sm font-semibold"
                               >
                                 JX LINE
                               </th>
@@ -415,7 +415,7 @@ const FetchData = () => {
                             {wc !== "CUTTING" && filterType !== "Model" && (
                               <th
                                 scope="col"
-                                className="sticky-main-first-column px-3 py-3.5 text-center text-sm font-semibold"
+                                className="sticky left-[175px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
                               >
                                 JX2 LINE
                               </th>
@@ -465,7 +465,7 @@ const FetchData = () => {
                               filterType === "Line-Model" && (
                                 <th
                                   scope="col"
-                                  className="sticky-main-first-column px-3 py-3.5 text-center text-sm font-semibold"
+                                  className="sticky left-[240px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
                                 >
                                   MODEL
                                 </th>
@@ -476,7 +476,7 @@ const FetchData = () => {
                               filterType === "Line-Model" && (
                                 <th
                                   scope="col"
-                                  className="sticky-main-first-column px-3 py-3.5 text-center text-sm font-semibold"
+                                  className="sticky left-[349px] top-0 bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
                                 >
                                   GENDER
                                 </th>
@@ -487,6 +487,14 @@ const FetchData = () => {
                               className={`px-3 py-3.5 text-center text-sm font-semibold ${
                                 wc === "CUTTING" || filterType === "Model"
                                   ? "sticky left-[291px] top-0 bg-gray-900"
+                                  : ""
+                              } ${
+                                wc !== "CUTTING" && filterType !== "Model"
+                                  ? "sticky left-[249px] bg-gray-900"
+                                  : ""
+                              } ${
+                                wc !== "CUTTING" && filterType === "Line-Model"
+                                  ? "sticky left-[417px] bg-gray-900"
                                   : ""
                               }`}
                             >
@@ -505,18 +513,34 @@ const FetchData = () => {
                           </tr>
                           <tr className="sticky top-12 bg-orange-700 z-10 whitespace-nowrap">
                             <th
-                              colSpan={3}
-                              className="sticky left-0 top-0 bg-orange-700 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                              colSpan={
+                                wc !== "CUTTING" && filterType === "Line-Model"
+                                  ? 5
+                                  : 3
+                              }
+                              className={`sticky left-0 top-0 bg-orange-700 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6`}
                             >
                               GRAND TOTAL
                             </th>
-                            <th className={`px-3 py-3.5 text-center text-sm font-semibold ${
+
+                            <th
+                              className={`px-3 py-3.5 text-center text-sm font-semibold ${
                                 wc === "CUTTING" || filterType === "Model"
                                   ? "sticky left-[291px] top-0 bg-orange-700"
                                   : ""
-                              }`}>
+                              } ${
+                                wc !== "CUTTING" && filterType !== "Model"
+                                  ? "sticky left-[249px] bg-orange-700"
+                                  : ""
+                              }${
+                                wc !== "CUTTING" && filterType === "Line-Model"
+                                  ? "sticky left-[417px] bg-orange-700"
+                                  : ""
+                              }`}
+                            >
                               {totalColumn.toLocaleString()}
                             </th>
+
                             {columns.map((column, colIndex) => (
                               <th
                                 key={colIndex}
@@ -553,12 +577,12 @@ const FetchData = () => {
                                 {item.WC}
                               </td>
                               {wc !== "CUTTING" && filterType !== "Model" && (
-                                <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
+                                <td className="sticky left-[114px] bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
                                   {item.JX_LINE}
                                 </td>
                               )}
                               {wc !== "CUTTING" && filterType !== "Model" && (
-                                <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
+                                <td className="sticky left-[175px] bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
                                   {item.SCAN_CELL}
                                 </td>
                               )}
@@ -574,14 +598,14 @@ const FetchData = () => {
                               )}
                               {wc !== "CUTTING" &&
                                 filterType === "Line-Model" && (
-                                  <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6">
+                                  <td className="sticky left-[240px] bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6">
                                     {item.GENDER}
                                   </td>
                                 )}
 
                               {wc !== "CUTTING" &&
                                 filterType === "Line-Model" && (
-                                  <td className="sticky-first-row bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
+                                  <td className="sticky left-[349px] bg-gray-50 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ">
                                     {item.GENDER2}
                                   </td>
                                 )}
@@ -590,6 +614,15 @@ const FetchData = () => {
                                 className={`sticky-fourth-row left-48 py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${
                                   wc === "CUTTING" || filterType === "Model"
                                     ? "sticky left-[291px] top-0 bg-gray-900"
+                                    : ""
+                                } ${
+                                  wc !== "CUTTING" && filterType !== "Model"
+                                    ? "sticky left-[249px]"
+                                    : ""
+                                }${
+                                  wc !== "CUTTING" &&
+                                  filterType === "Line-Model"
+                                    ? "sticky left-[417px] "
                                     : ""
                                 }`}
                                 style={{ backgroundColor: "#FA7625" }}

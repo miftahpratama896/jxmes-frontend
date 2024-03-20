@@ -1582,7 +1582,7 @@ const ProductDetail = () => {
                                 {totalAllRows.toLocaleString()}
                               </th>
                             )}
-                             {selectedWC !== "Cutting" && (
+                            {selectedWC !== "Cutting" && (
                               <th
                                 scope="col"
                                 className={`sticky left-[935px] z-50 bg-orange-700 px-3 py-3.5 z-10 text-center text-sm font-semibold text-gray-900  sm:pl-6`}

@@ -139,142 +139,6 @@ const ProductResultTargetModel = () => {
 
   return (
     <>
-      <style>
-        {`
-         /* CSS Styles */
-         .sticky-header thead th {
-           
-         }
-         .sticky-header th,
-         .sticky-header td {
-           white-space: nowrap;
-         }
-         .sticky-header thead tr:first-child th {
-          color: #D1D5DB;
-          position: sticky;
-          top: 0;
-          background-color: #1F2937;
-          z-index: 1;
-         }
-
-         .sticky-header thead tr:first-child th.first-column {
-          color: #D1D5DB;
-          position: sticky;
-          left:0;
-          top: 0;
-          background-color: #1F2937;
-          z-index: 3;
-         }
-         .sticky-header thead tr:first-child th.second-column {
-          color: #D1D5DB;
-          position: sticky;
-          left:132px;
-          top: 0;
-          z-index: 3;
-         }
-         .sticky-header thead tr:first-child th.third-column {
-          color: #D1D5DB;
-          position: sticky;
-          left:224px;
-          top: 0;
-          z-index: 3;
-         }
-         .sticky-header thead tr:first-child th.fourth-column {
-          color: #D1D5DB;
-          position: sticky;
-          left:334px;
-          top: 0;
-          z-index: 3;
-         }
-         .sticky-header thead tr:first-child th.five-column {
-          color: #D1D5DB;
-          position: sticky;
-          left:434px;
-          top: 0;
-
-          z-index: 3;
-         }
-         
-         .sticky-header thead tr:nth-child(2) th {
-           color: #D1D5DB;
-           position: sticky;
-           top: 48px; 
-           z-index: 2;
-         }
-
-         .sticky-header thead tr:nth-child(3) th {
-          position: sticky;
-          top: 96px; 
-          background-color: #FA7625;
-          z-index: 3;
-        }
-
-        .sticky-header thead tr:nth-child(3) th.first-column {
-          position: sticky;
-          left : 0;
-          top: 96px; 
-          z-index: 4;
-        }
-        .sticky-header thead tr:nth-child(3) th.second-column  {
-          position: sticky;
-          left:132px;
-          top: 96px; 
-          z-index: 4;
-        }
-        .sticky-header thead tr:nth-child(3) th.third-column  {
-          position: sticky;
-          left:224px;
-          top: 96px; 
-          z-index: 4;
-        }
-        .sticky-header thead tr:nth-child(3) th.fourth-column  {
-          position: sticky;
-          left:334px;
-          top: 96px; 
-          z-index: 4;
-        }
-        .sticky-header thead tr:nth-child(3) th.five-column  {
-          position: sticky;
-          left:434px;
-          top: 96px; 
-          z-index: 4;
-        }
-        
-        .sticky-first-row {
-          position: sticky;
-          left: 0;
-          z-index:1;
-        }
-        .sticky-second-row {
-          position: sticky;
-          left:132px;
-          z-index:1;
-        }
-        .sticky-third-row {
-          position: sticky;
-          left:224px;
-          z-index:1;
-        }
-        .sticky-fourth-row {
-          position: sticky;
-          left:334px;
-          z-index:1;
-        }
-        .sticky-five-row {
-          position: sticky;
-          left:434px;
-          z-index:1;
-        }
-
-         .table-container {
-          max-height: 70vh;
-          max-width: 197vh;
-          overflow-y: auto;
-          overflow-x: auto;
-         }
-        `}
-      </style>
-
       <main className="py-12">
         <div className="mx-auto max-w-full px-6 lg:px-1">
           <div className="px-4 sm:px-6 lg:px-8">
@@ -366,46 +230,46 @@ const ProductResultTargetModel = () => {
                 />
               </div>
             </div>
-            <div className="mt-8 flow-root ">
-              <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="mt-8 flow-root">
+              <div className="relative -mx-4 -my-2 overflow-y-scroll overflow-x-scroll sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                  <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-                    <div className="table-container">
-                      <table className="min-w-full divide-y divide-slate-950 sticky-header border border-slate-500">
+                  <div className=" shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+                    <div className="max-h-[70vh] max-w-screen ">
+                      <table className="min-w-full divide-y divide-neutral-950 border border-slate-500 ">
                         <thead className="bg-slate-300 ">
-                          <tr>
+                          <tr className="sticky top-0 text-white z-20 bg-gray-900 whitespace-nowrap">
                             <th
                               scope="col"
                               rowSpan={2}
-                              className="first-column py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6 "
+                              className="sticky left-0 top-0 bg-gray-900 py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6 "
                             >
                               MODEL
                             </th>
                             <th
                               scope="col"
                               rowSpan={2}
-                              className="second-column  py-3.5 pr-3 text-center  text-sm font-semibold text-gray-900 sm:pl-6"
+                              className="sticky left-[170px] top-0 bg-gray-900  py-3.5 pr-3 text-center  text-sm font-semibold sm:pl-6"
                             >
                               TOTAL PLAN
                             </th>
                             <th
                               scope="col"
                               rowSpan={2}
-                              className="third-column py-3.5 pl-4 pr-3 text-center  text-sm font-semibold text-gray-900 sm:pl-6"
+                              className="sticky left-[275px] top-0 bg-gray-900 py-3.5 pl-4 pr-3 text-center  text-sm font-semibold 0 sm:pl-6"
                             >
                               TOTAL PROD
                             </th>
                             <th
                               scope="col"
                               rowSpan={2}
-                              className="fourth-column py-3.5 pl-4 pr-3 text-center  text-sm font-semibold text-gray-900 sm:pl-6"
+                              className="sticky left-[383px] top-0 bg-gray-900 py-3.5 pl-4 pr-3 text-center  text-sm font-semibold sm:pl-6"
                             >
                               TOTAL DIFF
                             </th>
                             <th
                               scope="col"
                               rowSpan={2}
-                              className="five-column py-3.5 pl-4 pr-3 text-center  text-sm font-semibold text-gray-900 sm:pl-6"
+                              className="sticky left-[480px] top-0 bg-gray-900 py-3.5 pl-4 pr-3 text-center  text-sm font-semibold sm:pl-6"
                             >
                               RATE
                             </th>
@@ -414,7 +278,7 @@ const ProductResultTargetModel = () => {
                                 <th
                                   key={index}
                                   scope="col"
-                                  className="py-3.5 pl-4 pr-3 text-sm font-semibold text-gray-900 sm:pl-6 text-center"
+                                  className="py-3.5 pl-4 pr-3 text-sm font-semibold sm:pl-6 text-center"
                                   style={{
                                     backgroundColor:
                                       index % 12 < 3
@@ -437,12 +301,12 @@ const ProductResultTargetModel = () => {
                               </React.Fragment>
                             ))}
                           </tr>
-                          <tr>
+                          <tr className="sticky top-12 text-white bg-gray-900 whitespace-nowrap">
                             {dynamicColumns.map((column, index) => (
                               <React.Fragment key={index}>
                                 <th
                                   scope="col"
-                                  className="py-3.5 pl-4 pr-3 text-sm font-semibold text-gray-900 sm:pl-6 text-center"
+                                  className="py-3.5 pl-4 pr-3 text-sm font-semibold sm:pl-6 text-center"
                                   style={{
                                     backgroundColor:
                                       index % 12 < 3
@@ -476,18 +340,21 @@ const ProductResultTargetModel = () => {
 
                           {data?.map((item, index) =>
                             index === 0 ? (
-                              <tr key={index}>
+                              <tr
+                                key={index}
+                                className="sticky top-24 z-20 bg-orange-500 whitespace-nowrap"
+                              >
                                 <th
-                                  className={`first-column whitespace-nowrap text-center py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ${
-                                    index === 0 ? "bg-yellow-500" : ""
+                                  className={`sticky left-0 top-0 bg-orange-500 whitespace-nowrap text-center py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ${
+                                    index === 0 ? "" : ""
                                   }`}
                                 >
                                   {item.MODEL}
                                 </th>
                                 {/* TOTAL PLAN */}
                                 <th
-                                  className={`second-column whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6  ${
-                                    index === 0 ? "bg-yellow-500" : ""
+                                  className={`sticky left-[170px] top-0 bg-orange-500 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6  ${
+                                    index === 0 ? "" : ""
                                   }`}
                                 >
                                   {dynamicColumns
@@ -502,8 +369,8 @@ const ProductResultTargetModel = () => {
                                 </th>
                                 {/* TOTAL PROD */}
                                 <th
-                                  className={`third-column whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6  ${
-                                    index === 0 ? "bg-yellow-500" : ""
+                                  className={`sticky left-[275px] top-0 bg-orange-500 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6  ${
+                                    index === 0 ? "" : ""
                                   }`}
                                 >
                                   {dynamicColumns
@@ -518,7 +385,7 @@ const ProductResultTargetModel = () => {
                                 </th>
                                 {/* TOTAL DIFF */}
                                 <th
-                                  className={`fourth-column whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium sm:pl-6 ${
+                                  className={`sticky left-[383px] top-0 bg-orange-500 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium sm:pl-6 ${
                                     dynamicColumns.reduce((total, column) => {
                                       const value =
                                         item[
@@ -528,7 +395,7 @@ const ProductResultTargetModel = () => {
                                     }, 0) < 0
                                       ? "text-red-700"
                                       : ""
-                                  } ${index === 0 ? "bg-yellow-500" : ""}`}
+                                  } ${index === 0 ? "" : ""}`}
                                 >
                                   {dynamicColumns
                                     .reduce((total, column) => {
@@ -542,7 +409,7 @@ const ProductResultTargetModel = () => {
                                 </th>
                                 {/* RATE */}
                                 <th
-                                  className={`five-column whitespace-nowrap py-4 pl-4 pr-3 ttext-center text-xs font-medium sm:pl-6 ${
+                                  className={`sticky left-[480px] top-0 bg-orange-500 whitespace-nowrap py-4 pl-4 pr-3 ttext-center text-xs font-medium sm:pl-6 ${
                                     isFinite(
                                       (
                                         (dynamicColumns.reduce(
@@ -731,7 +598,7 @@ const ProductResultTargetModel = () => {
                                       item[column] && item[column] < 0
                                         ? "text-red-700"
                                         : "text-gray-900"
-                                    } ${index === 0 ? "bg-yellow-500" : ""}`}
+                                    } ${index === 0 ? "" : ""}`}
                                   >
                                     {item[column]
                                       ? item[column].toLocaleString()
@@ -756,7 +623,7 @@ const ProductResultTargetModel = () => {
                             index !== 0 ? (
                               <tr key={index}>
                                 <td
-                                  className={`sticky-first-row bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6 ${
+                                  className={`sticky left-0 bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6 ${
                                     index === 0 ? "bg-yellow-500" : ""
                                   }`}
                                 >
@@ -764,7 +631,7 @@ const ProductResultTargetModel = () => {
                                 </td>
                                 {/* TOTAL PLAN */}
                                 <td
-                                  className={`sticky-second-row bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6  ${
+                                  className={`sticky left-[170px] bg-gray-50 py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6  ${
                                     index === 0 ? "bg-yellow-500" : ""
                                   }`}
                                 >
@@ -780,7 +647,7 @@ const ProductResultTargetModel = () => {
                                 </td>
                                 {/* TOTAL PROD */}
                                 <td
-                                  className={`sticky-third-row bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6  ${
+                                  className={`sticky left-[275px] bg-gray-50 py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6  ${
                                     index === 0 ? "bg-yellow-500" : ""
                                   }`}
                                 >
@@ -796,7 +663,7 @@ const ProductResultTargetModel = () => {
                                 </td>
                                 {/* TOTAL DIFF */}
                                 <td
-                                  className={`sticky-fourth-row bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium sm:pl-6 ${
+                                  className={`sticky left-[383px] bg-gray-50 py-4 pl-4 pr-3 text-center text-xs font-medium sm:pl-6 ${
                                     dynamicColumns.reduce((total, column) => {
                                       const value =
                                         item[
@@ -820,7 +687,7 @@ const ProductResultTargetModel = () => {
                                 </td>
                                 {/* RATE */}
                                 <td
-                                  className={`sticky-five-row bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium sm:pl-6 ${
+                                  className={`sticky left-[480px] bg-gray-50 py-4 pl-4 pr-3 text-center text-xs font-medium sm:pl-6 ${
                                     isFinite(
                                       (
                                         (dynamicColumns.reduce(
@@ -1005,7 +872,7 @@ const ProductResultTargetModel = () => {
                                 {dynamicColumns.map((column, columnIndex) => (
                                   <td
                                     key={columnIndex}
-                                    className={`whitespace-nowrap text-center py-4 pl-4 pr-3 text-xs font-medium sm:pl-6 ${
+                                    className={` text-center py-4 pl-4 pr-3 text-xs font-medium sm:pl-6 ${
                                       item[column] && item[column] < 0
                                         ? "text-red-700"
                                         : "text-gray-900"
