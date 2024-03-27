@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Logo from "../../assets/img/New Logo White.png";
+import { Combobox } from "@headlessui/react";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
 function ProductCSS() {
   useEffect(() => {
@@ -11,7 +13,7 @@ function ProductCSS() {
         const data = {
           division: "JXMES-WEB",
           menuName: "PRODUCT",
-          programName: "PRODUCT - CSS",
+          programName: "PRODUCT - CCS",
           userID: user_id,
         };
 
@@ -46,22 +48,93 @@ function ProductCSS() {
   const [error, setError] = useState(null);
   const [numColumns, setNumColumns] = useState(0);
   const [totalAllRows, setTotalAllRows] = useState(0);
+  const [selectedJXLine, setSelectedJXLine] = useState("ALL");
+  const [selectedJX2Line, setSelectedJX2Line] = useState("ALL");
+  const [filteredJXLineOptions, setFilteredJXLineOptions] = useState([]);
+  const [filteredJX2LineOptions, setFilteredJX2LineOptions] = useState([]);
+  const [selectedStyle, setSelectedStyle] = useState("");
+  const [selectedModel, setSelectedModel] = useState("");
+  const [filteredStyleOptions, setFilteredStyleOptions] = useState([]);
+  const [filteredModelOptions, setFilteredModelOptions] = useState([]);
+  const [selectedGender, setSelectedGender] = useState("ALL");
+  const [filteredGenderOptions, setFilteredGenderOptions] = useState([]);
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
+  const handleJXLineChange = (selectedValue) => {
+    // Update the state with the selected Style
+    setSelectedJXLine(selectedValue);
+  };
+
+  const handleJX2LineChange = (selectedValue) => {
+    // Update the state with the selected Model
+    setSelectedJX2Line(selectedValue);
+  };
+  const handleStyleChange = (selectedValue) => {
+    // Update the state with the selected Style
+    setSelectedStyle(selectedValue);
+  };
+
+  const handleModelChange = (selectedValue) => {
+    // Update the state with the selected Model
+    setSelectedModel(selectedValue);
+  };
+  const handleGenderChange = (selectedValue) => {
+    // Update the state with the selected Style
+    setSelectedGender(selectedValue);
+  };
+
+  // Format tanggal ke format YYYY-MM-DD
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+  // Mendapatkan tanggal sekarang
+  const currentDate = new Date();
+
+  // Menetapkan dateFrom ke hari Minggu berikutnya dengan tanggal hari ini
+  const nextSunday = new Date(currentDate);
+  const [dateFrom, setDateFrom] = useState(formatDate(nextSunday));
+
+  // Menetapkan dateTo ke tanggal hari ini
+  const [dateTo, setDateTo] = useState(formatDate(nextSunday));
+
+  const convertToCustomFormat = (dateString) => {
+    if (dateString.trim() === "") {
+      return ""; // Jika release adalah string kosong, kembalikan string kosong
+    }
+
+    const dateObj = new Date(dateString);
+    const year = String(dateObj.getFullYear()).slice(-2);
+    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const day = String(dateObj.getDate()).padStart(2, "0");
+    return `${day}${month}${year}`;
+  };
+
+  const [release, setRelease] = useState("");
+  const convertedReleaseTo = convertToCustomFormat(release);
+
+  console.log(convertedReleaseTo);
 
   const fetchData = async () => {
     setUpdating(true);
 
     try {
+      const sanitizedStyle = selectedStyle.replace(/-/g, "");
       const response = await axios.post(
         "http://172.16.200.28:3000/product-css",
         {
-          dateFrom: "2024-03-26",
-          dateTo: "2024-03-26",
-          jxLine: "ALL",
-          jx2Line: "ALL",
-          rls: "",
-          model: "",
-          style: "",
-          gender: "ALL",
+          dateFrom: dateFrom,
+          dateTo: dateTo,
+          jxLine: selectedJXLine,
+          jx2Line: selectedJX2Line,
+          rls: convertedReleaseTo,
+          model: selectedModel,
+          style: sanitizedStyle,
+          gender: selectedGender,
           cekRls: 1,
           type: "INPUT",
         }
@@ -93,7 +166,17 @@ function ProductCSS() {
 
     // Cleanup the interval on unmount or when dependencies change
     return () => clearInterval(intervalId);
-  }, [autoUpdate]);
+  }, [
+    autoUpdate,
+    dateFrom,
+    dateTo,
+    release,
+    selectedJX2Line,
+    selectedJXLine,
+    selectedStyle,
+    selectedModel,
+    selectedGender,
+  ]);
 
   // Mendapatkan nama kolom secara dinamis dari data yang memiliki format waktu
   const getColumnNames = () => {
@@ -132,6 +215,25 @@ function ProductCSS() {
     setTotalAllRows(total);
   }, [data, columns]);
 
+  useEffect(() => {
+    const uniqueJXLineOptions = [...new Set(data?.map((item) => item.SCAN_LINEJX)),
+    ];
+    setFilteredJXLineOptions(uniqueJXLineOptions);
+
+    const uniqueJX2LineOptions = [...new Set(data?.map((item) => item.SCAN_LINEJX2)),
+    ];
+    setFilteredJX2LineOptions(uniqueJX2LineOptions);
+
+    const uniqueModelOptions = [...new Set(data?.map((item) => item.MODEL))];
+    setFilteredModelOptions(uniqueModelOptions);
+
+    const uniqueStyleOptions = [...new Set(data?.map((item) => item.STYLE))];
+    setFilteredStyleOptions(uniqueStyleOptions);
+
+    const uniqueGenderOptions = [...new Set(data?.map((item) => item.GENDER))];
+    setFilteredGenderOptions(uniqueGenderOptions);
+  }, [data]);
+
   console.log(data);
 
   return (
@@ -139,14 +241,606 @@ function ProductCSS() {
       <main className="py-12">
         <div className="mx-auto max-w-full px-6 lg:px-1">
           <div className="px-4 sm:px-6 lg:px-8">
-            <div className="sm:flex sm:items-center py-3">
+            <div className="sm:flex sm:items-center py-3 z-20">
               <div className="sm:flex-auto">
                 <h1 className="text-base font-semibold leading-6 text-gray-900">
                   Product
                 </h1>
                 <p className="mt-2 text-sm text-gray-700">
-                  A list of all the Product CSS
+                  A list of all the Product CCS
                 </p>
+              </div>
+              <div className="mt-4 sm:mt-0 sm:ml-4">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  DATE FROM
+                </label>
+                <input
+                  type="date"
+                  value={dateFrom}
+                  onChange={(e) => setDateFrom(e.target.value)}
+                  className="W-full z-10 mt-1 rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+              <div className="mt-4 sm:mt-0 sm:ml-4">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  DATE TO
+                </label>
+                <input
+                  type="date"
+                  value={dateTo}
+                  onChange={(e) => setDateTo(e.target.value)}
+                  className="W-full z-10 mt-1 rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+              <div className="mt-4 sm:mt-0 sm:ml-4">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  RELEASE FROM
+                </label>
+                <input
+                  type="date"
+                  value={release}
+                  onChange={(e) => setRelease(e.target.value)}
+                  className="W-full z-10 mt-1 rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+                <button
+                  onClick={() => setRelease("")} // Mengatur release menjadi string kosong saat tombol diklik
+                  className="mt-2 px-4 py-1 sm:ml-4 rounded-md bg-gray-700 text-gray-50 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                >
+                  Clear Release From
+                </button>
+              </div>
+            </div>
+
+            <div className="sm:flex sm:items-center py-3 ">
+              <div className="sm:flex-auto"></div>
+              <div className="mt-4 sm:mt-0 sm:ml-4">
+                <Combobox
+                  as="div"
+                  onChange={handleJXLineChange}
+                  value={selectedJXLine}
+                >
+                  <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">
+                    JX LINE
+                  </Combobox.Label>
+                  <div className="relative mt-2">
+                    <Combobox.Input
+                      className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      value={selectedJXLine}
+                      displayValue={selectedJXLine}
+                      onChange={(e) => handleJXLineChange(e.target.value)}
+                    />
+                    <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+                      <ChevronUpDownIcon
+                        className="h-5 w-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </Combobox.Button>
+
+                    <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                      {/* Option for All */}
+                      <Combobox.Option
+                        key="all"
+                        value="ALL"
+                        className={({ active }) =>
+                          classNames(
+                            "relative cursor-default select-none py-2 pl-3 pr-9",
+                            active
+                              ? "bg-indigo-600 text-white"
+                              : "text-gray-900"
+                          )
+                        }
+                      >
+                        {({ active, selected }) => (
+                          <>
+                            <span
+                              className={classNames(
+                                "block truncate",
+                                selected && "font-semibold"
+                              )}
+                            >
+                              All
+                            </span>
+                            {selected && (
+                              <span
+                                className={classNames(
+                                  "absolute inset-y-0 right-0 flex items-center pr-4",
+                                  active ? "text-white" : "text-indigo-600"
+                                )}
+                              >
+                                <CheckIcon
+                                  className="h-5 w-5"
+                                  aria-hidden="true"
+                                />
+                              </span>
+                            )}
+                          </>
+                        )}
+                      </Combobox.Option>
+
+                      {/* Filtered options */}
+                      {filteredJXLineOptions.map((JXLine) => (
+                        <Combobox.Option
+                          key={JXLine}
+                          value={JXLine}
+                          className={({ active }) =>
+                            classNames(
+                              "relative cursor-default select-none py-2 pl-3 pr-9",
+                              active
+                                ? "bg-indigo-600 text-white"
+                                : "text-gray-900"
+                            )
+                          }
+                        >
+                          {({ active, selected }) => (
+                            <>
+                              <span
+                                className={classNames(
+                                  "block truncate",
+                                  selected && "font-semibold"
+                                )}
+                              >
+                                {JXLine}
+                              </span>
+                              {selected && (
+                                <span
+                                  className={classNames(
+                                    "absolute inset-y-0 right-0 flex items-center pr-4",
+                                    active ? "text-white" : "text-indigo-600"
+                                  )}
+                                >
+                                  <CheckIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              )}
+                            </>
+                          )}
+                        </Combobox.Option>
+                      ))}
+                    </Combobox.Options>
+                  </div>
+                </Combobox>
+              </div>
+
+              <div className="mt-4 sm:mt-0 sm:ml-4">
+                <Combobox
+                  as="div"
+                  onChange={handleJX2LineChange}
+                  value={selectedJX2Line}
+                >
+                  <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">
+                    JX2 LINE
+                  </Combobox.Label>
+                  <div className="relative mt-2">
+                    <Combobox.Input
+                      className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      value={selectedJX2Line}
+                      displayValue={selectedJX2Line}
+                      onChange={(e) => handleJX2LineChange(e.target.value)}
+                    />
+                    <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+                      <ChevronUpDownIcon
+                        className="h-5 w-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </Combobox.Button>
+
+                    <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                      {/* Option for All */}
+                      <Combobox.Option
+                        key="all"
+                        value="ALL"
+                        className={({ active }) =>
+                          classNames(
+                            "relative cursor-default select-none py-2 pl-3 pr-9",
+                            active
+                              ? "bg-indigo-600 text-white"
+                              : "text-gray-900"
+                          )
+                        }
+                      >
+                        {({ active, selected }) => (
+                          <>
+                            <span
+                              className={classNames(
+                                "block truncate",
+                                selected && "font-semibold"
+                              )}
+                            >
+                              All
+                            </span>
+                            {selected && (
+                              <span
+                                className={classNames(
+                                  "absolute inset-y-0 right-0 flex items-center pr-4",
+                                  active ? "text-white" : "text-indigo-600"
+                                )}
+                              >
+                                <CheckIcon
+                                  className="h-5 w-5"
+                                  aria-hidden="true"
+                                />
+                              </span>
+                            )}
+                          </>
+                        )}
+                      </Combobox.Option>
+
+                      {/* Filtered options */}
+                      {filteredJX2LineOptions.map((JX2Line) => (
+                        <Combobox.Option
+                          key={JX2Line}
+                          value={JX2Line}
+                          className={({ active }) =>
+                            classNames(
+                              "relative cursor-default select-none py-2 pl-3 pr-9",
+                              active
+                                ? "bg-indigo-600 text-white"
+                                : "text-gray-900"
+                            )
+                          }
+                        >
+                          {({ active, selected }) => (
+                            <>
+                              <span
+                                className={classNames(
+                                  "block truncate",
+                                  selected && "font-semibold"
+                                )}
+                              >
+                                {JX2Line}
+                              </span>
+                              {selected && (
+                                <span
+                                  className={classNames(
+                                    "absolute inset-y-0 right-0 flex items-center pr-4",
+                                    active ? "text-white" : "text-indigo-600"
+                                  )}
+                                >
+                                  <CheckIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              )}
+                            </>
+                          )}
+                        </Combobox.Option>
+                      ))}
+                    </Combobox.Options>
+                  </div>
+                </Combobox>
+              </div>
+
+              <div className="mt-4 sm:mt-0 sm:ml-4">
+                <Combobox
+                  as="div"
+                  onChange={handleStyleChange}
+                  value={selectedStyle}
+                >
+                  <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">
+                    STYLE
+                  </Combobox.Label>
+                  <div className="relative mt-2">
+                    <Combobox.Input
+                      className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      value={selectedStyle}
+                      displayValue={selectedStyle}
+                      onChange={(e) => handleStyleChange(e.target.value)}
+                    />
+                    <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+                      <ChevronUpDownIcon
+                        className="h-5 w-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </Combobox.Button>
+
+                    <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                      {/* Option for All */}
+                      <Combobox.Option
+                        key="all"
+                        value=""
+                        className={({ active }) =>
+                          classNames(
+                            "relative cursor-default select-none py-2 pl-3 pr-9",
+                            active
+                              ? "bg-indigo-600 text-white"
+                              : "text-gray-900"
+                          )
+                        }
+                      >
+                        {({ active, selected }) => (
+                          <>
+                            <span
+                              className={classNames(
+                                "block truncate",
+                                selected && "font-semibold"
+                              )}
+                            >
+                              All
+                            </span>
+                            {selected && (
+                              <span
+                                className={classNames(
+                                  "absolute inset-y-0 right-0 flex items-center pr-4",
+                                  active ? "text-white" : "text-indigo-600"
+                                )}
+                              >
+                                <CheckIcon
+                                  className="h-5 w-5"
+                                  aria-hidden="true"
+                                />
+                              </span>
+                            )}
+                          </>
+                        )}
+                      </Combobox.Option>
+
+                      {/* Filtered options */}
+                      {filteredStyleOptions.map((style) => (
+                        <Combobox.Option
+                          key={style}
+                          value={style}
+                          className={({ active }) =>
+                            classNames(
+                              "relative cursor-default select-none py-2 pl-3 pr-9",
+                              active
+                                ? "bg-indigo-600 text-white"
+                                : "text-gray-900"
+                            )
+                          }
+                        >
+                          {({ active, selected }) => (
+                            <>
+                              <span
+                                className={classNames(
+                                  "block truncate",
+                                  selected && "font-semibold"
+                                )}
+                              >
+                                {style}
+                              </span>
+                              {selected && (
+                                <span
+                                  className={classNames(
+                                    "absolute inset-y-0 right-0 flex items-center pr-4",
+                                    active ? "text-white" : "text-indigo-600"
+                                  )}
+                                >
+                                  <CheckIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              )}
+                            </>
+                          )}
+                        </Combobox.Option>
+                      ))}
+                    </Combobox.Options>
+                  </div>
+                </Combobox>
+              </div>
+
+              <div className="mt-4 sm:mt-0 sm:ml-4">
+                <Combobox
+                  as="div"
+                  onChange={handleModelChange}
+                  value={selectedModel}
+                >
+                  <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">
+                    MODEL
+                  </Combobox.Label>
+                  <div className="relative mt-2">
+                    <Combobox.Input
+                      className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      value={selectedModel}
+                      displayValue={selectedModel}
+                      onChange={(e) => handleModelChange(e.target.value)}
+                    />
+                    <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+                      <ChevronUpDownIcon
+                        className="h-5 w-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </Combobox.Button>
+
+                    <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                      {/* Option for All */}
+                      <Combobox.Option
+                        key="all"
+                        value=""
+                        className={({ active }) =>
+                          classNames(
+                            "relative cursor-default select-none py-2 pl-3 pr-9",
+                            active
+                              ? "bg-indigo-600 text-white"
+                              : "text-gray-900"
+                          )
+                        }
+                      >
+                        {({ active, selected }) => (
+                          <>
+                            <span
+                              className={classNames(
+                                "block truncate",
+                                selected && "font-semibold"
+                              )}
+                            >
+                              All
+                            </span>
+                            {selected && (
+                              <span
+                                className={classNames(
+                                  "absolute inset-y-0 right-0 flex items-center pr-4",
+                                  active ? "text-white" : "text-indigo-600"
+                                )}
+                              >
+                                <CheckIcon
+                                  className="h-5 w-5"
+                                  aria-hidden="true"
+                                />
+                              </span>
+                            )}
+                          </>
+                        )}
+                      </Combobox.Option>
+
+                      {/* Filtered options */}
+                      {filteredModelOptions.map((model) => (
+                        <Combobox.Option
+                          key={model}
+                          value={model}
+                          className={({ active }) =>
+                            classNames(
+                              "relative cursor-default select-none py-2 pl-3 pr-9",
+                              active
+                                ? "bg-indigo-600 text-white"
+                                : "text-gray-900"
+                            )
+                          }
+                        >
+                          {({ active, selected }) => (
+                            <>
+                              <span
+                                className={classNames(
+                                  "block truncate",
+                                  selected && "font-semibold"
+                                )}
+                              >
+                                {model}
+                              </span>
+                              {selected && (
+                                <span
+                                  className={classNames(
+                                    "absolute inset-y-0 right-0 flex items-center pr-4",
+                                    active ? "text-white" : "text-indigo-600"
+                                  )}
+                                >
+                                  <CheckIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              )}
+                            </>
+                          )}
+                        </Combobox.Option>
+                      ))}
+                    </Combobox.Options>
+                  </div>
+                </Combobox>
+              </div>
+
+              <div className="mt-4 sm:mt-0 sm:ml-4">
+                <Combobox
+                  as="div"
+                  onChange={handleGenderChange}
+                  value={selectedGender}
+                >
+                  <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">
+                    GENDER
+                  </Combobox.Label>
+                  <div className="relative mt-2">
+                    <Combobox.Input
+                      className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      value={selectedGender}
+                      displayValue={selectedGender}
+                      onChange={(e) => handleGenderChange(e.target.value)}
+                    />
+                    <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+                      <ChevronUpDownIcon
+                        className="h-5 w-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </Combobox.Button>
+
+                    <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                      {/* Option for All */}
+                      <Combobox.Option
+                        key="all"
+                        value="ALL"
+                        className={({ active }) =>
+                          classNames(
+                            "relative cursor-default select-none py-2 pl-3 pr-9",
+                            active
+                              ? "bg-indigo-600 text-white"
+                              : "text-gray-900"
+                          )
+                        }
+                      >
+                        {({ active, selected }) => (
+                          <>
+                            <span
+                              className={classNames(
+                                "block truncate",
+                                selected && "font-semibold"
+                              )}
+                            >
+                              All
+                            </span>
+                            {selected && (
+                              <span
+                                className={classNames(
+                                  "absolute inset-y-0 right-0 flex items-center pr-4",
+                                  active ? "text-white" : "text-indigo-600"
+                                )}
+                              >
+                                <CheckIcon
+                                  className="h-5 w-5"
+                                  aria-hidden="true"
+                                />
+                              </span>
+                            )}
+                          </>
+                        )}
+                      </Combobox.Option>
+
+                      {/* Filtered options */}
+                      {filteredGenderOptions.map((Gender) => (
+                        <Combobox.Option
+                          key={Gender}
+                          value={Gender}
+                          className={({ active }) =>
+                            classNames(
+                              "relative cursor-default select-none py-2 pl-3 pr-9",
+                              active
+                                ? "bg-indigo-600 text-white"
+                                : "text-gray-900"
+                            )
+                          }
+                        >
+                          {({ active, selected }) => (
+                            <>
+                              <span
+                                className={classNames(
+                                  "block truncate",
+                                  selected && "font-semibold"
+                                )}
+                              >
+                                {Gender}
+                              </span>
+                              {selected && (
+                                <span
+                                  className={classNames(
+                                    "absolute inset-y-0 right-0 flex items-center pr-4",
+                                    active ? "text-white" : "text-indigo-600"
+                                  )}
+                                >
+                                  <CheckIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              )}
+                            </>
+                          )}
+                        </Combobox.Option>
+                      ))}
+                    </Combobox.Options>
+                  </div>
+                </Combobox>
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-4">
                 <label
@@ -231,7 +925,7 @@ function ProductCSS() {
                               </th>
                             ))}
                           </tr>
-                          <tr>
+                          <tr className="sticky top-12 z-10 bg-orange-700 whitespace-nowrap">
                             <th
                               scope="col"
                               colSpan={6}
