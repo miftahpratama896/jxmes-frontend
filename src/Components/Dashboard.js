@@ -127,6 +127,11 @@ export default function Example() {
         {
           name: "Product - CSS",
           href: "/ProductCSS",
+          active: true,
+        },
+        {
+          name: "Product - Input SPK Cutting",
+          href: "/ProductInputSPKCutt",
           active: false,
         },
       ],

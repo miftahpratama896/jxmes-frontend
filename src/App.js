@@ -35,6 +35,7 @@ import InventoryMesin from "./Components/WIP/InventoryMesin";
 import InventorySummary from "./Components/WIP/InventorySummary";
 import DailyProdQTYTrend from "./Components/Report/DailyProdQTYTrend";
 import ProductCSS from "./Components/Product/ProductCSS";
+import ProductInputSPKCutt from "./Components/Product/ProductInputSPKCutt";
 
 function App() {
   return (
@@ -114,6 +115,10 @@ function App() {
           <Route path="/ProductCSS">
             <Dashboard />
             <ProductCSS />
+          </Route>
+          <Route path="/ProductInputSPKCutt">
+            <Dashboard />
+            <ProductInputSPKCutt />
           </Route>
           <Route path="/POBalance">
             <Dashboard />
