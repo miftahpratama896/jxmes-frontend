@@ -13,6 +13,7 @@ import DailyMonitoring from "./Components/Monitoring/DailyMonitoring";
 import ProductTime from "./Components/Product/ProductTime";
 import ProductResultTargetLine from "./Components/Product/ProductResultTargetLine";
 import ProductResultTargetModel from "./Components/Product/ProductResultTargetModel";
+import ProductResultTargetJXLine from "./Components/Product/ProductResultTargetJXLine";
 import POBalance from "./Components/Order/POBalance";
 import InventoryLongTerm from "./Components/WIP/InventoryLongTerm";
 import ScanStatus from "./Components/Report/ScanStatus";
@@ -107,6 +108,10 @@ function App() {
           <Route path="/ProductResultTargetLine">
             <Dashboard />
             <ProductResultTargetLine />
+          </Route>
+          <Route path="/ProductResultTargetJXLine">
+            <Dashboard />
+            <ProductResultTargetJXLine />
           </Route>
           <Route path="/ProductResultTargetModel">
             <Dashboard />

@@ -231,6 +231,11 @@ function ProductCSS() {
     return total + item.RETUR;
   }, 0);
 
+  // Menghitung Total Prod 1
+  const totalprod1 = data[2]?.reduce((total, item) => {
+    return total + item.PROD;
+  }, 0);
+
   // Menghitung Total Output 1
   const totaloutput1 = data[2]?.reduce((total, item) => {
     return total + item.OUTPUT;
@@ -244,6 +249,11 @@ function ProductCSS() {
   // Menghitung Total Retur 2
   const totalretur2 = data[4]?.reduce((total, item) => {
     return total + item.RETUR;
+  }, 0);
+
+  // Menghitung Total Prod 2
+  const totalprod2 = data[4]?.reduce((total, item) => {
+    return total + item.PROD;
   }, 0);
 
   // Menghitung Total Output 2
@@ -348,6 +358,7 @@ function ProductCSS() {
                 >
                   <option value="INPUT">INPUT</option>
                   <option value="OUTPUT">OUTPUT</option>
+                  <option value="PROD">PROD</option>
                   {/* Add other factory options as needed */}
                 </select>
               </div>
@@ -1015,6 +1026,12 @@ function ProductCSS() {
                                                 scope="col"
                                                 className=" bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
                                               >
+                                                PROD
+                                              </th>
+                                              <th
+                                                scope="col"
+                                                className=" bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                                              >
                                                 RETUR
                                               </th>
                                               <th
@@ -1038,6 +1055,12 @@ function ProductCSS() {
                                                 className={`bg-orange-700 px-3 py-3.5 z-10 text-center text-sm font-semibold text-gray-900  sm:pl-6`}
                                               >
                                                 {totalinput1?.toLocaleString()}
+                                              </th>
+                                              <th
+                                                scope="col"
+                                                className={`bg-orange-700 px-3 py-3.5 z-10 text-center text-sm font-semibold text-gray-900  sm:pl-6`}
+                                              >
+                                                {totalprod1?.toLocaleString()}
                                               </th>
                                               <th
                                                 scope="col"
@@ -1080,6 +1103,9 @@ function ProductCSS() {
                                                 </td>
                                                 <td className=" bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                                   {item.INPUT}
+                                                </td>
+                                                <td className=" bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
+                                                  {item.PROD}
                                                 </td>
                                                 <td className=" bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                                   {item.RETUR}
@@ -1151,6 +1177,12 @@ function ProductCSS() {
                                                 scope="col"
                                                 className=" bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
                                               >
+                                                PROD
+                                              </th>
+                                              <th
+                                                scope="col"
+                                                className=" bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                                              >
                                                 RETUR
                                               </th>
                                               <th
@@ -1174,6 +1206,12 @@ function ProductCSS() {
                                                 className={`bg-orange-700 px-3 py-3.5 z-10 text-center text-sm font-semibold text-gray-900  sm:pl-6`}
                                               >
                                                 {totalinput2?.toLocaleString()}
+                                              </th>
+                                              <th
+                                                scope="col"
+                                                className={`bg-orange-700 px-3 py-3.5 z-10 text-center text-sm font-semibold text-gray-900  sm:pl-6`}
+                                              >
+                                                {totalprod2?.toLocaleString()}
                                               </th>
                                               <th
                                                 scope="col"
@@ -1213,6 +1251,9 @@ function ProductCSS() {
                                                 </td>
                                                 <td className=" bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                                   {item.INPUT}
+                                                </td>
+                                                <td className=" bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
+                                                  {item.PROD}
                                                 </td>
                                                 <td className=" bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                                   {item.RETUR}

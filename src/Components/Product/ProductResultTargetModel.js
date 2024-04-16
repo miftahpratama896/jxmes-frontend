@@ -61,10 +61,13 @@ const ProductResultTargetModel = () => {
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value);
 
+    // Tambahkan logika navigasi sesuai dengan opsi yang dipilih
     if (e.target.value === "Line") {
       window.location.href = "/ProductResultTargetLine";
     } else if (e.target.value === "Model") {
       window.location.href = "/ProductResultTargetModel";
+    } else if (e.target.value === "JXLine") {
+      window.location.href = "/ProductResultTargetJXLine";
     }
   };
 
@@ -204,7 +207,8 @@ const ProductResultTargetModel = () => {
                   value={selectedOption}
                   className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
                 >
-                  <option value="Line">Line</option>
+                  <option value="Line">JX/JX2 Line</option>
+                  <option value="JXLine">JX Line</option>
                   <option value="Model">Model</option>
                 </select>
               </div>
@@ -276,6 +280,53 @@ const ProductResultTargetModel = () => {
                             {dynamicColumns.map((column, index) => (
                               <React.Fragment key={index}>
                                 <th
+                                  scope="col"
+                                  className="py-3.5 pl-4 pr-3 text-sm font-semibold sm:pl-6 text-center"
+                                  style={{
+                                    backgroundColor:
+                                      index % 12 < 3
+                                        ? "#374151" // Kolom pertama
+                                        : index % 12 < 6
+                                          ? "#1f2937" // Kolom kedua
+                                          : index % 12 < 9
+                                            ? "#374151" // Kolom ketiga
+                                            : "#1f2937", // Kolom keempat
+                                  }}
+                                >
+                                  {column.endsWith("_1") ||
+                                    column.endsWith("_3") ? (
+                                    <span style={{ color: "rgba(0, 0, 0, 0)" }}>
+                                      okay
+                                    </span>
+                                  ) : (
+                                    // Ubah format tanggal dari YYYY-MM-DD menjadi D Month YYYY
+                                    (() => {
+                                      const dateParts = column.replace(/_2$/, "").split("-");
+                                      const year = parseInt(dateParts[0], 10);
+                                      const monthIndex = parseInt(dateParts[1], 10) - 1;
+                                      const day = parseInt(dateParts[2], 10);
+                                      const date = new Date(year, monthIndex, day);
+
+                                      // Format tanggal
+                                      const formattedDay = String(day).padStart(2, " ");
+                                      const formattedDate = `${formattedDay} ${date.toLocaleDateString("en-GB", {
+                                        month: "long",
+                                        year: "numeric",
+                                      })}`;
+
+                                      return formattedDate;
+                                    })()
+                                  )}
+                                </th>
+                              </React.Fragment>
+                            ))}
+
+                          </tr>
+                          <tr className="sticky top-12 text-white bg-gray-900 whitespace-nowrap">
+
+                            {dynamicColumns.map((column, index) => (
+                              <React.Fragment key={index}>
+                                <th
                                   key={index}
                                   scope="col"
                                   className="py-3.5 pl-4 pr-3 text-sm font-semibold sm:pl-6 text-center"
@@ -284,55 +335,19 @@ const ProductResultTargetModel = () => {
                                       index % 12 < 3
                                         ? "#374151" // Kolom pertama
                                         : index % 12 < 6
-                                        ? "#1f2937" // Kolom kedua
-                                        : index % 12 < 9
-                                        ? "#374151" // Kolom ketiga
-                                        : "#1f2937", // Kolom keempat
+                                          ? "#1f2937" // Kolom kedua
+                                          : index % 12 < 9
+                                            ? "#374151" // Kolom ketiga
+                                            : "#1f2937", // Kolom keempat
                                   }}
                                 >
                                   {column.endsWith("_1")
-                                    ? `[PLAN]`
+                                    ? `PLAN`
                                     : column.endsWith("_2")
-                                    ? `[PROD]`
-                                    : column.endsWith("_3")
-                                    ? `[DIFF]`
-                                    : column}
-                                </th>
-                              </React.Fragment>
-                            ))}
-                          </tr>
-                          <tr className="sticky top-12 text-white bg-gray-900 whitespace-nowrap">
-                            {dynamicColumns.map((column, index) => (
-                              <React.Fragment key={index}>
-                                <th
-                                  scope="col"
-                                  className="py-3.5 pl-4 pr-3 text-sm font-semibold sm:pl-6 text-center"
-                                  style={{
-                                    backgroundColor:
-                                      index % 12 < 3
-                                        ? "#374151" // Kolom pertama
-                                        : index % 12 < 6
-                                        ? "#1f2937" // Kolom kedua
-                                        : index % 12 < 9
-                                        ? "#374151" // Kolom ketiga
-                                        : "#1f2937", // Kolom keempat
-                                  }}
-                                >
-                                  {column.endsWith("_1") ||
-                                  column.endsWith("_3") ? (
-                                    <span style={{ color: "rgba(0, 0, 0, 0)" }}>
-                                      okay
-                                    </span>
-                                  ) : (
-                                    // Ubah format tanggal dari YYYY-MM-DD menjadi DD-MM-YYYY
-                                    new Date(column.replace(/_2$/, ""))
-                                      .toLocaleDateString("en-GB", {
-                                        day: "2-digit",
-                                        month: "2-digit",
-                                        year: "numeric",
-                                      })
-                                      .replace(/\//g, "-")
-                                  )}
+                                      ? `PROD`
+                                      : column.endsWith("_3")
+                                        ? `DIFF`
+                                        : column}
                                 </th>
                               </React.Fragment>
                             ))}
@@ -345,23 +360,21 @@ const ProductResultTargetModel = () => {
                                 className="sticky top-24 z-20 bg-orange-500 whitespace-nowrap"
                               >
                                 <th
-                                  className={`sticky left-0 top-0 bg-orange-500 whitespace-nowrap text-center py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ${
-                                    index === 0 ? "" : ""
-                                  }`}
+                                  className={`sticky left-0 top-0 bg-orange-500 whitespace-nowrap text-center py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 ${index === 0 ? "" : ""
+                                    }`}
                                 >
                                   {item.MODEL}
                                 </th>
                                 {/* TOTAL PLAN */}
                                 <th
-                                  className={`sticky left-[170px] top-0 bg-orange-500 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6  ${
-                                    index === 0 ? "" : ""
-                                  }`}
+                                  className={`sticky left-[170px] top-0 bg-orange-500 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6  ${index === 0 ? "" : ""
+                                    }`}
                                 >
                                   {dynamicColumns
                                     .reduce((total, column) => {
                                       const value =
                                         item[
-                                          column.endsWith("_1") ? column : ""
+                                        column.endsWith("_1") ? column : ""
                                         ] || 0;
                                       return total + value;
                                     }, 0)
@@ -369,15 +382,14 @@ const ProductResultTargetModel = () => {
                                 </th>
                                 {/* TOTAL PROD */}
                                 <th
-                                  className={`sticky left-[275px] top-0 bg-orange-500 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6  ${
-                                    index === 0 ? "" : ""
-                                  }`}
+                                  className={`sticky left-[275px] top-0 bg-orange-500 whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6  ${index === 0 ? "" : ""
+                                    }`}
                                 >
                                   {dynamicColumns
                                     .reduce((total, column) => {
                                       const value =
                                         item[
-                                          column.endsWith("_2") ? column : ""
+                                        column.endsWith("_2") ? column : ""
                                         ] || 0;
                                       return total + value;
                                     }, 0)
@@ -385,23 +397,22 @@ const ProductResultTargetModel = () => {
                                 </th>
                                 {/* TOTAL DIFF */}
                                 <th
-                                  className={`sticky left-[383px] top-0 bg-orange-500 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium sm:pl-6 ${
-                                    dynamicColumns.reduce((total, column) => {
-                                      const value =
-                                        item[
-                                          column.endsWith("_3") ? column : ""
-                                        ] || 0;
-                                      return total + value;
-                                    }, 0) < 0
-                                      ? "text-red-700"
-                                      : ""
-                                  } ${index === 0 ? "" : ""}`}
+                                  className={`sticky left-[383px] top-0 bg-orange-500 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium sm:pl-6 ${dynamicColumns.reduce((total, column) => {
+                                    const value =
+                                      item[
+                                      column.endsWith("_3") ? column : ""
+                                      ] || 0;
+                                    return total + value;
+                                  }, 0) < 0
+                                    ? "text-red-700"
+                                    : ""
+                                    } ${index === 0 ? "" : ""}`}
                                 >
                                   {dynamicColumns
                                     .reduce((total, column) => {
                                       const value =
                                         item[
-                                          column.endsWith("_3") ? column : ""
+                                        column.endsWith("_3") ? column : ""
                                         ] || 0;
                                       return total + value;
                                     }, 0)
@@ -409,133 +420,21 @@ const ProductResultTargetModel = () => {
                                 </th>
                                 {/* RATE */}
                                 <th
-                                  className={`sticky left-[480px] top-0 bg-orange-500 whitespace-nowrap py-4 pl-4 pr-3 ttext-center text-xs font-medium sm:pl-6 ${
-                                    isFinite(
-                                      (
-                                        (dynamicColumns.reduce(
-                                          (total, column) => {
-                                            const prodValue =
-                                              item[
-                                                column.endsWith("_2")
-                                                  ? column
-                                                  : ""
-                                              ] || 0;
-                                            const planValue =
-                                              item[
-                                                column.endsWith("_1")
-                                                  ? column
-                                                  : ""
-                                              ] || 0;
-                                            return total + prodValue;
-                                          },
-                                          0
-                                        ) /
-                                          dynamicColumns.reduce(
-                                            (total, column) => {
-                                              const value =
-                                                item[
-                                                  column.endsWith("_1")
-                                                    ? column
-                                                    : ""
-                                                ] || 0;
-                                              return total + value;
-                                            },
-                                            0
-                                          )) *
-                                        100
-                                      ).toFixed(2)
-                                    )
-                                      ? (
-                                          (dynamicColumns.reduce(
-                                            (total, column) => {
-                                              const prodValue =
-                                                item[
-                                                  column.endsWith("_2")
-                                                    ? column
-                                                    : ""
-                                                ] || 0;
-                                              const planValue =
-                                                item[
-                                                  column.endsWith("_1")
-                                                    ? column
-                                                    : ""
-                                                ] || 0;
-                                              return total + prodValue;
-                                            },
-                                            0
-                                          ) /
-                                            dynamicColumns.reduce(
-                                              (total, column) => {
-                                                const value =
-                                                  item[
-                                                    column.endsWith("_1")
-                                                      ? column
-                                                      : ""
-                                                  ] || 0;
-                                                return total + value;
-                                              },
-                                              0
-                                            )) *
-                                          100
-                                        ).toFixed(2) >= 100
-                                        ? "five-column bg-green-400"
-                                        : (
-                                            (dynamicColumns.reduce(
-                                              (total, column) => {
-                                                const prodValue =
-                                                  item[
-                                                    column.endsWith("_2")
-                                                      ? column
-                                                      : ""
-                                                  ] || 0;
-                                                const planValue =
-                                                  item[
-                                                    column.endsWith("_1")
-                                                      ? column
-                                                      : ""
-                                                  ] || 0;
-                                                return total + prodValue;
-                                              },
-                                              0
-                                            ) /
-                                              dynamicColumns.reduce(
-                                                (total, column) => {
-                                                  const value =
-                                                    item[
-                                                      column.endsWith("_1")
-                                                        ? column
-                                                        : ""
-                                                    ] || 0;
-                                                  return total + value;
-                                                },
-                                                0
-                                              )) *
-                                            100
-                                          ).toFixed(2) >= 98
-                                        ? "five-column bg-yellow-400"
-                                        : "five-column bg-red-400"
-                                      : "five-column bg-red-400"
-                                  } ${
-                                    index === 0
-                                      ? "five-column bg-yellow-500"
-                                      : ""
-                                  }`}
-                                >
-                                  {isFinite(
+                                  className={`sticky left-[480px] top-0 whitespace-nowrap py-4 pl-4 pr-3 ttext-center text-xs font-medium sm:pl-6 ${isFinite(
                                     (
                                       (dynamicColumns.reduce(
                                         (total, column) => {
                                           const prodValue =
                                             item[
-                                              column.endsWith("_2")
-                                                ? column
-                                                : ""
+                                            column.endsWith("_2")
+                                              ? column
+                                              : ""
                                             ] || 0;
                                           const planValue =
                                             item[
-                                              column.endsWith("_1")
-                                                ? column
-                                                : ""
+                                            column.endsWith("_1")
+                                              ? column
+                                              : ""
                                             ] || 0;
                                           return total + prodValue;
                                         },
@@ -545,9 +444,9 @@ const ProductResultTargetModel = () => {
                                           (total, column) => {
                                             const value =
                                               item[
-                                                column.endsWith("_1")
-                                                  ? column
-                                                  : ""
+                                              column.endsWith("_1")
+                                                ? column
+                                                : ""
                                               ] || 0;
                                             return total + value;
                                           },
@@ -556,20 +455,54 @@ const ProductResultTargetModel = () => {
                                       100
                                     ).toFixed(2)
                                   )
-                                    ? `${(
+                                    ? (
+                                      (dynamicColumns.reduce(
+                                        (total, column) => {
+                                          const prodValue =
+                                            item[
+                                            column.endsWith("_2")
+                                              ? column
+                                              : ""
+                                            ] || 0;
+                                          const planValue =
+                                            item[
+                                            column.endsWith("_1")
+                                              ? column
+                                              : ""
+                                            ] || 0;
+                                          return total + prodValue;
+                                        },
+                                        0
+                                      ) /
+                                        dynamicColumns.reduce(
+                                          (total, column) => {
+                                            const value =
+                                              item[
+                                              column.endsWith("_1")
+                                                ? column
+                                                : ""
+                                              ] || 0;
+                                            return total + value;
+                                          },
+                                          0
+                                        )) *
+                                      100
+                                    ).toFixed(2) >= 100
+                                      ? "five-column bg-green-400"
+                                      : (
                                         (dynamicColumns.reduce(
                                           (total, column) => {
                                             const prodValue =
                                               item[
-                                                column.endsWith("_2")
-                                                  ? column
-                                                  : ""
+                                              column.endsWith("_2")
+                                                ? column
+                                                : ""
                                               ] || 0;
                                             const planValue =
                                               item[
-                                                column.endsWith("_1")
-                                                  ? column
-                                                  : ""
+                                              column.endsWith("_1")
+                                                ? column
+                                                : ""
                                               ] || 0;
                                             return total + prodValue;
                                           },
@@ -579,26 +512,101 @@ const ProductResultTargetModel = () => {
                                             (total, column) => {
                                               const value =
                                                 item[
-                                                  column.endsWith("_1")
-                                                    ? column
-                                                    : ""
+                                                column.endsWith("_1")
+                                                  ? column
+                                                  : ""
                                                 ] || 0;
                                               return total + value;
                                             },
                                             0
                                           )) *
                                         100
-                                      ).toFixed(2)}%`
+                                      ).toFixed(2) >= 98
+                                        ? "five-column bg-yellow-400"
+                                        : "five-column bg-red-400"
+                                    : "five-column bg-red-400"
+                                    } ${index === 0
+                                      ? "five-column"
+                                      : ""
+                                    }`}
+                                >
+                                  {isFinite(
+                                    (
+                                      (dynamicColumns.reduce(
+                                        (total, column) => {
+                                          const prodValue =
+                                            item[
+                                            column.endsWith("_2")
+                                              ? column
+                                              : ""
+                                            ] || 0;
+                                          const planValue =
+                                            item[
+                                            column.endsWith("_1")
+                                              ? column
+                                              : ""
+                                            ] || 0;
+                                          return total + prodValue;
+                                        },
+                                        0
+                                      ) /
+                                        dynamicColumns.reduce(
+                                          (total, column) => {
+                                            const value =
+                                              item[
+                                              column.endsWith("_1")
+                                                ? column
+                                                : ""
+                                              ] || 0;
+                                            return total + value;
+                                          },
+                                          0
+                                        )) *
+                                      100
+                                    ).toFixed(2)
+                                  )
+                                    ? `${(
+                                      (dynamicColumns.reduce(
+                                        (total, column) => {
+                                          const prodValue =
+                                            item[
+                                            column.endsWith("_2")
+                                              ? column
+                                              : ""
+                                            ] || 0;
+                                          const planValue =
+                                            item[
+                                            column.endsWith("_1")
+                                              ? column
+                                              : ""
+                                            ] || 0;
+                                          return total + prodValue;
+                                        },
+                                        0
+                                      ) /
+                                        dynamicColumns.reduce(
+                                          (total, column) => {
+                                            const value =
+                                              item[
+                                              column.endsWith("_1")
+                                                ? column
+                                                : ""
+                                              ] || 0;
+                                            return total + value;
+                                          },
+                                          0
+                                        )) *
+                                      100
+                                    ).toFixed(2)}%`
                                     : "0%"}
                                 </th>
                                 {dynamicColumns.map((column, columnIndex) => (
                                   <th
                                     key={columnIndex}
-                                    className={`whitespace-nowrap text-center py-4 pl-4 pr-3 text-xs font-medium sm:pl-6 ${
-                                      item[column] && item[column] < 0
-                                        ? "text-red-700"
-                                        : "text-gray-900"
-                                    } ${index === 0 ? "" : ""}`}
+                                    className={`whitespace-nowrap text-center py-4 pl-4 pr-3 text-xs font-medium sm:pl-6 ${item[column] && item[column] < 0
+                                      ? "text-red-700"
+                                      : "text-gray-900"
+                                      } ${index === 0 ? "" : ""}`}
                                   >
                                     {item[column]
                                       ? item[column].toLocaleString()
@@ -623,23 +631,21 @@ const ProductResultTargetModel = () => {
                             index !== 0 ? (
                               <tr key={index}>
                                 <td
-                                  className={`sticky left-0 bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6 ${
-                                    index === 0 ? "bg-yellow-500" : ""
-                                  }`}
+                                  className={`sticky left-0 bg-gray-50 whitespace-nowrap py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6 ${index === 0 ? "bg-yellow-500" : ""
+                                    }`}
                                 >
                                   {item.MODEL}
                                 </td>
                                 {/* TOTAL PLAN */}
                                 <td
-                                  className={`sticky left-[170px] bg-gray-50 py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6  ${
-                                    index === 0 ? "bg-yellow-500" : ""
-                                  }`}
+                                  className={`sticky left-[170px] bg-gray-50 py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6  ${index === 0 ? "bg-yellow-500" : ""
+                                    }`}
                                 >
                                   {dynamicColumns
                                     .reduce((total, column) => {
                                       const value =
                                         item[
-                                          column.endsWith("_1") ? column : ""
+                                        column.endsWith("_1") ? column : ""
                                         ] || 0;
                                       return total + value;
                                     }, 0)
@@ -647,15 +653,14 @@ const ProductResultTargetModel = () => {
                                 </td>
                                 {/* TOTAL PROD */}
                                 <td
-                                  className={`sticky left-[275px] bg-gray-50 py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6  ${
-                                    index === 0 ? "bg-yellow-500" : ""
-                                  }`}
+                                  className={`sticky left-[275px] bg-gray-50 py-4 pl-4 pr-3 text-center text-xs font-medium text-gray-900 sm:pl-6  ${index === 0 ? "bg-yellow-500" : ""
+                                    }`}
                                 >
                                   {dynamicColumns
                                     .reduce((total, column) => {
                                       const value =
                                         item[
-                                          column.endsWith("_2") ? column : ""
+                                        column.endsWith("_2") ? column : ""
                                         ] || 0;
                                       return total + value;
                                     }, 0)
@@ -663,23 +668,22 @@ const ProductResultTargetModel = () => {
                                 </td>
                                 {/* TOTAL DIFF */}
                                 <td
-                                  className={`sticky left-[383px] bg-gray-50 py-4 pl-4 pr-3 text-center text-xs font-medium sm:pl-6 ${
-                                    dynamicColumns.reduce((total, column) => {
-                                      const value =
-                                        item[
-                                          column.endsWith("_3") ? column : ""
-                                        ] || 0;
-                                      return total + value;
-                                    }, 0) < 0
-                                      ? "text-red-700"
-                                      : ""
-                                  } ${index === 0 ? "bg-yellow-500" : ""}`}
+                                  className={`sticky left-[383px] bg-gray-50 py-4 pl-4 pr-3 text-center text-xs font-medium sm:pl-6 ${dynamicColumns.reduce((total, column) => {
+                                    const value =
+                                      item[
+                                      column.endsWith("_3") ? column : ""
+                                      ] || 0;
+                                    return total + value;
+                                  }, 0) < 0
+                                    ? "text-red-700"
+                                    : ""
+                                    } ${index === 0 ? "bg-yellow-500" : ""}`}
                                 >
                                   {dynamicColumns
                                     .reduce((total, column) => {
                                       const value =
                                         item[
-                                          column.endsWith("_3") ? column : ""
+                                        column.endsWith("_3") ? column : ""
                                         ] || 0;
                                       return total + value;
                                     }, 0)
@@ -687,133 +691,21 @@ const ProductResultTargetModel = () => {
                                 </td>
                                 {/* RATE */}
                                 <td
-                                  className={`sticky left-[480px] bg-gray-50 py-4 pl-4 pr-3 text-center text-xs font-medium sm:pl-6 ${
-                                    isFinite(
-                                      (
-                                        (dynamicColumns.reduce(
-                                          (total, column) => {
-                                            const prodValue =
-                                              item[
-                                                column.endsWith("_2")
-                                                  ? column
-                                                  : ""
-                                              ] || 0;
-                                            const planValue =
-                                              item[
-                                                column.endsWith("_1")
-                                                  ? column
-                                                  : ""
-                                              ] || 0;
-                                            return total + prodValue;
-                                          },
-                                          0
-                                        ) /
-                                          dynamicColumns.reduce(
-                                            (total, column) => {
-                                              const value =
-                                                item[
-                                                  column.endsWith("_1")
-                                                    ? column
-                                                    : ""
-                                                ] || 0;
-                                              return total + value;
-                                            },
-                                            0
-                                          )) *
-                                        100
-                                      ).toFixed(2)
-                                    )
-                                      ? (
-                                          (dynamicColumns.reduce(
-                                            (total, column) => {
-                                              const prodValue =
-                                                item[
-                                                  column.endsWith("_2")
-                                                    ? column
-                                                    : ""
-                                                ] || 0;
-                                              const planValue =
-                                                item[
-                                                  column.endsWith("_1")
-                                                    ? column
-                                                    : ""
-                                                ] || 0;
-                                              return total + prodValue;
-                                            },
-                                            0
-                                          ) /
-                                            dynamicColumns.reduce(
-                                              (total, column) => {
-                                                const value =
-                                                  item[
-                                                    column.endsWith("_1")
-                                                      ? column
-                                                      : ""
-                                                  ] || 0;
-                                                return total + value;
-                                              },
-                                              0
-                                            )) *
-                                          100
-                                        ).toFixed(2) >= 100
-                                        ? "sticky-five-row bg-green-400"
-                                        : (
-                                            (dynamicColumns.reduce(
-                                              (total, column) => {
-                                                const prodValue =
-                                                  item[
-                                                    column.endsWith("_2")
-                                                      ? column
-                                                      : ""
-                                                  ] || 0;
-                                                const planValue =
-                                                  item[
-                                                    column.endsWith("_1")
-                                                      ? column
-                                                      : ""
-                                                  ] || 0;
-                                                return total + prodValue;
-                                              },
-                                              0
-                                            ) /
-                                              dynamicColumns.reduce(
-                                                (total, column) => {
-                                                  const value =
-                                                    item[
-                                                      column.endsWith("_1")
-                                                        ? column
-                                                        : ""
-                                                    ] || 0;
-                                                  return total + value;
-                                                },
-                                                0
-                                              )) *
-                                            100
-                                          ).toFixed(2) >= 98
-                                        ? "sticky-five-row bg-yellow-400"
-                                        : "sticky-five-row bg-red-400"
-                                      : "sticky-five-row bg-red-400"
-                                  } ${
-                                    index === 0
-                                      ? "sticky-five-row bg-yellow-500"
-                                      : ""
-                                  }`}
-                                >
-                                  {isFinite(
+                                  className={`sticky left-[480px] bg-gray-50 py-4 pl-4 pr-3 text-center text-xs font-medium sm:pl-6 ${isFinite(
                                     (
                                       (dynamicColumns.reduce(
                                         (total, column) => {
                                           const prodValue =
                                             item[
-                                              column.endsWith("_2")
-                                                ? column
-                                                : ""
+                                            column.endsWith("_2")
+                                              ? column
+                                              : ""
                                             ] || 0;
                                           const planValue =
                                             item[
-                                              column.endsWith("_1")
-                                                ? column
-                                                : ""
+                                            column.endsWith("_1")
+                                              ? column
+                                              : ""
                                             ] || 0;
                                           return total + prodValue;
                                         },
@@ -823,9 +715,9 @@ const ProductResultTargetModel = () => {
                                           (total, column) => {
                                             const value =
                                               item[
-                                                column.endsWith("_1")
-                                                  ? column
-                                                  : ""
+                                              column.endsWith("_1")
+                                                ? column
+                                                : ""
                                               ] || 0;
                                             return total + value;
                                           },
@@ -834,20 +726,54 @@ const ProductResultTargetModel = () => {
                                       100
                                     ).toFixed(2)
                                   )
-                                    ? `${(
+                                    ? (
+                                      (dynamicColumns.reduce(
+                                        (total, column) => {
+                                          const prodValue =
+                                            item[
+                                            column.endsWith("_2")
+                                              ? column
+                                              : ""
+                                            ] || 0;
+                                          const planValue =
+                                            item[
+                                            column.endsWith("_1")
+                                              ? column
+                                              : ""
+                                            ] || 0;
+                                          return total + prodValue;
+                                        },
+                                        0
+                                      ) /
+                                        dynamicColumns.reduce(
+                                          (total, column) => {
+                                            const value =
+                                              item[
+                                              column.endsWith("_1")
+                                                ? column
+                                                : ""
+                                              ] || 0;
+                                            return total + value;
+                                          },
+                                          0
+                                        )) *
+                                      100
+                                    ).toFixed(2) >= 100
+                                      ? "sticky-five-row bg-green-400"
+                                      : (
                                         (dynamicColumns.reduce(
                                           (total, column) => {
                                             const prodValue =
                                               item[
-                                                column.endsWith("_2")
-                                                  ? column
-                                                  : ""
+                                              column.endsWith("_2")
+                                                ? column
+                                                : ""
                                               ] || 0;
                                             const planValue =
                                               item[
-                                                column.endsWith("_1")
-                                                  ? column
-                                                  : ""
+                                              column.endsWith("_1")
+                                                ? column
+                                                : ""
                                               ] || 0;
                                             return total + prodValue;
                                           },
@@ -857,26 +783,101 @@ const ProductResultTargetModel = () => {
                                             (total, column) => {
                                               const value =
                                                 item[
-                                                  column.endsWith("_1")
-                                                    ? column
-                                                    : ""
+                                                column.endsWith("_1")
+                                                  ? column
+                                                  : ""
                                                 ] || 0;
                                               return total + value;
                                             },
                                             0
                                           )) *
                                         100
-                                      ).toFixed(2)}%`
+                                      ).toFixed(2) >= 98
+                                        ? "sticky-five-row bg-yellow-400"
+                                        : "sticky-five-row bg-red-400"
+                                    : "sticky-five-row bg-red-400"
+                                    } ${index === 0
+                                      ? "sticky-five-row bg-yellow-500"
+                                      : ""
+                                    }`}
+                                >
+                                  {isFinite(
+                                    (
+                                      (dynamicColumns.reduce(
+                                        (total, column) => {
+                                          const prodValue =
+                                            item[
+                                            column.endsWith("_2")
+                                              ? column
+                                              : ""
+                                            ] || 0;
+                                          const planValue =
+                                            item[
+                                            column.endsWith("_1")
+                                              ? column
+                                              : ""
+                                            ] || 0;
+                                          return total + prodValue;
+                                        },
+                                        0
+                                      ) /
+                                        dynamicColumns.reduce(
+                                          (total, column) => {
+                                            const value =
+                                              item[
+                                              column.endsWith("_1")
+                                                ? column
+                                                : ""
+                                              ] || 0;
+                                            return total + value;
+                                          },
+                                          0
+                                        )) *
+                                      100
+                                    ).toFixed(2)
+                                  )
+                                    ? `${(
+                                      (dynamicColumns.reduce(
+                                        (total, column) => {
+                                          const prodValue =
+                                            item[
+                                            column.endsWith("_2")
+                                              ? column
+                                              : ""
+                                            ] || 0;
+                                          const planValue =
+                                            item[
+                                            column.endsWith("_1")
+                                              ? column
+                                              : ""
+                                            ] || 0;
+                                          return total + prodValue;
+                                        },
+                                        0
+                                      ) /
+                                        dynamicColumns.reduce(
+                                          (total, column) => {
+                                            const value =
+                                              item[
+                                              column.endsWith("_1")
+                                                ? column
+                                                : ""
+                                              ] || 0;
+                                            return total + value;
+                                          },
+                                          0
+                                        )) *
+                                      100
+                                    ).toFixed(2)}%`
                                     : "0%"}
                                 </td>
                                 {dynamicColumns.map((column, columnIndex) => (
                                   <td
                                     key={columnIndex}
-                                    className={` text-center py-4 pl-4 pr-3 text-xs font-medium sm:pl-6 ${
-                                      item[column] && item[column] < 0
-                                        ? "text-red-700"
-                                        : "text-gray-900"
-                                    } ${index === 0 ? "bg-yellow-500" : ""}`}
+                                    className={` text-center py-4 pl-4 pr-3 text-xs font-medium sm:pl-6 ${item[column] && item[column] < 0
+                                      ? "text-red-700"
+                                      : "text-gray-900"
+                                      } ${index === 0 ? "bg-yellow-500" : ""}`}
                                   >
                                     {item[column]
                                       ? item[column].toLocaleString()

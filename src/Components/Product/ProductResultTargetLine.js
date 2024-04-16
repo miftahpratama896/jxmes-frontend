@@ -52,7 +52,9 @@ const ProductResultTarget = () => {
       window.location.href = "/ProductResultTargetLine";
     } else if (e.target.value === "Model") {
       window.location.href = "/ProductResultTargetModel";
-    }
+    } else if (e.target.value === "JXLine") {
+        window.location.href = "/ProductResultTargetJXLine";
+    } 
   };
 
   // Format tanggal ke format YYYY-MM-DD
@@ -237,7 +239,8 @@ const ProductResultTarget = () => {
                   value={selectedOption}
                   className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
                 >
-                  <option value="Line">Line</option>
+                 <option value="Line">JX/JX2 Line</option>
+                  <option value="JXLine">JX Line</option>
                   <option value="Model">Model</option>
                 </select>
               </div>

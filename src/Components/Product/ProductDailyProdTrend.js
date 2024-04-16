@@ -359,8 +359,20 @@ function ProductDailyProdTrend() {
                                 );
                                 const bgColor =
                                   index % 2 === 1 ? "" : "#374151";
-                                const dateParts = displayName.split("-");
-                                const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+                                  const dateParts = displayName.split("-");
+                                  const monthNames = [
+                                      "January", "February", "March",
+                                      "April", "May", "June", "July",
+                                      "August", "September", "October",
+                                      "November", "December"
+                                  ];
+
+                                  const dateObject = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+                                  const day = dateObject.getDate();
+                                  const monthIndex = dateObject.getMonth();
+                                  const year = dateObject.getFullYear();
+
+                                  const formattedDate = `${day} ${monthNames[monthIndex]} ${year}`;
                                 return (
                                   <th
                                     colSpan={3}
