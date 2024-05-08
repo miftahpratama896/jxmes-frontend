@@ -877,7 +877,7 @@ function NotFound() {
                                     ? new Date(item.OGAC)
                                         .toLocaleDateString("en-GB", {
                                           day: "2-digit",
-                                          month: "2-digit",
+                                          month: "long",
                                           year: "numeric",
                                         })
                                         .replace(/\//g, "-")
@@ -888,7 +888,7 @@ function NotFound() {
                                     ? new Date(item.OGAC_UPDATE)
                                         .toLocaleDateString("en-GB", {
                                           day: "2-digit",
-                                          month: "2-digit",
+                                          month: "long",
                                           year: "numeric",
                                         })
                                         .replace(/\//g, "-")
@@ -899,7 +899,7 @@ function NotFound() {
                                     ? new Date(item.ASSY_DATE)
                                         .toLocaleDateString("en-GB", {
                                           day: "2-digit",
-                                          month: "2-digit",
+                                          month: "long",
                                           year: "numeric",
                                         })
                                         .replace(/\//g, "-")
@@ -1223,7 +1223,7 @@ function NotFound() {
                                           ? new Date(item.ASSY_DATE)
                                               .toLocaleDateString("en-GB", {
                                                 day: "2-digit",
-                                                month: "2-digit",
+                                                month: "long",
                                                 year: "numeric",
                                               })
                                               .replace(/\//g, "-")

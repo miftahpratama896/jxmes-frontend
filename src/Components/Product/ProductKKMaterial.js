@@ -749,7 +749,7 @@ function ProductKKMaterial() {
                                   ? new Date(item.REQ_DATE)
                                       .toLocaleDateString("en-GB", {
                                         day: "2-digit",
-                                        month: "2-digit",
+                                        month: "long",
                                         year: "numeric",
                                       })
                                       .replace(/\//g, "-")

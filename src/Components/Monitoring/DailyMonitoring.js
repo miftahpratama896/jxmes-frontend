@@ -48,9 +48,10 @@ const FetchData = () => {
   const [dateFrom, setDateFrom] = useState(firstDayOfPreviousMonthISO);
   const [dateTo, setDateTo] = useState(todayISO);
 
-  const [wc, setWC] = useState("SEWING");
+  const [wc, setWC] = useState("CUTTING");
   const [plant, setPlant] = useState("ALL");
   const [columns, setColumns] = useState([]);
+  const [columns2, setColumns2] = useState([]);
   const [filterType, setFilterType] = useState("Line");
 
   function classNames(...classes) {
@@ -91,6 +92,20 @@ const FetchData = () => {
     });
 
     setColumns(newColumns);
+  }, [dateFrom, dateTo]);
+
+  useEffect(() => {
+    const startMonth = new Date(dateFrom).getMonth();
+    const endMonth = new Date(dateTo).getMonth();
+    const monthDiff = endMonth - startMonth + 1;
+  
+    const dateArray = getDateRangeArray(new Date(dateFrom), new Date(dateTo));
+  
+    const newColumns = dateArray.map((date) => {
+      return date.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+    });
+  
+    setColumns2(newColumns);
   }, [dateFrom, dateTo]);
 
   const getRdoCekValue = (filterType) => {
@@ -501,13 +516,13 @@ const FetchData = () => {
                               TOTAL
                             </th>
 
-                            {columns.map((column, index) => (
+                            {columns2.map((column2, index) => (
                               <th
                                 key={index}
                                 scope="col"
                                 className="px-3 py-3.5 text-center text-sm font-semibold"
                               >
-                                {column}
+                                {column2}
                               </th>
                             ))}
                           </tr>

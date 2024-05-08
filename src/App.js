@@ -14,6 +14,8 @@ import ProductTime from "./Components/Product/ProductTime";
 import ProductResultTargetLine from "./Components/Product/ProductResultTargetLine";
 import ProductResultTargetModel from "./Components/Product/ProductResultTargetModel";
 import ProductResultTargetJXLine from "./Components/Product/ProductResultTargetJXLine";
+import ProductResultTargetJXSPK from "./Components/Product/ProductResultTargetJXSPK";
+import ProductResultTargetSPKAll from "./Components/Product/ProductResultTargetSPKAll";
 import POBalance from "./Components/Order/POBalance";
 import InventoryLongTerm from "./Components/WIP/InventoryLongTerm";
 import ScanStatus from "./Components/Report/ScanStatus";
@@ -37,6 +39,8 @@ import InventorySummary from "./Components/WIP/InventorySummary";
 import DailyProdQTYTrend from "./Components/Report/DailyProdQTYTrend";
 import ProductCSS from "./Components/Product/ProductCSS";
 import ProductInputSPKCutt from "./Components/Product/ProductInputSPKCutt";
+import DailyCutt from "./Components/Report/DailyCutt";
+import DailyBarcodeCutt from "./Components/Report/DailyBarcodeCutt";
 
 function App() {
   return (
@@ -113,6 +117,14 @@ function App() {
             <Dashboard />
             <ProductResultTargetJXLine />
           </Route>
+          <Route path="/ProductResultTargetJXSPK">
+            <Dashboard />
+            <ProductResultTargetJXSPK />
+          </Route>
+          <Route path="/ProductResultTargetJXSPKAll">
+            <Dashboard />
+            <ProductResultTargetSPKAll />
+          </Route>
           <Route path="/ProductResultTargetModel">
             <Dashboard />
             <ProductResultTargetModel />
@@ -124,6 +136,14 @@ function App() {
           <Route path="/ProductInputSPKCutt">
             <Dashboard />
             <ProductInputSPKCutt />
+          </Route>
+          <Route path="/DailyCutt">
+            <Dashboard />
+            <DailyCutt />
+          </Route>
+          <Route path="/DailyBarcodeCutt">
+            <Dashboard />
+            <DailyBarcodeCutt />
           </Route>
           <Route path="/POBalance">
             <Dashboard />

@@ -351,14 +351,15 @@ export default function DailyProdQTYTrend() {
                               >
                                 {item.TARGET_DATE
                                   ? new Date(item.TARGET_DATE)
-                                      .toLocaleDateString("en-GB", {
-                                        day: "2-digit",
-                                        month: "2-digit",
-                                        year: "numeric",
-                                      })
-                                      .replace(/\//g, "-")
+                                    .toLocaleDateString("en-GB", {
+                                      day: "2-digit",
+                                      month: "long", // Menggunakan "long" untuk nama bulan penuh
+                                      year: "numeric",
+                                    })
+                                    .replace(/,/g, "") // Menghilangkan koma setelah nama bulan
                                   : ""}
                               </td>
+
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                 {item.PROD_DAY}
                               </td>
@@ -372,13 +373,12 @@ export default function DailyProdQTYTrend() {
                                 {item.INPUT_ACT}
                               </td>
                               <td
-                                className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 ${
-                                  item.INPUT_RATE >= 100
+                                className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 ${item.INPUT_RATE >= 100
                                     ? "bg-green-400"
                                     : item.INPUT_RATE >= 98
-                                    ? "bg-yellow-400"
-                                    : "bg-red-400"
-                                }`}
+                                      ? "bg-yellow-400"
+                                      : "bg-red-400"
+                                  }`}
                               >
                                 {item.INPUT_RATE}
                               </td>
@@ -392,36 +392,33 @@ export default function DailyProdQTYTrend() {
                                 {item.PROD_H_OUTPUT}
                               </td>
                               <td
-                                className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 ${
-                                  item.PROD_DAY_OUTPUT_RATE >= 100
+                                className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 ${item.PROD_DAY_OUTPUT_RATE >= 100
                                     ? "bg-green-400"
                                     : item.PROD_DAY_OUTPUT_RATE >= 98
-                                    ? "bg-yellow-400"
-                                    : "bg-red-400"
-                                }`}
+                                      ? "bg-yellow-400"
+                                      : "bg-red-400"
+                                  }`}
                               >
                                 {" "}
                                 {item.PROD_DAY_OUTPUT_RATE}%
                               </td>
                               <td
-                                className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 ${
-                                  item.PROD_HOUR_OUTPUT_RATE >= 100
+                                className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 ${item.PROD_HOUR_OUTPUT_RATE >= 100
                                     ? "bg-green-400"
                                     : item.PROD_HOUR_OUTPUT_RATE >= 98
-                                    ? "bg-yellow-400"
-                                    : "bg-red-400"
-                                }`}
+                                      ? "bg-yellow-400"
+                                      : "bg-red-400"
+                                  }`}
                               >
                                 {item.PROD_HOUR_OUTPUT_RATE}%
                               </td>
                               <td
-                                className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 ${
-                                  item.PROD_H_OUTPUT_RATE >= 100
+                                className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 ${item.PROD_H_OUTPUT_RATE >= 100
                                     ? "bg-green-400"
                                     : item.PROD_H_OUTPUT_RATE >= 98
-                                    ? "bg-yellow-400"
-                                    : "bg-red-400"
-                                }`}
+                                      ? "bg-yellow-400"
+                                      : "bg-red-400"
+                                  }`}
                               >
                                 {item.PROD_H_OUTPUT_RATE}%
                               </td>

@@ -134,6 +134,7 @@ export default function Example() {
           href: "/ProductInputSPKCutt",
           active: false,
         },
+        
       ],
     },
     {
@@ -162,6 +163,16 @@ export default function Example() {
       href: "#",
       current: false,
       subItems: [
+        {
+          name: "Daily SPK Cutting",
+          href: "/DailyCutt",
+          active: false,
+        },
+        {
+          name: "Daily Barcode Cutting",
+          href: "/DailyBarcodeCutt",
+          active: false,
+        },
         { name: "Daily Hour Production", href: "/DailyHourProd", active: true },
         { name: "Scan Status JX2-JX", href: "/ScanStatus", active: true },
         { name: "Daily Prod QTY Trend", href: "/DailyProdQTYTrend", active: true },

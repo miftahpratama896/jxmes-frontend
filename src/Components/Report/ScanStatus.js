@@ -1149,140 +1149,159 @@ function ScanStatus() {
                                 {item.BARCODE}
                               </td>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-center text-sm font-medium text-gray-900 sm:pl-6">
-                                {new Date(
-                                  item.SCAN_WH_INPUT &&
-                                    item.SCAN_WH_INPUT.replace(
-                                      "T",
-                                      " "
-                                    ).replace(".000Z", "")
-                                )
-                                  .toLocaleDateString("en-GB", {
-                                    day: "2-digit",
-                                    month: "2-digit",
-                                    year: "numeric",
-                                  })
-                                  .replace(/\//g, "-")}{" "}
-                                {new Date(
-                                  item.SCAN_WH_INPUT &&
-                                    item.SCAN_WH_INPUT.replace(
-                                      "T",
-                                      " "
-                                    ).replace(".000Z", "")
-                                ).toLocaleTimeString([], {
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                                  second: "2-digit",
-                                })}
-                              </td>
-                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-center text-sm font-medium text-gray-900 sm:pl-6">
-                                {new Date(
-                                  item.SCAN_WH_OUTPUT &&
-                                    item.SCAN_WH_OUTPUT.replace(
-                                      "T",
-                                      " "
-                                    ).replace(".000Z", "")
-                                )
-                                  .toLocaleDateString("en-GB", {
-                                    day: "2-digit",
-                                    month: "2-digit",
-                                    year: "numeric",
-                                  })
-                                  .replace(/\//g, "-")}{" "}
-                                {new Date(
-                                  item.SCAN_WH_OUTPUT &&
-                                    item.SCAN_WH_OUTPUT.replace(
-                                      "T",
-                                      " "
-                                    ).replace(".000Z", "")
-                                ).toLocaleTimeString([], {
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                                  second: "2-digit",
-                                })}
-                              </td>
-                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-center text-sm font-medium text-gray-900 sm:pl-6">
-                                {new Date(
-                                  item.SCAN_LOADING &&
-                                    item.SCAN_LOADING.replace("T", " ").replace(
-                                      ".000Z",
-                                      ""
-                                    )
-                                )
-                                  .toLocaleDateString("en-GB", {
-                                    day: "2-digit",
-                                    month: "2-digit",
-                                    year: "numeric",
-                                  })
-                                  .replace(/\//g, "-")}{" "}
-                                {new Date(
-                                  item.SCAN_LOADING &&
-                                    item.SCAN_LOADING.replace("T", " ").replace(
-                                      ".000Z",
-                                      ""
-                                    )
-                                ).toLocaleTimeString([], {
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                                  second: "2-digit",
-                                })}
-                              </td>
-                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-center text-sm font-medium text-gray-900 sm:pl-6">
-                                {item.JX_INPUT && (
-                                  <>
-                                    {new Date(
-                                      item.JX_INPUT.replace("T", " ").replace(
-                                        ".000Z",
-                                        ""
-                                      )
-                                    )
-                                      .toLocaleDateString("en-GB", {
-                                        day: "2-digit",
-                                        month: "2-digit",
-                                        year: "numeric",
-                                      })
-                                      .replace(/\//g, "-")}{" "}
-                                    {new Date(
-                                      item.JX_INPUT.replace("T", " ").replace(
-                                        ".000Z",
-                                        ""
-                                      )
-                                    ).toLocaleTimeString([], {
+                                {(() => {
+                                  const scanDate = item.SCAN_WH_INPUT && new Date(item.SCAN_WH_INPUT.replace("T", " ").replace(".000Z", ""));
+                                  if (scanDate) {
+                                    const day = scanDate.getDate();
+                                    const monthIndex = scanDate.getMonth();
+                                    const year = scanDate.getFullYear();
+                                    const monthNames = [
+                                      "January", "February", "March", "April", "May", "June",
+                                      "July", "August", "September", "October", "November", "December"
+                                    ];
+                                    const month = monthNames[monthIndex];
+
+                                    return `${day} ${month} ${year}`;
+                                  } else {
+                                    return ""; // Return an empty string if SCAN_WH_INPUT is not valid
+                                  }
+                                })()}{" "}
+                                {(() => {
+                                  const scanTime = item.SCAN_WH_INPUT && new Date(item.SCAN_WH_INPUT.replace("T", " ").replace(".000Z", ""));
+                                  if (scanTime) {
+                                    return scanTime.toLocaleTimeString([], {
                                       hour: "2-digit",
                                       minute: "2-digit",
                                       second: "2-digit",
-                                    })}
-                                  </>
-                                )}
+                                    });
+                                  } else {
+                                    return ""; // Return an empty string if SCAN_WH_INPUT is not valid
+                                  }
+                                })()}
                               </td>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-center text-sm font-medium text-gray-900 sm:pl-6">
-                                {item.JX_ASM_INPUT && (
-                                  <>
-                                    {new Date(
-                                      item.JX_ASM_INPUT &&
-                                        item.JX_ASM_INPUT.replace(
-                                          "T",
-                                          " "
-                                        ).replace(".000Z", "")
-                                    )
-                                      .toLocaleDateString("en-GB", {
-                                        day: "2-digit",
-                                        month: "2-digit",
-                                        year: "numeric",
-                                      })
-                                      .replace(/\//g, "-")}{" "}
-                                    {new Date(
-                                      item.JX_ASM_INPUT &&
-                                        item.JX_ASM_INPUT.replace(
-                                          "T",
-                                          " "
-                                        ).replace(".000Z", "")
-                                    ).toLocaleTimeString([], {
+                                {(() => {
+                                  const scanDate = item.SCAN_WH_OUTPUT && new Date(item.SCAN_WH_OUTPUT.replace("T", " ").replace(".000Z", ""));
+                                  if (scanDate) {
+                                    const day = scanDate.getDate();
+                                    const monthIndex = scanDate.getMonth();
+                                    const year = scanDate.getFullYear();
+                                    const monthNames = [
+                                      "January", "February", "March", "April", "May", "June",
+                                      "July", "August", "September", "October", "November", "December"
+                                    ];
+                                    const month = monthNames[monthIndex];
+
+                                    return `${day} ${month} ${year}`;
+                                  } else {
+                                    return ""; // Return an empty string if SCAN_WH_INPUT is not valid
+                                  }
+                                })()}{" "}
+                                {(() => {
+                                  const scanTime = item.SCAN_WH_OUTPUT && new Date(item.SCAN_WH_OUTPUT.replace("T", " ").replace(".000Z", ""));
+                                  if (scanTime) {
+                                    return scanTime.toLocaleTimeString([], {
                                       hour: "2-digit",
                                       minute: "2-digit",
                                       second: "2-digit",
-                                    })}
-                                  </>
-                                )}
+                                    });
+                                  } else {
+                                    return ""; // Return an empty string if SCAN_WH_INPUT is not valid
+                                  }
+                                })()}
+                              </td>
+                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-center text-sm font-medium text-gray-900 sm:pl-6">
+                                {(() => {
+                                  const scanDate = item.SCAN_LOADING && new Date(item.SCAN_LOADING.replace("T", " ").replace(".000Z", ""));
+                                  if (scanDate) {
+                                    const day = scanDate.getDate();
+                                    const monthIndex = scanDate.getMonth();
+                                    const year = scanDate.getFullYear();
+                                    const monthNames = [
+                                      "January", "February", "March", "April", "May", "June",
+                                      "July", "August", "September", "October", "November", "December"
+                                    ];
+                                    const month = monthNames[monthIndex];
+
+                                    return `${day} ${month} ${year}`;
+                                  } else {
+                                    return ""; // Return an empty string if SCAN_WH_INPUT is not valid
+                                  }
+                                })()}{" "}
+                                {(() => {
+                                  const scanTime = item.SCAN_LOADING && new Date(item.SCAN_LOADING.replace("T", " ").replace(".000Z", ""));
+                                  if (scanTime) {
+                                    return scanTime.toLocaleTimeString([], {
+                                      hour: "2-digit",
+                                      minute: "2-digit",
+                                      second: "2-digit",
+                                    });
+                                  } else {
+                                    return ""; // Return an empty string if SCAN_WH_INPUT is not valid
+                                  }
+                                })()}
+                              </td>
+                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-center text-sm font-medium text-gray-900 sm:pl-6">
+                                {(() => {
+                                  const scanDate = item.JX_INPUT && new Date(item.JX_INPUT.replace("T", " ").replace(".000Z", ""));
+                                  if (scanDate) {
+                                    const day = scanDate.getDate();
+                                    const monthIndex = scanDate.getMonth();
+                                    const year = scanDate.getFullYear();
+                                    const monthNames = [
+                                      "January", "February", "March", "April", "May", "June",
+                                      "July", "August", "September", "October", "November", "December"
+                                    ];
+                                    const month = monthNames[monthIndex];
+
+                                    return `${day} ${month} ${year}`;
+                                  } else {
+                                    return ""; // Return an empty string if SCAN_WH_INPUT is not valid
+                                  }
+                                })()}{" "}
+                                {(() => {
+                                  const scanTime = item.JX_INPUT && new Date(item.JX_INPUT.replace("T", " ").replace(".000Z", ""));
+                                  if (scanTime) {
+                                    return scanTime.toLocaleTimeString([], {
+                                      hour: "2-digit",
+                                      minute: "2-digit",
+                                      second: "2-digit",
+                                    });
+                                  } else {
+                                    return ""; // Return an empty string if SCAN_WH_INPUT is not valid
+                                  }
+                                })()}
+                              </td>
+                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-center text-sm font-medium text-gray-900 sm:pl-6">
+                                {(() => {
+                                  const scanDate = item.JX_ASM_INPUT && new Date(item.JX_ASM_INPUT.replace("T", " ").replace(".000Z", ""));
+                                  if (scanDate) {
+                                    const day = scanDate.getDate();
+                                    const monthIndex = scanDate.getMonth();
+                                    const year = scanDate.getFullYear();
+                                    const monthNames = [
+                                      "January", "February", "March", "April", "May", "June",
+                                      "July", "August", "September", "October", "November", "December"
+                                    ];
+                                    const month = monthNames[monthIndex];
+
+                                    return `${day} ${month} ${year}`;
+                                  } else {
+                                    return ""; // Return an empty string if SCAN_WH_INPUT is not valid
+                                  }
+                                })()}{" "}
+                                {(() => {
+                                  const scanTime = item.JX_ASM_INPUT && new Date(item.JX_ASM_INPUT.replace("T", " ").replace(".000Z", ""));
+                                  if (scanTime) {
+                                    return scanTime.toLocaleTimeString([], {
+                                      hour: "2-digit",
+                                      minute: "2-digit",
+                                      second: "2-digit",
+                                    });
+                                  } else {
+                                    return ""; // Return an empty string if SCAN_WH_INPUT is not valid
+                                  }
+                                })()}
                               </td>
                             </tr>
                           ))}

@@ -53,8 +53,12 @@ const ProductResultTarget = () => {
     } else if (e.target.value === "Model") {
       window.location.href = "/ProductResultTargetModel";
     } else if (e.target.value === "JXLine") {
-        window.location.href = "/ProductResultTargetJXLine";
-    } 
+      window.location.href = "/ProductResultTargetJXLine";
+    } else if (e.target.value === "JXSPK") {
+      window.location.href = "/ProductResultTargetJXSPK";
+    } else if (e.target.value === "JXSPKAll") {
+      window.location.href = "/ProductResultTargetJXSPKAll";
+    }
   };
 
   // Format tanggal ke format YYYY-MM-DD
@@ -239,8 +243,10 @@ const ProductResultTarget = () => {
                   value={selectedOption}
                   className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
                 >
-                 <option value="Line">JX/JX2 Line</option>
-                  <option value="JXLine">JX Line</option>
+                  <option value="Line">JX/JX2 Line</option>
+                  <option value="JXLine">JX Line (Day)</option>
+                  <option value="JXSPK">JX SPK (Day)</option>
+                  <option value="JXSPKAll">JX SPK (All)</option>
                   <option value="Model">Model</option>
                 </select>
               </div>
@@ -350,7 +356,7 @@ const ProductResultTarget = () => {
                                   className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
                                 >
                                   {item.TARGET !== null &&
-                                  item.TARGET !== undefined
+                                    item.TARGET !== undefined
                                     ? item.TARGET.toLocaleString()
                                     : ""}
                                 </th>
@@ -359,7 +365,7 @@ const ProductResultTarget = () => {
                                   className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                                 >
                                   {item.PROD_QTY !== null &&
-                                  item.PROD_QTY !== undefined
+                                    item.PROD_QTY !== undefined
                                     ? item.PROD_QTY.toLocaleString()
                                     : ""}
                                 </th>
@@ -377,26 +383,26 @@ const ProductResultTarget = () => {
                                   style={{
                                     backgroundColor:
                                       item.DIFF !== null &&
-                                      item.DIFF !== undefined
+                                        item.DIFF !== undefined
                                         ? calculateRate(
-                                            item.TARGET,
-                                            item.PROD_QTY
-                                          ) >= 100
+                                          item.TARGET,
+                                          item.PROD_QTY
+                                        ) >= 100
                                           ? "rgb(144,238,144)"
                                           : calculateRate(
-                                              item.TARGET,
-                                              item.PROD_QTY
-                                            ) >= 98
-                                          ? "rgb(255, 255, 128)"
-                                          : "rgb(255, 128, 128)"
+                                            item.TARGET,
+                                            item.PROD_QTY
+                                          ) >= 98
+                                            ? "rgb(255, 255, 128)"
+                                            : "rgb(255, 128, 128)"
                                         : "",
                                   }}
                                 >
                                   {item.DIFF !== null && item.DIFF !== undefined
                                     ? `${calculateRate(
-                                        item.TARGET,
-                                        item.PROD_QTY
-                                      )}%`
+                                      item.TARGET,
+                                      item.PROD_QTY
+                                    )}%`
                                     : ""}
                                 </th>
                                 <th
@@ -422,115 +428,104 @@ const ProductResultTarget = () => {
                             index !== 0 ? (
                               <tr key={index}>
                                 <td
-                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${
-                                    index === 0 ? "bg-yellow-500" : ""
-                                  }`}
+                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${index === 0 ? "bg-yellow-500" : ""
+                                    }`}
                                 >
                                   {item.JX_LINE}
                                 </td>
                                 <td
-                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${
-                                    index === 0 ? "bg-yellow-500" : ""
-                                  }`}
+                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${index === 0 ? "bg-yellow-500" : ""
+                                    }`}
                                 >
                                   {item.JX2_LINE}
                                 </td>
                                 <td
-                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${
-                                    index === 0 ? "bg-yellow-500" : ""
-                                  }`}
+                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${index === 0 ? "bg-yellow-500" : ""
+                                    }`}
                                 >
                                   {item.TARGET !== null &&
-                                  item.TARGET !== undefined
+                                    item.TARGET !== undefined
                                     ? item.TARGET.toLocaleString()
                                     : ""}
                                 </td>
                                 <td
-                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${
-                                    index === 0 ? "bg-yellow-500" : ""
-                                  }`}
+                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${index === 0 ? "bg-yellow-500" : ""
+                                    }`}
                                 >
                                   {item.PROD_QTY !== null &&
-                                  item.PROD_QTY !== undefined
+                                    item.PROD_QTY !== undefined
                                     ? item.PROD_QTY.toLocaleString()
                                     : ""}
                                 </td>
                                 <td
-                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium ${
-                                    item.DIFF < 0
-                                      ? "text-red-700"
-                                      : "text-gray-900"
-                                  } text-black sm:pl-6 ${
-                                    index === 0 ? "bg-yellow-500" : ""
-                                  }`}
+                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium ${item.DIFF < 0
+                                    ? "text-red-700"
+                                    : "text-gray-900"
+                                    } text-black sm:pl-6 ${index === 0 ? "bg-yellow-500" : ""
+                                    }`}
                                 >
                                   {item.DIFF !== null && item.DIFF !== undefined
                                     ? item.DIFF.toLocaleString()
                                     : ""}
                                 </td>
                                 <td
-                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium ${
-                                    index === 0 ? "bg-yellow-500" : ""
-                                  }`}
+                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium ${index === 0 ? "bg-yellow-500" : ""
+                                    }`}
                                   style={{
                                     backgroundColor:
                                       item.DIFF !== null &&
-                                      item.DIFF !== undefined
+                                        item.DIFF !== undefined
                                         ? calculateRate(
-                                            item.TARGET,
-                                            item.PROD_QTY
-                                          ) >= 100
+                                          item.TARGET,
+                                          item.PROD_QTY
+                                        ) >= 100
                                           ? "rgb(144,238,144)"
                                           : calculateRate(
-                                              item.TARGET,
-                                              item.PROD_QTY
-                                            ) >= 98
-                                          ? "rgb(255, 255, 128)"
-                                          : "rgb(255, 128, 128)"
+                                            item.TARGET,
+                                            item.PROD_QTY
+                                          ) >= 98
+                                            ? "rgb(255, 255, 128)"
+                                            : "rgb(255, 128, 128)"
                                         : "",
                                   }}
                                 >
                                   {item.DIFF !== null && item.DIFF !== undefined
                                     ? `${calculateRate(
-                                        item.TARGET,
-                                        item.PROD_QTY
-                                      )}%`
+                                      item.TARGET,
+                                      item.PROD_QTY
+                                    )}%`
                                     : ""}
                                 </td>
                                 <td
-                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${
-                                    index === 0 ? "bg-yellow-500" : ""
-                                  }`}
+                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${index === 0 ? "bg-yellow-500" : ""
+                                    }`}
                                 >
                                   {item.STYLE !== null &&
-                                  item.STYLE !== undefined
+                                    item.STYLE !== undefined
                                     ? item.STYLE
                                     : ""}
                                 </td>
                                 <td
-                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${
-                                    index === 0 ? "bg-yellow-500" : ""
-                                  }`}
+                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${index === 0 ? "bg-yellow-500" : ""
+                                    }`}
                                 >
                                   {item.MODEL_NAME !== null &&
-                                  item.MODEL_NAME !== undefined
+                                    item.MODEL_NAME !== undefined
                                     ? item.MODEL_NAME
                                     : ""}
                                 </td>
                                 <td
-                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${
-                                    index === 0 ? "bg-yellow-500" : ""
-                                  }`}
+                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${index === 0 ? "bg-yellow-500" : ""
+                                    }`}
                                 >
                                   {item.GENDER !== null &&
-                                  item.GENDER !== undefined
+                                    item.GENDER !== undefined
                                     ? item.GENDER
                                     : ""}
                                 </td>
                                 <td
-                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${
-                                    index === 0 ? "bg-yellow-500" : ""
-                                  }`}
+                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${index === 0 ? "bg-yellow-500" : ""
+                                    }`}
                                 >
                                   {item.QTY !== null && item.QTY !== undefined
                                     ? item.QTY.toLocaleString()

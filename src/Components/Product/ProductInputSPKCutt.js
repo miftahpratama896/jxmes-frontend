@@ -1,15 +1,16 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import axios from 'axios';
-import { Transition } from '@headlessui/react'
-import { CheckCircleIcon } from '@heroicons/react/24/outline'
-import { XMarkIcon } from '@heroicons/react/20/solid'
+import { Transition } from '@headlessui/react';
+import { CheckCircleIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon } from '@heroicons/react/20/solid';
 
 function ProductInputSPKCutt() {
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(false);
     const [data, setData] = useState([]);
     const [uniqueComponents, setUniqueComponents] = useState([]);
     const [uniqueModel, setUniqueModel] = useState([]);
     const [uniqueMaterial, setUniqueMaterial] = useState([]);
+    const [filteredMaterials, setFilteredMaterials] = useState([]);
 
     const [formData, setFormData] = useState({
         LINE: '',
@@ -28,6 +29,22 @@ function ProductInputSPKCutt() {
             ...prevState,
             [name]: value
         }));
+
+        // Jika yang berubah adalah MODEL, reset COMPONENT dan MATERIAL
+        if (name === 'MODEL') {
+            setFormData(prevState => ({
+                ...prevState,
+                COMPONENT: '',
+                MATERIAL: ''
+            }));
+        }
+        
+        // Jika yang berubah adalah COMPONENT, filter material sesuai dengan komponen yang dipilih
+        if (name === 'COMPONENT') {
+            const selectedComponent = value;
+            const filteredMaterial = new Set(data.filter(item => item.COMPONENT === selectedComponent).map(item => item.MATERIAL));
+            setFilteredMaterials([...filteredMaterial]);
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -76,17 +93,35 @@ function ProductInputSPKCutt() {
             });
     }, []);
 
-    console.log(data)
+    useEffect(() => {
+        // Filter material berdasarkan komponen yang dipilih
+        if (formData.COMPONENT) {
+            const filteredMaterial = new Set(data.filter(item => item.COMPONENT === formData.COMPONENT).map(item => item.MATERIAL));
+            setFilteredMaterials([...filteredMaterial]);
+        } else {
+            // Jika komponen tidak dipilih, atur material yang difilter menjadi kosong
+            setFilteredMaterials([]);
+        }
+    }, [formData.COMPONENT, data]);
 
     return (
         <>
-
             <div className="max-w-md mx-auto m-4 p-6 bg-white rounded-md shadow-md">
                 <h2 className="text-lg font-semibold mb-4">FORM INPUT SPK - CUTTING</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label className="block mb-1" htmlFor="LINE">LINE</label>
-                        <input className="w-full border border-gray-300 rounded-md px-3 py-2" type="text" name="LINE" value={formData.LINE} onChange={handleChange} />
+                        <select
+                            className="w-full border border-gray-300 rounded-md px-3 py-2"
+                            name="LINE"
+                            value={formData.LINE}
+                            onChange={handleChange}
+                        >
+                            <option value="">Select Line</option>
+                            {[...Array(16)].map((_, index) => (
+                                <option key={index + 1} value={index + 1}>{index + 1}</option>
+                            ))}
+                        </select>
                     </div>
                     <div className="mb-4">
                         <label className="block mb-1" htmlFor="STYLE">STYLE</label>
@@ -97,6 +132,7 @@ function ProductInputSPKCutt() {
                         <select
                             className="w-full border border-gray-300 rounded-md px-3 py-2"
                             name="MODEL"
+                            value={formData.MODEL}
                             onChange={handleChange}
                         >
                             <option value="">Select Model</option>
@@ -105,32 +141,38 @@ function ProductInputSPKCutt() {
                             ))}
                         </select>
                     </div>
-                    <div className="mb-4">
-                        <label className="block mb-1" htmlFor="COMPONENT">COMPONENT</label>
-                        <select
-                            className="w-full border border-gray-300 rounded-md px-3 py-2"
-                            name="COMPONENT"
-                            onChange={handleChange}
-                        >
-                            <option value="">Select Component</option>
-                            {uniqueComponents.map(component => (
-                                <option key={component} value={component}>{component}</option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="mb-4">
-                        <label className="block mb-1" htmlFor="MATERIAL">MATERIAL</label>
-                        <select
-                            className="w-full border border-gray-300 rounded-md px-3 py-2"
-                            name="MATERIAL"
-                            onChange={handleChange}
-                        >
-                            <option value="">Select Material</option>
-                            {uniqueMaterial.map(material => (
-                                <option key={material} value={material}>{material}</option>
-                            ))}
-                        </select>
-                    </div>
+                    {formData.MODEL && (
+                        <div className="mb-4">
+                            <label className="block mb-1" htmlFor="COMPONENT">COMPONENT</label>
+                            <select
+                                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                                name="COMPONENT"
+                                value={formData.COMPONENT}
+                                onChange={handleChange}
+                            >
+                                <option value="">Select Component</option>
+                                {uniqueComponents.map(component => (
+                                    <option key={component} value={component}>{component}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
+                    {filteredMaterials.length > 0 && (
+                        <div className="mb-4">
+                            <label className="block mb-1" htmlFor="MATERIAL">MATERIAL</label>
+                            <select
+                                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                                name="MATERIAL"
+                                value={formData.MATERIAL}
+                                onChange={handleChange}
+                            >
+                                <option value="">Select Material</option>
+                                {filteredMaterials.map(material => (
+                                    <option key={material} value={material}>{material}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
                     <div className="mb-4">
                         <label className="block mb-1" htmlFor="CUTT_PROCESS_DATE">CUTT PROCESS DATE</label>
                         <input className="w-full border border-gray-300 rounded-md px-3 py-2" type="date" name="CUTT_PROCESS_DATE" value={formData.CUTT_PROCESS_DATE} onChange={handleChange} />
@@ -139,18 +181,6 @@ function ProductInputSPKCutt() {
                         <label className="block mb-1" htmlFor="TOTAL_DAILY_PLAN">TOTAL DAILY PLAN</label>
                         <input className="w-full border border-gray-300 rounded-md px-3 py-2" type="number" name="TOTAL_DAILY_PLAN" value={formData.TOTAL_DAILY_PLAN} onChange={handleChange} />
                     </div>
-                    <div className="mb-4">
-                        <label className="block mb-1" htmlFor="TOTAL_DAILY_ACTUAL">TOTAL DAILY ACTUAL</label>
-                        <input
-                            className="w-full border border-gray-300 rounded-md px-3 py-2"
-                            type="number"
-                            name="TOTAL_DAILY_ACTUAL"
-                            value={formData.TOTAL_DAILY_ACTUAL}
-                            onChange={handleChange}
-                            readOnly // Menambahkan atribut readOnly
-                        />
-                    </div>
-
                     <button className="bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-600" type="submit">Submit</button>
                 </form>
             </div>
