@@ -361,16 +361,16 @@ export default function DailyProdQTYTrend() {
                               </td>
 
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                {item.PROD_DAY}
+                                {item.PROD_DAY?.toLocaleString()}
                               </td>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                {item.PROD_HOUR}
+                                {item.PROD_HOUR?.toLocaleString()}
                               </td>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                {item.PROD_HOUR_RATE}
+                                {item.PROD_HOUR_RATE?.toLocaleString()}
                               </td>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                {item.INPUT_ACT}
+                                {item.INPUT_ACT?.toLocaleString()}
                               </td>
                               <td
                                 className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 ${item.INPUT_RATE >= 100
@@ -380,13 +380,13 @@ export default function DailyProdQTYTrend() {
                                       : "bg-red-400"
                                   }`}
                               >
-                                {item.INPUT_RATE}
+                                {item.INPUT_RATE?.toLocaleString()}
                               </td>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                {item.PROD_DAY_OUTPUT}
+                                {item.PROD_DAY_OUTPUT?.toLocaleString()}
                               </td>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                {item.PROD_HOUR_OUTPUT}
+                                {item.PROD_HOUR_OUTPUT?.toLocaleString()}
                               </td>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                 {item.PROD_H_OUTPUT}

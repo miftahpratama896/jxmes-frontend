@@ -1,10 +1,46 @@
 import React, { useState, Fragment, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import { Transition } from '@headlessui/react';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import { XMarkIcon } from '@heroicons/react/20/solid';
 
 function ProductInputSPKCutt() {
+    const history = useHistory();
+    useEffect(() => {
+        const user_id = localStorage.getItem("user_id");
+        const sendDataToBackend = async () => {
+          try {
+            const data = {
+              division: "JXMES-WEB",
+              menuName: "PRODUCT",
+              programName: "PRODUCT - INPUT SPK CUTTING",
+              userID: user_id,
+            };
+    
+            // Kirim data ke backend
+            const response = await axios.post(
+              "http://172.16.200.28:3000/api/log-menu-access",
+              data
+            );
+            console.log("Response:", response.data);
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        };
+    
+        // Panggil fungsi untuk mengirim data ke backend
+        sendDataToBackend();
+      }, []);
+    
+      useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          // Redirect ke halaman login jika tidak ada token
+          history.push("/");
+        }
+      }, [history]);
+
     const [show, setShow] = useState(false);
     const [data, setData] = useState([]);
     const [uniqueComponents, setUniqueComponents] = useState([]);
@@ -50,7 +86,7 @@ function ProductInputSPKCutt() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://172.16.206.4:3003/input-spk-cutting', formData);
+            const response = await axios.post('http://172.16.200.28:3000/input-spk-cutting', formData);
             console.log(response.data);
             // Reset form data after successful submission
             setFormData({
@@ -75,7 +111,7 @@ function ProductInputSPKCutt() {
 
     useEffect(() => {
         // Mendapatkan data dari server Express.js
-        axios.get('http://172.16.206.4:3003/barcode-cutt')
+        axios.get('http://172.16.200.28:3000/barcode-cutt')
             .then(response => {
                 setData(response.data);
                 // Membuat array unik dari nilai COMPONENT

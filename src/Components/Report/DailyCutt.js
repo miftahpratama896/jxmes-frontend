@@ -5,6 +5,40 @@ import Logo from "../../assets/img/New Logo White.png";
 
 const DailyCutt = () => {
   const history = useHistory();
+  useEffect(() => {
+    const user_id = localStorage.getItem("user_id");
+    const sendDataToBackend = async () => {
+      try {
+        const data = {
+          division: "JXMES-WEB",
+          menuName: "REPORT",
+          programName: "REPORT - DAILY SPK CUTTING",
+          userID: user_id,
+        };
+
+        // Kirim data ke backend
+        const response = await axios.post(
+          "http://172.16.200.28:3000/api/log-menu-access",
+          data
+        );
+        console.log("Response:", response.data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    // Panggil fungsi untuk mengirim data ke backend
+    sendDataToBackend();
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      // Redirect ke halaman login jika tidak ada token
+      history.push("/");
+    }
+  }, [history]);
+
 
   const [data, setData] = useState([]);
   const [autoUpdate, setAutoUpdate] = useState(false);
@@ -13,11 +47,12 @@ const DailyCutt = () => {
   const [updatedData, setUpdatedData] = useState({});
   const [selectedLine, setSelectedLine] = useState(0);
   const [selectedDate, setSelectedDate] = useState(getTodayDate());
+  const [numColumns, setNumColumns] = useState(0);
 
   const fetchData = async () => {
     try {
       setUpdating(true);
-      const response = await axios.get(`http://172.16.206.4:3003/spk-cutt?LINE=${selectedLine}&CUTT_PROCESS_DATE=${selectedDate}`);
+      const response = await axios.get(`http://172.16.200.28:3000/spk-cutt?LINE=${selectedLine}&CUTT_PROCESS_DATE=${selectedDate}`);
       setData(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -95,9 +130,9 @@ const DailyCutt = () => {
       }
 
       // Kirim data pembaruan ke backend menggunakan axios
-      await axios.put(`http://172.16.206.4:3003/spk-cutt-update/${selectedData.ID}`, updatedData); // Menggunakan ID untuk update
+      await axios.put(`http://172.16.200.28:3000/spk-cutt-update/${selectedData.ID}`, updatedData); // Menggunakan ID untuk update
       // Refresh data setelah berhasil memperbarui
-      const response = await axios.get('http://172.16.206.4:3003/spk-cutt');
+      const response = await axios.get('http://172.16.200.28:3000/spk-cutt');
       setData(response.data);
       // Tutup modal update
       closeUpdateModal();
@@ -115,6 +150,28 @@ const DailyCutt = () => {
     return `${year}-${month}-${day}`;
   }
 
+  // Mendapatkan nama kolom secara dinamis dari data yang memiliki format waktu
+  const getColumnNames = () => {
+    if (data.length === 0) return [];
+    return Object.keys(data[0]).filter((key) => key.match(/^\d{2}_\d{2}$/));
+  };
+
+  // Fungsi untuk menghitung total dari kolom tertentu
+  const calculateColumnTotal = (columnName) => {
+    // Menggunakan reduce untuk menjumlahkan nilai-nilai dalam kolom columnName
+    const total = data.reduce((accumulator, currentItem) => {
+      return accumulator + currentItem[columnName];
+    }, 0);
+
+    // Kembalikan total
+    return total;
+  };
+
+  useEffect(() => {
+    const columns = getColumnNames();
+    setNumColumns(columns.length);
+  }, [data]); // Jika data berubah, perbaharui jumlah kolom
+  const columns = getColumnNames();
 
   console.log("Selected Data:", data);
 
@@ -217,38 +274,77 @@ const DailyCutt = () => {
                           <tr className="sticky top-0 text-white z-10 bg-gray-900 whitespace-nowrap">
                             <th
                               scope="col"
+                              rowSpan={2}
                               className="sticky top-0 bg-gray-900 py-3.5 pl-4 pr-3 text-center text-sm font-semibold sm:pl-6"
                             >
                               LINE
                             </th>
                             <th
                               scope="col"
+                              rowSpan={2}
                               className="sticky bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               STYLE
                             </th>
                             <th
                               scope="col"
+                              rowSpan={2}
                               className="sticky bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               MODEL
                             </th>
                             <th
                               scope="col"
+                              rowSpan={2}
                               className="sticky bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               COMPONENT
                             </th>
                             <th
                               scope="col"
+                              rowSpan={2}
                               className="sticky bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
                             >
                               MATERIAL
                             </th>
                             <th
                               scope="col"
+                              colSpan={2}
                               className="sticky bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
                             >
+                              PPIC PLAN
+                            </th>
+                            <th
+                              scope="col"
+                              colSpan={numColumns}
+                              className="sticky bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                              style={{
+                                backgroundColor: "#374151",
+                              }}
+                            >
+                              CUTTING PER HOUR
+                            </th>
+                            <th
+                              scope="col"
+                              rowSpan={2}
+                              className="sticky bg-gray-900  px-3 py-3.5 text-center text-sm font-semibold"
+                            >
+                              TOTAL ACTUAL
+                            </th>
+                            <th
+                              scope="col"
+                              rowSpan={2}
+                              className="sticky bg-gray-900  px-3 py-3.5 text-center text-sm font-semibold"
+                            >
+                              ACTION
+                            </th>
+                          </tr>
+                          <tr className="sticky top-12 text-white z-10 bg-gray-900 whitespace-nowrap">
+                          <th
+                              scope="col"
+                              className="sticky bg-gray-900 px-3 py-3.5 text-center text-sm font-semibold"
+                            >
+                              
                               CUTTING PROCESS DATE
                             </th>
                             <th
@@ -257,18 +353,24 @@ const DailyCutt = () => {
                             >
                               TOTAL PLAN
                             </th>
-                            <th
-                              scope="col"
-                              className="sticky bg-gray-900  px-3 py-3.5 text-center text-sm font-semibold"
-                            >
-                              TOTAL ACTUAL
-                            </th>
-                            <th
-                              scope="col"
-                              className="sticky bg-gray-900  px-3 py-3.5 text-center text-sm font-semibold"
-                            >
-                              ACTION
-                            </th>
+                            {columns.map((columnName, index) => {
+                              // Split string based on underscore to separate hours and minutes
+                              const [hour, minute] = columnName.split('_');
+                              // Format the time string
+                              const formattedTime = `${hour}:${minute}`;
+                              return (
+                                <th
+                                  key={index}
+                                  scope="col"
+                                  className="sticky bg-gray-900  px-3 py-3.5 text-center text-sm font-semibold"
+                                  style={{
+                                    backgroundColor: "#374151",
+                                  }}
+                                >
+                                  {formattedTime}
+                                </th>
+                              );
+                            })}
                           </tr>
                         </thead>
                         {updating && (
@@ -304,6 +406,13 @@ const DailyCutt = () => {
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                 {item.TOTAL_DAILY_PLAN}
                               </td>
+                              {columns.map((columnName) => (
+                                <td
+                                  className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6"
+                                >
+                                  {item[columnName]}
+                                </td>
+                              ))}
                               <td className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium sm:pl-6 ${item.TOTAL_DAILY_ACTUAL >= item.TOTAL_DAILY_PLAN ? 'bg-green-500' : 'bg-red-500'
                                 }`}>
                                 {item.TOTAL_DAILY_ACTUAL}

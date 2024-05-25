@@ -349,6 +349,13 @@ const ProductResultTargetJXLine = () => {
                                                         </th>
                                                         <th
                                                             scope="col"
+                                                            rowSpan={2}
+                                                            className="sticky left-[73px] top-0 bg-gray-900 py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-50 sm:pl-6"
+                                                        >
+                                                            MODEL
+                                                        </th>
+                                                        <th
+                                                            scope="col"
                                                             colSpan={6}
                                                             className="sticky left-[177px] top-0 bg-gray-900 py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-50 sm:pl-6"
                                                         >
@@ -464,7 +471,7 @@ const ProductResultTargetJXLine = () => {
                                                     <tr className="sticky top-24 text-gray-900 z-10 bg-orange-500 whitespace-nowrap">
                                                         <th
                                                             scope="col"
-                                                            colSpan={2}
+                                                            colSpan={3}
                                                             className="sticky left-[0px] top-0 bg-orange-500 py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
                                                         >
                                                             TOTAL
@@ -582,6 +589,9 @@ const ProductResultTargetJXLine = () => {
                                                                 </td>
                                                                 <td className={`sticky left-[73px] whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 ${item.STYLE === 'SUB_TOTAL' ? 'bg-gray-400' : 'bg-gray-50'}`}>
                                                                     {item.STYLE}
+                                                                </td>
+                                                                <td className={`sticky left-[73px] whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 ${item.STYLE === 'SUB_TOTAL' ? 'bg-gray-400' : 'bg-gray-50'}`}>
+                                                                    {item.MODEL}
                                                                 </td>
                                                                 <td className={`sticky left-[177px] whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6 ${item.STYLE === 'SUB_TOTAL' ? 'bg-gray-400' : 'bg-gray-50'}`}>
                                                                     {totalPlan?.toLocaleString()}{" "}

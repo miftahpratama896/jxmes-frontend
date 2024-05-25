@@ -55,6 +55,10 @@ const InventoryLongTerm = () => {
   const [filteredGenderOptions, setFilteredGenderOptions] = useState([]);
   const [selectedModel, setSelectedModel] = useState("");
   const [filteredModelOptions, setFilteredModelOptions] = useState([]);
+  const [selectedJXLine, setSelectedJXLine] = useState("");
+  const [selectedLine, setSelectedLine] = useState("");
+  const [filteredJXLineOptions, setFilteredJXLineOptions] = useState([]);
+  const [filteredLineOptions, setFilteredLineOptions] = useState([]);
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -127,13 +131,14 @@ const InventoryLongTerm = () => {
         STOCK_DATE: selectedDate,
         S_DAY: 0,
         WC: selectedWC,
-        SCAN_LINE: "ALL",
+        SCAN_LINE: selectedLine,
         RLS: "",
         STYLE_NAME: selectedModel,
         STYLE: sanitizedStyle,
         GENDER: selectedGender,
         C_CEK: 0,
         PLANT: "ALL",
+        JXLINE: selectedJXLine
       });
       setData(response.data[0]);
     } catch (error) {
@@ -163,6 +168,8 @@ const InventoryLongTerm = () => {
     selectedStyle,
     selectedGender,
     selectedModel,
+    selectedJXLine,
+    selectedLine
   ]);
 
   useEffect(() => {
@@ -180,6 +187,16 @@ const InventoryLongTerm = () => {
       ...new Set(data.map((item) => item.STYLE_NAME)),
     ];
     setFilteredModelOptions(uniqueModelOptions);
+  }, [data]);
+
+  useEffect(() => {
+    const uniqueJXLineOptions = [...new Set(data.map((item) => item.JX_LINE))];
+    setFilteredJXLineOptions(uniqueJXLineOptions);
+  }, [data]);
+
+  useEffect(() => {
+    const uniqueLineOptions = [...new Set(data.map((item) => item.LINE))];
+    setFilteredLineOptions(uniqueLineOptions);
   }, [data]);
 
   function getBackgroundColor(differenceInDays) {
@@ -258,11 +275,49 @@ const InventoryLongTerm = () => {
                   onChange={handleWCChange}
                   className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
                 >
-                  <option value="Sewing">Sewing</option>
                   <option value="Cutting">Cutting</option>
+                  <option value="Sewing">Sewing</option>
                   <option value="W/H">W/H</option>
                 </select>
               </div>
+              <div className="mt-4 sm:mt-0 sm:ml-4">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  JX LINE
+                </label>
+                <select
+                  value={selectedJXLine}
+                  onChange={(e) => setSelectedJXLine(e.target.value)}
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
+                >
+                  <option value="">All JX Lines</option>
+                  {/* Isi dropdown dengan opsi JX_LINE */}
+                  {filteredJXLineOptions.map((option, index) => (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {selectedWC !='Cutting' && (
+              <div className="mt-4 sm:mt-0 sm:ml-4">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  LINE
+                </label>
+                <select
+                  value={selectedLine}
+                  onChange={(e) => setSelectedLine(e.target.value)}
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
+                >
+                  <option value="">All Lines</option>
+                  {/* Isi dropdown dengan opsi LINE */}
+                  {filteredLineOptions.map((option, index) => (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              )}
               <div className="mt-4 sm:mt-0 sm:ml-4">
                 <label className="block text-sm font-medium leading-6 text-gray-900">
                   TERM
@@ -652,6 +707,20 @@ const InventoryLongTerm = () => {
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
+                              JX LINE
+                            </th>
+                            {(selectedWC === "Sewing" || selectedWC === "W/H") && (
+                              <th
+                                scope="col"
+                                className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              >
+                                LINE
+                              </th>
+                            )}
+                            <th
+                              scope="col"
+                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                            >
                               RELEASE
                             </th>
                             <th
@@ -700,7 +769,7 @@ const InventoryLongTerm = () => {
                           <tr>
                             <th
                               scope="col"
-                              colSpan={8}
+                              colSpan={selectedWC === "Sewing" || selectedWC === "W/H" ? 10 : 9}
                               className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
                             >
                               TOTAL
@@ -780,6 +849,14 @@ const InventoryLongTerm = () => {
                                     {item.WC}
                                   </td>
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
+                                    {item.JX_LINE}
+                                  </td>
+                                  {(selectedWC === "Sewing" || selectedWC === "W/H") && (
+                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
+                                      {item.LINE}
+                                    </td>
+                                  )}
+                                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                     {item.RELEASE}
                                   </td>
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
@@ -801,25 +878,24 @@ const InventoryLongTerm = () => {
                                     {item.QTY}
                                   </td>
                                   <td
-                                    className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 ${
-                                      differenceInDays <= 6
-                                        ? "bg-red-100"
-                                        : differenceInDays <= 13
+                                    className={`whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 ${differenceInDays <= 6
+                                      ? "bg-red-100"
+                                      : differenceInDays <= 13
                                         ? "bg-red-200"
                                         : differenceInDays <= 20
-                                        ? "bg-red-300"
-                                        : differenceInDays <= 27
-                                        ? "bg-red-400"
-                                        : differenceInDays <= 34
-                                        ? "bg-red-500"
-                                        : differenceInDays <= 41
-                                        ? "bg-red-600"
-                                        : differenceInDays <= 48
-                                        ? "bg-red-700"
-                                        : differenceInDays <= 55
-                                        ? "bg-red-800"
-                                        : "bg-red-900"
-                                    } sm:pl-6`}
+                                          ? "bg-red-300"
+                                          : differenceInDays <= 27
+                                            ? "bg-red-400"
+                                            : differenceInDays <= 34
+                                              ? "bg-red-500"
+                                              : differenceInDays <= 41
+                                                ? "bg-red-600"
+                                                : differenceInDays <= 48
+                                                  ? "bg-red-700"
+                                                  : differenceInDays <= 55
+                                                    ? "bg-red-800"
+                                                    : "bg-red-900"
+                                      } sm:pl-6`}
                                   >
                                     {differenceInDays}
                                   </td>

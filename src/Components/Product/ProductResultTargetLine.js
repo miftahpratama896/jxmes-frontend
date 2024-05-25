@@ -43,6 +43,7 @@ const ProductResultTarget = () => {
   const [autoUpdate, setAutoUpdate] = useState(false);
   const [updating, setUpdating] = useState(false); // State untuk menunjukkan apakah sedang dalam proses pembaruan
   const [selectedOption, setSelectedOption] = useState("Line");
+  const [showJX2Line, setShowJX2Line] = useState(false);
 
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value);
@@ -201,6 +202,22 @@ const ProductResultTarget = () => {
                   RATE {"<"}= 97
                 </p>
               </div>
+              <div className="mt-4 sm:mt-0 sm:ml-4 flex items-center">
+                <label
+                  htmlFor="showJX2LineCheckbox"
+                  className="block text-sm font-medium text-gray-700 mr-2"
+                >
+                  JX2 LINE
+                </label>
+                <input
+                  type="checkbox"
+                  id="showJX2LineCheckbox"
+                  checked={showJX2Line}
+                  onChange={() => setShowJX2Line(!showJX2Line)}
+                  className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 sm:text-sm"
+                />
+              </div>
+
               <div className="mt-4 sm:mt-0 sm:ml-4">
                 <label
                   htmlFor="productOption"
@@ -290,25 +307,19 @@ const ProductResultTarget = () => {
                               scope="col"
                               className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
                             >
-                              JX2 LINE
+                              JX TARGET
                             </th>
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
-                              TOTAL PLAN
+                              JX2 PROD
                             </th>
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                             >
-                              TOTAL PROD
-                            </th>
-                            <th
-                              scope="col"
-                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
-                            >
-                              TOTAL DIFF
+                              JX2 DIFF
                             </th>
                             <th
                               scope="col"
@@ -316,6 +327,14 @@ const ProductResultTarget = () => {
                             >
                               RATE
                             </th>
+                            <th
+                              scope="col"
+                              className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                              colSpan={showJX2Line ? 2 : 1}
+                            >
+                              {showJX2Line ? "JX2 LINE" : "JX2 LINE"}
+                            </th>
+
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
@@ -346,8 +365,7 @@ const ProductResultTarget = () => {
                               <tr>
                                 <th
                                   scope="col"
-                                  colSpan={2}
-                                  className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                                  className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
                                 >
                                   TOTAL
                                 </th>
@@ -407,7 +425,7 @@ const ProductResultTarget = () => {
                                 </th>
                                 <th
                                   scope="col"
-                                  colSpan={4}
+                                  colSpan={showJX2Line ? 6 : 5}
                                   className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                                 ></th>
                               </tr>
@@ -432,12 +450,6 @@ const ProductResultTarget = () => {
                                     }`}
                                 >
                                   {item.JX_LINE}
-                                </td>
-                                <td
-                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${index === 0 ? "bg-yellow-500" : ""
-                                    }`}
-                                >
-                                  {item.JX2_LINE}
                                 </td>
                                 <td
                                   className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${index === 0 ? "bg-yellow-500" : ""
@@ -496,6 +508,27 @@ const ProductResultTarget = () => {
                                     )}%`
                                     : ""}
                                 </td>
+                                <td
+                                  className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${index === 0 ? "bg-yellow-500" : ""
+                                    }`}
+                                >
+                                  {item.JX2_NEW !== null &&
+                                    item.JX2_NEW !== undefined
+                                    ? item.JX2_NEW
+                                    : ""}
+                                </td>
+                                {showJX2Line && (
+                                  <tr>
+                                    <td
+                                      className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${index === 0 ? "bg-yellow-500" : ""
+                                        }`}
+                                    >
+                                      {item.JX2_LINE !== null && item.JX2_LINE !== undefined
+                                        ? item.JX2_LINE
+                                        : ""}
+                                    </td>
+                                  </tr>
+                                )}
                                 <td
                                   className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm text-center font-medium text-gray-900 sm:pl-6 ${index === 0 ? "bg-yellow-500" : ""
                                     }`}

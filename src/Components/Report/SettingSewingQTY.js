@@ -409,7 +409,7 @@ function ScanStatus() {
                                     scope="col"
                                     className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                                   >
-                                    {item.DI_CUTTING}
+                                    {item.DI_CUTTING.toLocaleString()}
                                   </th>
                                   <th
                                     scope="col"
@@ -474,7 +474,7 @@ function ScanStatus() {
                                   {item.ASSY_TARGET}
                                 </td>
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                  {item.STOCK}
+                                  {item.STOCK.toLocaleString()}
                                 </td>
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                   {item.LINE}
@@ -486,19 +486,19 @@ function ScanStatus() {
                                   {item.TARGET}
                                 </td>
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                  {item.SETTING_MARKET}
+                                  {item.SETTING_MARKET.toLocaleString()}
                                 </td>
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                  {item.DI_CUTTING}
+                                  {item.DI_CUTTING.toLocaleString()}
                                 </td>
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                  {item.DONE_DI_UPS}
+                                  {item.DONE_DI_UPS.toLocaleString()}
                                 </td>
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                  {item.SELISIH}
+                                  {item.SELISIH.toLocaleString()}
                                 </td>
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
-                                  {item.AVAIABLE_SETTING}
+                                  {item.AVAIABLE_SETTING.toLocaleString()}
                                 </td>
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-center font-medium text-gray-900 sm:pl-6">
                                   {item.DAY.toFixed(2)}

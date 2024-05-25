@@ -5,6 +5,40 @@ import Logo from "../../assets/img/New Logo White.png";
 
 const DailyBarcodeCutt = () => {
   const history = useHistory();
+  useEffect(() => {
+    const user_id = localStorage.getItem("user_id");
+    const sendDataToBackend = async () => {
+      try {
+        const data = {
+          division: "JXMES-WEB",
+          menuName: "REPORT",
+          programName: "REPORT - DAILY BARCODE CUTTING",
+          userID: user_id,
+        };
+
+        // Kirim data ke backend
+        const response = await axios.post(
+          "http://172.16.200.28:3000/api/log-menu-access",
+          data
+        );
+        console.log("Response:", response.data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    // Panggil fungsi untuk mengirim data ke backend
+    sendDataToBackend();
+  }, []);
+
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      // Redirect ke halaman login jika tidak ada token
+      history.push("/");
+    }
+  }, [history]);
 
   const [data, setData] = useState([]);
   const [autoUpdate, setAutoUpdate] = useState(false);
@@ -26,7 +60,7 @@ const DailyBarcodeCutt = () => {
   const fetchData = async () => {
     try {
       setUpdating(true);
-      const response = await axios.get(`http://172.16.206.4:3003/monitoring-barcode?LINE=${selectedLine}&DATE=${selectedDate}`); // Sesuaikan dengan URL endpoint Anda
+      const response = await axios.get(`http://172.16.200.28:3000/monitoring-barcode?LINE=${selectedLine}&DATE=${selectedDate}`); // Sesuaikan dengan URL endpoint Anda
       setData(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -81,19 +115,6 @@ const DailyBarcodeCutt = () => {
     setUpdatedData({});
   };
 
-  const handleSubmit = async () => {
-    try {
-      // Kirim data pembaruan ke backend menggunakan axios
-      await axios.put(`http://172.16.206.4:3003/spk-cutt/${selectedData.LINE}/${selectedData.CUTT_PROCESS_DATE}/${selectedData.COMPONENT}`, updatedData);
-      // Refresh data setelah berhasil memperbarui
-      const response = await axios.get('http://172.16.206.4:3003/spk-cutt');
-      setData(response.data);
-      // Tutup modal update
-      closeUpdateModal();
-    } catch (error) {
-      console.error('Error updating data:', error);
-    }
-  };
 
   console.log("Selected Data:", data);
 
@@ -262,38 +283,6 @@ const DailyBarcodeCutt = () => {
           </div>
         </div>
       </main>
-      {selectedData && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-8 rounded shadow-md">
-            <h2 className="text-lg font-semibold mb-4">Update Data</h2>
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold mb-2">LINE</label>
-              <input
-                type="text"
-                className="border border-gray-300 rounded px-3 py-2 w-full"
-                name="LINE"
-                value={updatedData.LINE || ""}
-                onChange={(e) => setUpdatedData({ ...updatedData, LINE: e.target.value })}
-              />
-            </div>
-            {/* Tambahkan input untuk setiap kolom data yang ingin diupdate */}
-            <div className="flex justify-end">
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-                onClick={handleSubmit}
-              >
-                Update
-              </button>
-              <button
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
-                onClick={closeUpdateModal}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 };

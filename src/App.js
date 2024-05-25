@@ -41,6 +41,7 @@ import ProductCSS from "./Components/Product/ProductCSS";
 import ProductInputSPKCutt from "./Components/Product/ProductInputSPKCutt";
 import DailyCutt from "./Components/Report/DailyCutt";
 import DailyBarcodeCutt from "./Components/Report/DailyBarcodeCutt";
+import JXJX2StatusRetur from "./Components/Report/JXJX2StatusRetur";
 
 function App() {
   return (
@@ -180,6 +181,10 @@ function App() {
           <Route path="/DailyHourProd">
             <Dashboard />
             <DailyHourProd />
+          </Route>
+          <Route path="/JXJX2StatusRetur">
+            <Dashboard />
+            <JXJX2StatusRetur />
           </Route>
         </Switch>
       </Router>

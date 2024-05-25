@@ -132,7 +132,7 @@ export default function Example() {
         {
           name: "Product - Input SPK Cutting",
           href: "/ProductInputSPKCutt",
-          active: false,
+          active: true,
         },
         
       ],
@@ -166,17 +166,18 @@ export default function Example() {
         {
           name: "Daily SPK Cutting",
           href: "/DailyCutt",
-          active: false,
+          active: true,
         },
         {
           name: "Daily Barcode Cutting",
           href: "/DailyBarcodeCutt",
-          active: false,
+          active: true,
         },
         { name: "Daily Hour Production", href: "/DailyHourProd", active: true },
         { name: "Scan Status JX2-JX", href: "/ScanStatus", active: true },
         { name: "Daily Prod QTY Trend", href: "/DailyProdQTYTrend", active: true },
         { name: "Setting Sewing QTY", href: "/SettingSewingQTY", active: true },
+        { name: "JX-JX2 Status Retur", href: "/JXJX2StatusRetur", active: true },
       ],
     },
   ];
